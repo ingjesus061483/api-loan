@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\ContactInfoController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EmploymentInformationController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +20,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/',[HomeController::class,'index']);/* function () {
     return view('welcome');
+});*/
+Route::get('UnAutorize', function () {
+    return view('Shared.UnAutorize');
 });
+Route::patch('clients/UpdateLawInformation/{id}',[ClientController::class,'UpdateLawInformation']);
+Route::patch('clients/UpdatePatrimonialInformation/{id}',[ClientController::class,'UpdatePatrimonialInformation']);
+Route::get('cities/GetCitiesByState/{stateId}',[CityController::class,'GetCitiesByState']);
+Route::resource('contactinfo',ContactInfoController::class);
+Route::resource('clients',ClientController::class);
+Route::resource('employmentInformations', EmploymentInformationController::class);
+Route::resource('loans', LoanController::class);
+Route::post('login',[LoginController::class,'store']);
+Route::delete('login/{id}',[LoginController::class,'destroy']);
+Route::get('login/show',[LoginController::class,'show']);

@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\ClientController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Route::apiResource('clients', ClientController::class);
