@@ -188,6 +188,14 @@
         <script src="{{url('/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script> 
 
         <script>
+
+            if($("#seizure"))
+            {
+                if($("#seizure").is(':checked'))                
+                {
+                    $("#divCompanySeizure").fadeIn();                
+                }                
+            }
             var app="{{isset($info)?$info:''}}";
         
             switch(app){
@@ -244,7 +252,17 @@
                     return true;                
                 }                
                 return false;                               
-            }            
+            }  
+            $(".currency").focus(function(){
+                this.value= ""
+               
+            });
+            $(".currency").blur(function(){
+              this.value= new Intl.NumberFormat("en-US", {
+                                        style: "currency",                        
+                                        currency: "USD"
+                                        }).format(this.value);
+            });          
             $("#state").change(function(){
                 console.log(this.value);
                 url="{{url('/cities/GetCitiesByState/')}}/"+this.value;
@@ -269,7 +287,10 @@
             })
             $("#seizure").change(function(){
                 console.log( this.checked);
-                this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();                
+                this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();      
+                $("#company_seizure").focus(); 
+                $("#company_seizure").val('');
+                         
             });
           
             $("#btnInfoPatrimonial").click(function(){
@@ -354,7 +375,7 @@
             dialogContact= $("#dialogContact")
             .dialog({                
             autoOpen: false,                
-            height: 300,                      
+            height: 350,                      
             width: 600,                      
             modal: true,                      
             buttons: 

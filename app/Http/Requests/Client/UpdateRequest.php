@@ -20,14 +20,17 @@ class UpdateRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {     
         return [
-            'identification'=>'required|max:50|unique:clientes,identificacion,'.$this->id,
-            'name'=>'required|max:50',
-            'last_name'=>'required|max:50',
-            'address'=>'required|max:50',
-            'phone'=>'required|max:50',
-            'email'=>'required|email|max:255',    
+            'identification'=>'required|max:50|unique:clients,identification,'.$this->id,
+            'name_last_name'=>'required|max:100',            
+            'address'=>'required|max:100',                          
+            'email'=>'required|email|max:50',
+            'birth_date'=>'required',
+            'expedition_date'=>'required',
+            'neighborhood'=>'required|max:50',
+            'marital_status' => 'required',
+            'study_level' =>'required',          
             //
         ];
     }

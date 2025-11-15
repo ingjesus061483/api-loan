@@ -3,24 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Loan\StoreRequest;
+use App\Http\Requests\Loan\UpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Loan;
 class LoanController extends Controller
 {
-    public function update(Request $request,$id)
+    public function update(UpdateRequest $request,$id)
     {
-        
+   
+        $loan=Loan::find($id);
+
+        $ammount=$this->convert_to_number($request->ammount);  
+        $arrloan=[    
+            'ammount'=>$ammount,
+            'term'=>$request->term,
+            'client_id'=>$request->client_id,
+            'warranty_id'=>$request->warranty
+        ];
+        $loan->update($arrloan);
+        session(["info"=>"loan"]);
+        return back();
     }
     public function store(StoreRequest $request)
     {
         $client=session()->has('client')?session('client'):null;
-        if($client==null)
+        print_r($request->all());
+      $cur= str_replace('$','',$request->ammount) ;
+
+      $ammount=$this->convert_to_number($request->ammount);// str_replace(',','', str_replace('.00','',$cur));
+           
+       if($client==null)
         {
             return redirect()->to(url('/clients/create'))  ->withErrors("la informacion personal no ha sido llena");                       
         }
         $arrloan=[
             'reference'=>date_timestamp_get(date_create()).$client->identification,
-            'ammount'=>$request->ammount,
+            'ammount'=>$ammount,
             'term'=>$request->term,
             'client_id'=>$request->client_id,
             'warranty_id'=>$request->warranty

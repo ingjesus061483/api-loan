@@ -88,7 +88,7 @@
                     <td>{{$item->level_study}}  </td>
                     <td>{{$item->vehicle==1?'Si':'No'}}  </td>
                     <td>{{$item->estate==1?'Si':'No'}}  </td>
-                    <td>{{$item->seizure==1?'Si':'No' }} </td>
+                    <td>{{$item->seizure}} </td>
                     <td>${{number_format( $item->ammount)}}  </td>
                     <td>{{$item->term}}    </td>
                     <td>{{$item->warranty}}  </td>

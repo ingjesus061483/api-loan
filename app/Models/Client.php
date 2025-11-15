@@ -22,6 +22,7 @@ class Client extends Model
          'vehicle',
          'estate',
          'seizure',
+          'company_seizure',
          'quality_holder_id',
          'marital_status_id',
          'level_study_id'  

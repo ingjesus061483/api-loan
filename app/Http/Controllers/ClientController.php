@@ -83,18 +83,17 @@ class ClientController extends Controller
                                    'arl.name as arl_affiliate',
                                    'ls.name as level_study',
                                    'clients.vehicle',
-                                   'clients.estate', 
-                                   'clients.seizure',
+                                   'clients.estate',                                   
                                    'loans.ammount',
                                    'loans.term',
                                    'w.name as warranty',     
-                                   'clients.created_at')                                   
+                                   'clients.created_at')
+                                ->selectRaw("CASE WHEN clients.seizure =1 THEN concat('SI',' ',clients.company_seizure) ELSE 'NO' END as seizure")                                   
                                 ->selectRaw("(SELECT
-                                                        GROUP_CONCAT(
-                                                        CONCAT (pt.name,': ', ci.phone_number) separator '; '  )
-                                                    FROM
-                                                    contact_informations ci	JOIN `phone_types` pt ON pt.id=ci.phone_type_id
-                                                    where ci.client_id=clients.id)as contact_informations")
+                                              GROUP_CONCAT(CONCAT (pt.name,': ', ci.phone_number) separator '; ')                                              
+                                              FROM                                              
+                                              contact_informations ci	JOIN `phone_types` pt ON pt.id=ci.phone_type_id                                              
+                                              where ci.client_id=clients.id)as contact_informations")
                                 ->leftjoin("quality_holders as q","q.id","=","quality_holder_id")         
                                 ->join("marital_status as ms","ms.id","=","marital_status_id")                               
                                 ->join("level_studies as ls","ls.id","=","clients.level_study_id")
@@ -110,15 +109,23 @@ class ClientController extends Controller
     }
     public function UpdateLawInformation(Request $request ,$id)
     {
+        $seizure=$request->seizure==null?0:(bool)$request->seizure;
+        if($seizure==1 && ($request->company_seizure==null || trim($request->company_seizure)==""))
+        {
+            return redirect()->to(url('/clients/create'))                                                                                     
+                             ->withErrors('Debe ingresar la empresa que tiene el embargo');        
+        }
         $client=Client::find($id);
         if($client==null)
         {
             return redirect()->to(url('/clients/create'))                            
                              ->withErrors('No se ha encontrado el cliente');        
         }
-        $client->seizure=$request->seizure==null?0:(bool)$request->seizure;        
+        $client->seizure=$seizure; 
+        $client->company_seizure=$request->company_seizure;      
         $client->update();
         session(["info"=>"law"]);
+        session(['client' => $client]);         
         return back();
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
     }
@@ -135,6 +142,7 @@ class ClientController extends Controller
         $client->estate=$request->estate==null?0:(bool)$request->estate;
         $client->update();
         session(["info"=>"patrimonial"]);
+        session(['client' => $client]);         
       //  return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
       return back();
 
@@ -155,7 +163,7 @@ class ClientController extends Controller
     public function create()
     {     
         $client=session()->has('client')?session('client'):null;
-        $contactInfos=ContactInformation::where ('client_id',$client!=null?$client->id:0);
+        $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();            
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
         $info=session()->has("info")?session('info'):'client';
@@ -260,13 +268,12 @@ class ClientController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
+       // print_r($request->all());
+        //exit;
         $client = Client::find($id);
         $client->update($request->all());
-        $data=[
-            'message'=>'Client updated successfully',
-            'client'=>$client
-        ];
-        return redirect()->to(url('/clients/'.$id.'/edit'));
+        session(['client' => $client]);
+        return back();
 
 
         //

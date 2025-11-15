@@ -4,7 +4,7 @@ namespace App\Http\Requests\EmploymentInformation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,7 +21,7 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [     
+        return [
             'client_id'=>'required',       
             'company_works'=>'required|max:100',
             'nit_company_works'=>'required|max:50',
@@ -37,7 +37,6 @@ class StoreRequest extends FormRequest
             'contract_type'=>'required',
             'eps_affiliate'=>'required',
             'arl_affiliate'=>'required',
-    
             //
         ];
     }
