@@ -475,9 +475,8 @@
             <i class="fas fa-table me-1"></i>
             INFORMACION LEGAL
         </div>
-        <div class="card-body">
-            
-                    <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post">
+        <div class="card-body">            
+            <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post">
                         @csrf
                         @method('PATCH')   
                         <div class="row">
