@@ -15,7 +15,15 @@
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
-
+                        @if($errors->any())
+                        <div id="errors" style="display: none" class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li style="list-style: none">{{$error}}</li>                    
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                         @yield('content')
                     </div>
                 </main>
@@ -24,7 +32,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div class="text-muted">Copyright &copy; Magestad {{date('Y')}}</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
@@ -35,13 +43,21 @@
                 </footer>
             </div>
         </div>
+        <script src="{{url('/js/jquery.js')}}"></script> 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{url('/js/scripts.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-             const myTimeout = setTimeout(myGreeting, 5000);        
-                function myGreeting() 
-                {                    
-                    $("#errors").fadeOut();                
-                }
+            if ($("#errors").length>0)
+            {
+                Swal.fire({
+                  title: "Drag me!",
+                  icon: "error",
+                  html:$("#errors").html(),
+                  draggable: true
+                });            
+
+            }          
+        </script>
     </body>
 </html>

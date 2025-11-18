@@ -23,10 +23,30 @@ class UpdateRequest extends FormRequest
     {
         return [
             'client_id'=>'required',
-            'ammount'=>'required',
+            'ammount'=>'required|max:10',
           'term'=>'required|numeric',
           'warranty'=>'required'
             //
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'client_id.required' => 'El :attribute es obligatorio.',  
+            'ammount.required' => 'El :attribute es obligatorio.',
+            'ammount.max' => 'El :attribute no debe ser mayor a 10 caracteres.',
+            'term.required' => 'El :attribute es obligatorio.',
+            'term.numeric' => 'El :attribute debe ser un número.',
+            'warranty.required' => 'El :attribute es obligatorio.',           
+        ];    
+    }
+    public function attributes()
+    {
+        return [
+            'client_id' => 'cliente',
+            'ammount' => 'monto',
+            'term' => 'plazo',
+            'warranty' => 'garantía',
         ];
     }
 }

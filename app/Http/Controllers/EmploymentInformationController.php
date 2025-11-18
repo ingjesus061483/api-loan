@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\EmploymentInformation;
 class EmploymentInformationController extends Controller
 {
-    public function update(UpdateRequest $request ,$id){
-       
+    public function update(UpdateRequest $request ,$id)
+    {       
         $EmploymentInformation=EmploymentInformation::find($id);
         $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
         $arrEmployment=[
@@ -34,7 +34,7 @@ class EmploymentInformationController extends Controller
         ];
         $EmploymentInformation->update($arrEmployment);
         session(["info"=>"employment"]);
-        return back();
+        return back()->with(['message'=>'Información de empleo actualizada correctamente']);
     }
     public function store(StoreRequest $request)
     {
@@ -66,7 +66,7 @@ class EmploymentInformationController extends Controller
         ];
         $EmploymentInformation=EmploymentInformation::create($arrEmployment);
         session(["info"=>"employment"]);
-        return redirect()->to('/clients/create');
+        return back()->with(['message'=>'Información de empleo guardada correctamente']);
      
     }
     //

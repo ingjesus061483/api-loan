@@ -9,10 +9,8 @@ use App\Models\Loan;
 class LoanController extends Controller
 {
     public function update(UpdateRequest $request,$id)
-    {
-   
+    {   
         $loan=Loan::find($id);
-
         $ammount=$this->convert_to_number($request->ammount);  
         $arrloan=[    
             'ammount'=>$ammount,
@@ -22,19 +20,17 @@ class LoanController extends Controller
         ];
         $loan->update($arrloan);
         session(["info"=>"loan"]);
-        return back();
+        return back()->with(['message'=>'Información del prestamo actualizada correctamente']);
     }
     public function store(StoreRequest $request)
     {
         $client=session()->has('client')?session('client'):null;
-        print_r($request->all());
-      $cur= str_replace('$','',$request->ammount) ;
-
-      $ammount=$this->convert_to_number($request->ammount);// str_replace(',','', str_replace('.00','',$cur));
-           
-       if($client==null)
+        $ammount=$this->convert_to_number($request->ammount);// str_replace(',','', str_replace('.00','',$cur));
+        //print_r($request->all());
+      //$cur= str_replace('$','',$request->ammount) ;
+        if($client==null)
         {
-            return redirect()->to(url('/clients/create'))  ->withErrors("la informacion personal no ha sido llena");                       
+            return redirect()->to(url('/clients/create'))  ->withErrors("La información personal no ha sido llena");                       
         }
         $arrloan=[
             'reference'=>date_timestamp_get(date_create()).$client->identification,

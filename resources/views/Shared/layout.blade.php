@@ -10,12 +10,14 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
         <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-R5Azes02wvL9ervyq6xo5WLyg1ufX0qwun0F/0qos0E0wNjnnRTADTQpjpnNLakj" crossorigin="anonymous">
- 
+        <link rel="shortcut icon" type="image/x-icon" href="{{url('/img/Cerik.ico')}}" />     
         <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
         <link href="{{url('/jquery-ui-1.12.1.custom/jquery-ui.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
+        <input type="hidden" id="base_url" value="{{url('/')}}/">
+        <input type="hidden" id="info" value="{{isset($info)?$info:''}}">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="{{url('/')}}">Magestad</a>
@@ -39,10 +41,10 @@
                         <li><hr class="dropdown-divider" /></li>
                         <li>
                             <form class="d-none d-md-inline-block form-inline" action="{{url('/login')}}/{{auth()->user()->id }}"                                    
-                                onsubmit="return validar('Desea cerrar la sesion?')" method="post">
+                             method="post">
                             @csrf
                             @method('delete')
-                            <button title="Cerrar sesion" type="submit" class="btn">
+                            <button title="Cerrar sesion" type="button" onclick="validar(this,'Desea cerrar la sesion?')" class="btn">
                               Cerrar sesion  <i class="fa-solid fa-right-from-bracket"></i>                                
                             </button>
                         </form>    
@@ -70,6 +72,16 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
                             @if(auth()->check())
+                            <a class="nav-link" href="{{url('/arls')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                ARL
+                            </a>
+                            <a class="nav-link" href="{{url('/eps')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                EPS
+                            </a>
+                            @endif
+                            @if(auth()->check())
                             <a class="nav-link" href="{{url('/clients')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-comment-dots"></i></div>
                                 Clientes
@@ -80,15 +92,15 @@
                                 Solicitud de credito
                             </a>
                             @endif
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <div class="sb-sidenav-menu-heading">Formatos</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                Crediticios
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                                    <a class="nav-link" href="{{url('/clients/create')}}">Solicitud de credito</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>
                             </div>
@@ -123,6 +135,7 @@
                                     </div>
                                 </nav>
                             </div>
+                         
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -146,20 +159,27 @@
                 <main>
                     <div class="container-fluid px-4">
                         @if(session('message'))
-                            <div  id="message" class="alert alert-success">
+                            <div  id="message" style="display: none" class="alert alert-success">
                                 {{session('message')}}
                             </div>
                         @endif                    
                         @if($errors->any())
-                            <div  id="errors" class="alert alert-danger">
+                            <div  id="errors" style="display: none" class="alert alert-danger">
                                 <ul>                                    
                                     @foreach ($errors->all() as $error)                                    
-                                        <li>{{$error}}</li>                                 
+                                        <li style="list-style: none">{{$error}}</li>                                 
                                     @endforeach                                
                                 </ul>
                             </div>                            
                         @endif
-                        <h1 class="mt-4">@yield('title')</h1>
+                        <div class="row">
+                            <div class="col-10">
+                                <h1 class="mt-4">@yield('title')</h1>                                
+                            </div>                          
+                            <div class="col-2">
+                                <img src="{{url('img/CerikSoluciones.png')}}"width="100px"height="100px;" alt="">
+                            </div>                        
+                        </div>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{url('/')}}">Inicio</a></li>                            
                             <li class="breadcrumb-item active">@yield('title')</li>                        
@@ -170,7 +190,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website {{date('Y')}}</div>
+                            <div class="text-muted">Copyright &copy; Magestad {{date('Y')}}</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
@@ -181,14 +201,96 @@
                 </footer>
             </div>
         </div>
+        <div title="EPS" id="dialogEps">
+            <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
+                @csrf
+                <p style="color: red">Si su EPS no se encuentra en el listado, por favor registrela</p>
+                <div class="mb-3">
+                    <label class="form-label" for=""> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%" id="name">                    
+                </div>
+                @if (auth()->check())    
+                <div class="mb-3">
+                    <label class="form-label" for=""> Descripcion</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>                
+                </div>
+                @endif
+            </form>
+        </div>
+        <div title="ARL" id="dialogArl">
+            <form id ="frmArl" action="{{url('/arls')}}" method="POST" autocomplete="off">
+                @csrf                
+                <p style="color: red">Si su ARL no se encuentra en el listado, por favor registrela</p>               
+                <div class="mb-3">
+                    <label class="form-label" for=""> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%" id="name">                    
+                </div>
+                @if (auth()->check())    
+                <div class="mb-3">
+                    <label class="form-label" for=""> Descripcion</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>                
+                </div>
+                @endif
+            </form>
+        </div>
+        <div title="Información de contacto" id="dialogContact">
+            <div class="row">        
+                <div class="col-3">            
+                    <img width="120px" height="120px" src="{{url('img/CerikSoluciones.png')}}" alt="">
+                </div>
+                <div class="col-9">            
+                    <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
+                            @csrf
+                            <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
+                        
+                            <div class="mb-3">
+                                <label class="form-label" for=""> Tipo de contacto</label>
+                                <select class="form-select" name="phone_type" style="width:80%" id="phone_type">
+                                    <option value="">Seleccione una opcion</option>
+                                    @if(isset($phonetypes))
+                                    @foreach($phonetypes as $item)
+                                    <option value="{{$item->id}}">{{ $item->name}}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="">
+                                    Numero de telefono
+                                </label>
+                                <input type="tel" name="phone" class="form-control"style="width:80%" id="phone">            
+                            </div>
+                        </form>
+                </div>                
+        </div>
         <script src="{{url('/js/jquery.js')}}"></script> 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{url('/js/scripts.js')}}"></script>
         <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.js" integrity="sha384-mtJ3+H/dkUyvhmcXYSyIZyaeG0TnEkh91c1JwFkrkBLHBv8oQ3lFjUp8xfDan41b" crossorigin="anonymous"></script>
         <script src="{{url('/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script> 
-
-        <script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript">
+            var app=$("#info").val();
+            var urlBase=$("#base_url").val();
+            if( $("#errors").length>0 )            
+            {
+                Swal.fire({
+                  title: "Se han encontrado los siguientes errores:",
+                  icon: "error",
+                  html:$("#errors").html(),
+                  draggable: true
+                });            
+            }
+            if( $("#message").length>0 )            
+            {
+                Swal.fire({
+                  title: "Información",
+                  icon: "info",
+                  html:$("#message").html(),
+                  draggable: true
+                });            
+            }            
+            
             if($("#seizure"))
             {
                 if($("#seizure").is(':checked'))                
@@ -196,35 +298,48 @@
                     $("#divCompanySeizure").fadeIn();                
                 }                
             }
-            var app="{{isset($info)?$info:''}}";
-        
-            switch(app){
-                case "client":{
+            if($("#birth_date"))
+            {
+                if($("#birth_date").val()!='')
+                {
+                   let age=CalculateAge($("#birth_date").val());
+                    $("#age").val(age +" años");               
+                }
+            }
+                  
+            switch(app)
+            {
+                case "client":                    
+                {
                     $("#cardInfoPersonal").fadeIn();
                     break;
                 }
-                case "contact":{
+                case "contact":                    
+                {
                     $("#cardDatosContacto").fadeIn();
                     break;
                 }
-                case 'law':{
+                case 'law':                    
+                {
                     $("#cardInfoLegal").fadeIn();   
                     break; 
                 }
-                case 'patrimonial':{
+                case 'patrimonial':                    
+                {
                     $("#cardInfoPatrimonial").fadeIn();    
                     break;
                 }
-                case  'loan':{
+                case  'loan':                    
+                {
                     $("#cardInfoCrediticia").fadeIn();
                     break;
                 }
-                case 'employment':{
+                case 'employment':                    
+                {
                     $("#cardInfoLaboral").fadeIn();
-
+                    break;
                 }
-            }
-        
+            }        
             if($(".table"))
             {
                 $(".table").DataTable({                    
@@ -243,19 +358,105 @@
                         className: "dt-head-center", targets: [ 0 ]
                     }],      */            
                 });                
-            }
-            const myTimeout = setTimeout(myGreeting, 5000);            
-            function validar(mensaje) 
+            }                      
+            function validar(obj, mensaje) 
             {
-                if (confirm(mensaje))
-                {                              
-                    return true;                
-                }                
-                return false;                               
+                console.log(obj.parentElement);   
+                var frm = obj.parentElement;                            
+                Swal.fire({                    
+                    title: mensaje,
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, continuar",
+                    cancelButtonText: "Cancelar"
+                    }).then((result) => 
+                    {
+                        if(result.isConfirmed)                        
+                        {                            
+                            frm.submit();                                              
+                        }
+                       
+                    });              
+            
             }  
+            function editarArl(id)
+            {                
+                url=urlBase+"arls/"+id;//"{{url('/arls')}}/"+id;                
+                $.ajax({                    
+                    url: url,                    
+                    type: "GET",                    
+                    dataType: "json",                    
+                    success: function (result) 
+                    {                        
+                        console.log(result);
+                        dialogArl.dialog("open");
+                        $("#frmArl #name").val(result.name);
+                        $("#frmArl #description").val(result.description);                        
+                        $("#frmArl").attr('action',urlBase+"arls/"+id);// "{{url('/arls')}}/"+id);
+                        let metodo= '<input type="hidden" name="_method" value="PUT">';
+                        $("#frmArl").append(metodo);                        
+                    },                    
+                    error: function (ajaxContext) 
+                    {                                                                
+                        alert(ajaxContext.responseText)                   
+                    }                
+                });
+            }            
+            function myGreeting(etiqueta)
+            {            
+                $("#"+etiqueta).fadeOut();                        
+            }       
+            function CalculateAge(dateString)        
+            {        
+                let hoy = new Date();            
+                let fechaNacimiento = new Date(dateString);            
+                let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();                            
+                let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth();            
+                if (                
+                    diferenciaMeses < 0 ||(diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate()))                
+                {                
+                    edad--;            
+                }            
+                return edad;        
+            }
+            function editarEps(id)
+            {
+                url=urlBase+"eps/"+id;// "{{url('/eps')}}/"+id;                
+                $.ajax({                    
+                    url: url,                    
+                    type: "GET",                    
+                    dataType: "json",                    
+                    success: function (result) 
+                    {                        
+                        console.log(result);
+                        dialogEps.dialog("open");
+                        $("#frmEps #name").val(result.name);
+                        $("#frmEps #description").val(result.description);                        
+                        $("#frmEps").attr('action',urlBase+"eps/"+id);//"{{url('/eps')}}/"+id);
+                        let metodo= '<input type="hidden" name="_method" value="PUT">';
+                        $("#frmEps").append(metodo);                        
+                    },                    
+                    error: function (ajaxContext) 
+                    {                        
+                        alert(ajaxContext.responseText)                   
+                    }                
+                });
+            }
+            $(".btnEps").click(function(){
+                dialogEps.dialog("open");
+            });
+            $(".btnArl").click(function(){
+                dialogArl.dialog("open");
+            });
+           
+            $("#birth_date").change(function(){
+                let age=CalculateAge(this.value);
+                   $("#age").val(age +" años");               
+            });
             $(".currency").focus(function(){
-                this.value= ""
-               
+                this.value= "";               
             });
             $(".currency").blur(function(){
               this.value= new Intl.NumberFormat("en-US", {
@@ -265,7 +466,7 @@
             });          
             $("#state").change(function(){
                 console.log(this.value);
-                url="{{url('/cities/GetCitiesByState/')}}/"+this.value;
+                url=urlBase+"cities/GetCitiesByState/"+this.value;//"{{url('/cities/GetCitiesByState/')}}/"+this.value;
                 $("#city").empty().append('<option value="">Seleccione una ciudad</option>');
                 $.ajax({                    
                     url: url,                    
@@ -289,13 +490,10 @@
                 console.log( this.checked);
                 this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();      
                 $("#company_seizure").focus(); 
-                $("#company_seizure").val('');
-                         
-            });
-          
+                $("#company_seizure").val('');                        
+            });          
             $("#btnInfoPatrimonial").click(function(){
-                $(".btn").removeClass('btn-info').addClass('btn-primary');
-                
+                $(".btn").removeClass('btn-info').addClass('btn-primary');                
                 $("#btnInfoPatrimonial")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
@@ -346,8 +544,7 @@
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoLegal")
                  .removeClass('btn-primary')
-                 .addClass('btn-info');
-                
+                 .addClass('btn-info');                
                 $("#cardInfoPatrimonial").fadeOut();
                 $("#cardDatosContacto").fadeOut();
                 $("#cardInfoPersonal").fadeOut();
@@ -371,39 +568,94 @@
             $("#btnContact").click(function()                          
             {
                 dialogContact.dialog("open");            
-            });            
-            dialogContact= $("#dialogContact")
-            .dialog({                
-            autoOpen: false,                
-            height: 350,                      
-            width: 600,                      
-            modal: true,                      
-            buttons: 
-            [{
-                text: "Guardar",                        
-                "class": 'btn btn-success',                        
-                click: function () {                            
-                    $("#frmContact")[0].submit();                     
-                }
-            },            
-            {                        
-                text: "Salir",                        
-                "class": 'btn btn-danger',                        
-                click: function () {                            
-                    dialogContact.dialog("close");                        
-                }
-            }],                                          
+            }); 
+            var dialogArl= $("#dialogArl").dialog({
+                autoOpen: false,                
+                height: 350,                      
+                width: 600,                      
+                modal: true,                      
+                buttons: 
+                [{
+                    text: "Guardar",                        
+                    "class": 'btn btn-success',                        
+                    click: function () {                            
+                        $("#frmArl")[0].submit();                     
+                    }
+                },
+                {                        
+                    text: "Salir",                        
+                    "class": 'btn btn-danger',                        
+                    click: function () {                            
+                        dialogArl.dialog("close");                        
+                    }
+                }],
+            close: function (){
+                $("#frmArl")[0].reset();
+                //form[0].reset();                                                          
+                //allFields.removeClass("ui-state-error");
+
+            }
+            });
+            dialogEps= $("#dialogEps").dialog({
+                autoOpen: false,                
+                height: 350,                      
+                width: 600,                      
+                modal: true,                      
+                buttons: 
+                [{
+                    text: "Guardar",                        
+                    "class": 'btn btn-success',                        
+                    click: function () {                            
+                        $("#frmEps")[0].submit();                     
+                    }
+                },
+                {                        
+                    text: "Salir",                        
+                    "class": 'btn btn-danger',                        
+                    click: function () {                            
+                        dialogEps.dialog("close");                        
+                    }
+                }],                                          
             close: function () 
             {
-                $("#frmContact")[0].reset();
+                $("#frmEps")[0].reset();
                 //form[0].reset();                                                          
                 //allFields.removeClass("ui-state-error");                        
             }                    
-            });
-            function myGreeting()         
-            {                    
-                $("#errors").fadeOut();                
-            }
+            });           
+            dialogContact= $("#dialogContact").dialog({                                
+                autoOpen: false,                
+                height: 350,                      
+                width: 600,                      
+                modal: true,                      
+                buttons: 
+                [
+                    {                    
+                        text: "Guardar",                                            
+                        "class": 'btn btn-success',                    
+                        click: function() 
+                        {                        
+                            $("#frmContact")[0].submit();                                         
+                        }                
+                    },                
+                    {
+                        text: "Salir",                    
+                        "class": 'btn btn-danger',                                            
+                        click: function ()
+                        {                        
+                            dialogContact.dialog("close");                                           
+                        }
+                
+                    }
+                ],                                          
+                close: function () 
+                {
+                    $("#frmContact")[0].reset();
+                //form[0].reset();                                                          
+                //allFields.removeClass("ui-state-error");                        
+                }        
+            });        
+        
         </script>
     </body>
 </html>

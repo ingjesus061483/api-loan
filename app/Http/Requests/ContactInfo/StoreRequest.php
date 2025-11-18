@@ -23,9 +23,28 @@ class StoreRequest extends FormRequest
     {
         return [
             'client_id'=>'required',
-            'phone'=>'required|max:50',
+            'phone'=>'required|max:10',
             'phone_type'=>'required|max:50',
             //
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'client_id.required' => 'El :attribute es obligatorio.',   
+            'phone.required' => 'El :attribute es obligatorio.',   
+            'phone.max' => 'El :attribute no debe ser mayor a 10 caracteres.',
+            'phone_type.required' => 'El :attribute es obligatorio.',   
+            'phone_type.max' => 'El :attribute no debe ser mayor a 50 caracteres.',
+        ];    
+    }
+    public function attributes()
+    {
+        return [
+            'client_id' => 'cliente',
+            'phone' => 'teléfono',
+            'phone_type' => 'tipo de teléfono',
+
         ];
     }
 }

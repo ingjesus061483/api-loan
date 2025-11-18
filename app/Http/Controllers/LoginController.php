@@ -27,7 +27,7 @@ class LoginController extends Controller
             Auth::login($user);
             return redirect()->to('/');
         }
-        return redirect()->to('login/show')->withErrors('Usuario o contraseña invalido');
+        return redirect()->to('login/show')->withErrors('Usuario o contraseña inválido');
 
     }
     public function destroy(int $id)

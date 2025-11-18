@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Eps;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
-class LoginRequest extends FormRequest
+
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,25 +22,24 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required',Password::default()],
+            'name' => 'required|max:50',
             //
         ];
     }
     public function messages()
     {
         return [
-            'email.required' => 'El :attribute es obligatorio.',               
-            'email.email' => 'El :attribute debe ser una dirección de correo válida.',
-            'password.required' => 'La contraseña es obligatoria.',
-            
+            'name.required' => 'El :attribute es obligatorio.',   
+            'name.max' => 'El :attribute no debe ser mayor a 50 caracteres.',
         ];    
     }
     public function attributes()
     {
         return [
-            'email' => 'Email del usuario',
+            'name' => 'nombre de la EPS',
  
         ];
     }
+
+
 }

@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class EpsAffiliate extends Model
 {
     protected $table="eps_affiliates";
+    protected $fillable=[        
+        'id',
+        'name',
+        'description'
+    ];
     use HasFactory;
 }

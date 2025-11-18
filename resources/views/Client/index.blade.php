@@ -12,10 +12,11 @@
             <a href="{{url('/clients/create')}}" title="Crear cliente" class="btn btn-primary" ><i class="fa-solid fa-user-tie"></i></a>        
         </div>  
 
-        <table  class="table table-hover table-bordered" >
+        <table  class="table table-hover table-bordered" style="width:100%">
             <thead >
-                <tr>
-                    <th>&nbsp;</th>
+                <tr>                    
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>     
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>               
                     <th style="text-align:center">FECHA DE SOLICITUD </th>
                     <th style="text-align:center">REFERENCIA</th>
                     <th style="text-align:center">CALIDAD DEL TITULAR</th>
@@ -23,7 +24,8 @@
                     <th style="text-align:center">NOMBRES Y APELLIDOS</th>
                     <th style="text-align:center">IDENTIFICACION</th>
                     <th style="text-align:center">FECHA DE NACIMIENTO</th>
-                    <th style="text-align:center">FECHA DE EXPEDICION DOCUMENTO</th>
+                    <th style="text-align:center">EDAD</th>                    
+                    <th style="text-align:center">FECHA DE EXPEDICION</th>
                     <th style="text-align:center">DIRECCION</th>
                     <th style="text-align:center">EMAIL</th>
                     <th style="text-align:center"> BARRIO</th>
@@ -56,7 +58,15 @@
             <tbody>
                 @foreach ($clients as $item)        
                 <tr>
-                    <td><a href="{{url('/clients')}}/{{$item->id}}/edit" title="Editar" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a></td>
+                    <td style="width:100%">
+                        <form method="POST"  action="{{url('/clients')}}/{{$item->id}}"  style="display:inline">
+                            @csrf
+                            {{method_field('DELETE')}}                            
+                            <button type="button" title="Eliminar" onclick="validar(this,'¿Desea eliminar el registro?')" class="btn btn-danger btn-sm" ><i class="fa-solid fa-trash"></i></button>
+                        </form>                        
+                        
+                    </td>
+                    <td><a href="{{url('/clients')}}/{{$item->id}}/edit" title="Editar" class="btn btn-warning btn-sm"><i class="fa-solid fa-pencil"></i></a></td>
                     <td>{{date("d/m/Y", strtotime($item->created_at))}}</td>                    
                     <td>{{$item->reference}}</td>
                     <td>{{$item->quality_holders}}</td>
@@ -64,6 +74,7 @@
                     <td>{{$item->name_last_name}}</td>
                     <td>{{$item->identification}}</td>
                     <td>{{date("d/m/Y", strtotime($item->date_birth))}}</td>
+                    <td>{{$item->age.' años'}}</td>
                     <td>{{date("d/m/Y", strtotime($item->expedition_date))}}</td>
                     <td>{{$item->address}}</td>
                     <td>{{$item->email}}</td>

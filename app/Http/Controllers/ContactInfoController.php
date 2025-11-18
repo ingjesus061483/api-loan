@@ -14,7 +14,7 @@ class ContactInfoController extends Controller
         $client=(session()->has('client')?session('client'):$request->client_id!=0)?Client::find($request->client_id): null;
         if($client==null)
         {
-            return redirect()->to(url('/clients/create'))  ->withErrors("la informacion personal no ha sido llena");                       
+            return back()->withErrors("la informacion personal no ha sido llena");                       
         }
         $ContactInfo=new ContactInformation();
         $ContactInfo->client_id=$request->client_id;
@@ -22,16 +22,14 @@ class ContactInfoController extends Controller
         $ContactInfo->phone_type_id=$request->phone_type;
         $ContactInfo->save();        
         session(["info"=>"contact"]);
-     //   return redirect()->to(url('/clients/create')); 
-     return back();
+        return back()->with(['message'=>'Información de contacto creada correctamente']);
    }
     public function destroy($id)
     {        
         $ContactInfo=ContactInformation::find($id);                                    
         $ContactInfo->delete();    
-        session(["info"=>"contact"]);           
-     //   return redirect()->to(url('/clients/create'));      
-     return back();
+        session(["info"=>"contact"]);        
+        return back()->with(['message'=>'Información de contacto eliminada correctamente']);
     }
     //
 }

@@ -1,4 +1,5 @@
 @extends('shared/layout')
+@section('img',url('img/CerikSoluciones.png'))
 @section('title','Formulario de solicitud de credito')
 @section('content')
 
@@ -35,11 +36,7 @@
         INFORMACION PERSONAL    
     </div>    
     <div class="card-body">        
-        <div class="row">
-            <div class="col-3">
-                <img src="{{url('img/CerikSoluciones.png')}}" alt="">
-            </div>
-            <div class="col-9">
+       
                 <form autocomplete="off" action="{{url('/clients')}}{{$client!=null?'/'.$client->id:''}}" method="post">                    
                     @csrf  
                         <input type="hidden" name="id" value="{{$client?->id}}" id="id" >          
@@ -61,7 +58,7 @@
                                 <select class="form-select" name="quality_holder" id="quality_holder">                            
                                     <option value="">Seleccione una opcion</option>                            
                                     @foreach($QualityHolder as $item)                            
-                                    <option value="{{$item->id}}">{{$item->name}}</option>                                          
+                                    <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>                                          
                                     @endforeach                        
                                 </select>                    
                             </div>                       
@@ -90,8 +87,18 @@
                         <div class="col-4">
                             <div class="mb-3" >
                                 <label class="form-label" for="">FECHA DE NACIMIENTO*</label>
-                                <input type="date" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"
-                                                                                                                                    id="birth_date">
+                                <div class="row">
+                                    <div class="col-8">                                        
+                                        <input type="date" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"                                        
+                                        id="birth_date">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" readonly class="form-control" id="age" 
+                                        value="{{$client!=null? \Carbon\Carbon::parse($client->date_birth)->age:''}}">
+                                    </div>
+                                </div>
+                                
+                                                                                                                                    
                             </div>
                         </div>
                     </div>
@@ -148,24 +155,19 @@
                             </div>
                         </div>
                     </div>    
-                    <button type="submit" id="btnGuardar" class="btn btn-success">Guardar</button>                     
+                    <button type="submit" id="btnGuardar" class="btn btn-success">{{$client==null?'Guardar':'Actualizar'}}</button>                     
                 </form>
-            </div>
-        </div>
+       
     </div>
 </div>
-    <div class="card mb-4" id="cardDatosContacto" style="display: none;">
+    <div class="card mb-4" id="cardDatosContacto" style="width:85%;margin:0 auto; display: none;">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             INFORMACION DE CONTACTO        
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{{url('img/CerikSoluciones.png')}}" alt="">
-                </div>
-                <div class="col-9">
-                    <a class="btn btn-primary" id="btnContact">Crear datos de contacto</a>
+            
+                    <a class="btn btn-primary"title="Crear datos de contacto" id="btnContact"><i class="fa-solid fa-square-phone-flip"></i></a>
                     <table class="table">
                         <thead>
                             <tr>   
@@ -190,8 +192,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-            </div>
+            
         </div>
     </div>        
     <div class="card mb-4" id="cardInfoLaboral" style="display:none">
@@ -200,12 +201,9 @@
             INFORMACION LABORAL
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{{url('img/CerikSoluciones.png')}}" alt="">
-                </div>
-                <div class="col-9">
-                    <form autocomplete="off" action="{{url('/employmentInformations')}}{{$EmploymentInformation!=null?'/'.$EmploymentInformation->id:''}} "method="post">
+            <a class= "btnEps btn btn-primary" id="btnEps"> Crear EPS</a>
+            <a class=" btnArl btn btn-primary" id="btnArl">Crear ARL</a>            
+            <form autocomplete="off" action="{{url('/employmentInformations')}}{{$EmploymentInformation!=null?'/'.$EmploymentInformation->id:''}} "method="post">
                         @csrf
                         @if($EmploymentInformation!=null)
                             @method('PATCH')
@@ -389,10 +387,9 @@
                                 </div>   
                             </div>
                         </div>
-                        <button type="submit" id="btnGuardar" class="btn btn-success">Guardar</button>
-                    </form>
-                </div>
-            </div>   
+                        <button type="submit" id="btnGuardar" class="btn btn-success">{{$EmploymentInformation==null?'Guardar':'Actualizar'}}</button>
+            </form>
+            
         </div>
     </div>
     <div class="card mb-4" id="cardInfoCrediticia" style="display:none">        
@@ -401,11 +398,7 @@
             ACERCA EL CREDITO
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{{url('img/CerikSoluciones.png')}}" alt="">
-                </div>
-                <div class="col-9">
+            
                     <form autocomplete="off" action="{{url('/loans')}}{{$loan!=null?'/'.$loan->id:''}}"method="post">
                         @if($loan!=null)
                             @method('PATCH')
@@ -443,23 +436,18 @@
                                 </div>
                             </div>
                         </div> 
-                        <button type="submit" id="btnGuardar" class="btn btn-success">Guardar</button>    
+                        <button type="submit" id="btnGuardar" class="btn btn-success">{{$loan==null?'Guardar':'Actualizar'}}</button>
                     </form>
-                </div>
-            </div>
+            
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoPatrimonial" style="display: none;">        
+    <div class="card mb-4" id="cardInfoPatrimonial" style="width:70%;margin:0 auto;display: none;">        
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             INFORMACION PATRIMONIAL
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{{url('img/CerikSoluciones.png')}}" alt="">
-                </div>
-                <div class="col-9">
+            
                     <form autocomplete="off" action="{{url('/clients/UpdatePatrimonialInformation')}}/{{$client!=null?$client->id:0}}"method="post">
                         @csrf
                         @method('PATCH') 
@@ -476,24 +464,19 @@
                             </label>
                         </div>
                         <div>
-                            <button type="submit" id="btnGuardar" class="btn btn-success">Guardar</button>
+                            <button type="submit" id="btnGuardar" class="btn btn-success">Actualizar</button>
                         </div>
                     </form>
-                </div>
-            </div>
+            
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoLegal" style="margin:0 auto;display: none;">
+    <div class="card mb-4" id="cardInfoLegal" style="width:85%;margin:0 auto;display: none;">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             INFORMACION LEGAL
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{{url('img/CerikSoluciones.png')}}" alt="">
-                </div>
-                <div class="col-9">
+            
                     <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post">
                         @csrf
                         @method('PATCH')   
@@ -516,42 +499,11 @@
                             </div>
                         </div>
                         <div>
-                            <button type="submit" id="btnGuardar" class="btn btn-success">Guardar</button>                
+                            <button type="submit" id="btnGuardar" class="btn btn-success">Actualizar</button>                
                         </div>
                     </form>
-                </div>
-            </div>
+            
         </div>
     </div>
-    <div>  
-       
-</div>
-<div title="Información de contacto" id="dialogContact">
-    <div class="row">        
-        <div class="col-3">            
-            <img width="120px" height="120px" src="{{url('img/CerikSoluciones.png')}}" alt="">
-        </div>
-        <div class="col-9">            
-            <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
-                    @csrf
-                    <input type="hidden"  value="{{$client!=null? $client->id:''}}" name="client_id" id="client_id" >
-                
-                    <div class="mb-3">
-                        <label class="form-label" for=""> Tipo de contacto</label>
-                        <select class="form-select" name="phone_type" style="width:80%" id="phone_type">
-                            <option value="">Seleccione una opcion</option>
-                            @foreach($phonetypes as $item)
-                            <option value="{{$item->id}}">{{ $item->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="">
-                            Numero de telefono
-                        </label>
-                        <input type="tel" name="phone" class="form-control"style="width:80%" id="phone">            
-                    </div>
-                </form>
-        </div>                
-</div>
+
 @endsection
