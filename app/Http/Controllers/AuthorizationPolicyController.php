@@ -15,7 +15,7 @@ class AuthorizationPolicyController extends Controller
     public function index(AutorizeRequest $request)
     {
        $data=[
-        "AuthorizationPolicies"=> AuthorizationPolicy::all(),
+        "policies"=> AuthorizationPolicy::all(),
          ];
         return view("AuthorizationPolicies.index",$data);
         //

@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('authorization_policies', function (Blueprint $table) {
-            $table->id();
-            $table->string("title",50);
-            $table->string("description",3000);
-            $table->timestamps();
+        Schema::table('clients', function (Blueprint $table) {
+            $table->tinyInteger("acept_data_processing_policies")->after('company_seizure')->default(0);
+            //
         });
     }
 
@@ -24,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('authorization_policies');
+        Schema::table('clients', function (Blueprint $table) {
+            //
+        });
     }
 };

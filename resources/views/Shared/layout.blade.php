@@ -10,7 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
         <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-R5Azes02wvL9ervyq6xo5WLyg1ufX0qwun0F/0qos0E0wNjnnRTADTQpjpnNLakj" crossorigin="anonymous">
-        <link rel="shortcut icon" type="image/x-icon" href="{{url('/img/Cerik.ico')}}" />     
+        <link rel="shortcut icon" type="image/x-icon" href="{{url('/img/Cerik.ico')}}" />
         <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
         <link href="{{url('/jquery-ui-1.12.1.custom/jquery-ui.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                @if (auth()->check())              
+                @if (auth()->check())
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i> </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -40,18 +40,18 @@
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
-                            <form class="d-none d-md-inline-block form-inline" action="{{url('/login')}}/{{auth()->user()->id }}"                                    
+                            <form class="d-none d-md-inline-block form-inline" action="{{url('/login')}}/{{auth()->user()->id }}"
                              method="post">
                             @csrf
                             @method('delete')
                             <button title="Cerrar sesion" type="button" onclick="validar(this,'Desea cerrar la sesion?')" class="btn">
-                              Cerrar sesion  <i class="fa-solid fa-right-from-bracket"></i>                                
+                              Cerrar sesion  <i class="fa-solid fa-right-from-bracket"></i>
                             </button>
-                        </form>    
-                            
+                        </form>
+
                         </li>
                     </ul>
-                </li>                    
+                </li>
                 @else
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-check"></i></a>
@@ -59,9 +59,9 @@
                         <li><a class="dropdown-item" href="{{url('login/show')}}">Login</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                     </ul>
-                </li>    
+                </li>
                 @endif
-                
+
 
             </ul>
         </nav>
@@ -72,6 +72,9 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
                             @if(auth()->check())
+                            <a class="nav-link" href="{{url('/authorizationPolicies')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Politicas y autorizaciones
                             <a class="nav-link" href="{{url('/arls')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 ARL
@@ -135,7 +138,7 @@
                                     </div>
                                 </nav>
                             </div>
-                         
+
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -147,9 +150,9 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer"> 
+                    <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        @if(auth()->check())                       
+                        @if(auth()->check())
                         {{auth()->user()->name}}
                         @endif
                     </div>
@@ -162,27 +165,27 @@
                             <div  id="message" style="display: none" class="alert alert-success">
                                 {{session('message')}}
                             </div>
-                        @endif                    
+                        @endif
                         @if($errors->any())
                             <div  id="errors" style="display: none" class="alert alert-danger">
-                                <ul>                                    
-                                    @foreach ($errors->all() as $error)                                    
-                                        <li style="list-style: none">{{$error}}</li>                                 
-                                    @endforeach                                
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li style="list-style: none">{{$error}}</li>
+                                    @endforeach
                                 </ul>
-                            </div>                            
+                            </div>
                         @endif
                         <div class="row">
                             <div class="col-10">
-                                <h1 class="mt-4">@yield('title')</h1>                                
-                            </div>                          
+                                <h1 class="mt-4">@yield('title')</h1>
+                            </div>
                             <div class="col-2">
                                 <img src="{{url('img/CerikSoluciones.png')}}"width="100px"height="100px;" alt="">
-                            </div>                        
+                            </div>
                         </div>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="{{url('/')}}">Inicio</a></li>                            
-                            <li class="breadcrumb-item active">@yield('title')</li>                        
+                            <li class="breadcrumb-item"><a href="{{url('/')}}">Inicio</a></li>
+                            <li class="breadcrumb-item active">@yield('title')</li>
                         </ol>
                        @yield('content')
                     </div>
@@ -203,16 +206,16 @@
         </div>
         <div title="Autorizaciones y politicas" id="dialogPolicy">
             <form id ="frmPolicy" action="{{url('/authorizationPolicies')}}" method="POST" autocomplete="off">
-                @csrf                
+                @csrf
                 <div class="mb-3">
                     <label class="form-label" for=""> Titulo*</label>
-                    <input type="text" name="title" class="form-control" style="width:80%" id="title">                    
-                </div>                
+                    <input type="text" name="title" class="form-control" style="width:80%" id="title">
+                </div>
                 <div class="mb-3">
                     <label class="form-label" for=""> Contenido*</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>                
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
                 </div>
-                
+
             </form>
         </div>
 
@@ -222,42 +225,42 @@
                 <p style="color: red">Si su EPS no se encuentra en el listado, por favor registrela</p>
                 <div class="mb-3">
                     <label class="form-label" for=""> Nombre*</label>
-                    <input type="text" name="name" class="form-control" style="width:80%" id="name">                    
+                    <input type="text" name="name" class="form-control" style="width:80%" id="name">
                 </div>
-                @if (auth()->check())    
+                @if (auth()->check())
                 <div class="mb-3">
                     <label class="form-label" for=""> Descripcion</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>                
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 @endif
             </form>
         </div>
         <div title="ARL" id="dialogArl">
             <form id ="frmArl" action="{{url('/arls')}}" method="POST" autocomplete="off">
-                @csrf                
-                <p style="color: red">Si su ARL no se encuentra en el listado, por favor registrela</p>               
+                @csrf
+                <p style="color: red">Si su ARL no se encuentra en el listado, por favor registrela</p>
                 <div class="mb-3">
                     <label class="form-label" for=""> Nombre*</label>
-                    <input type="text" name="name" class="form-control" style="width:80%" id="name">                    
+                    <input type="text" name="name" class="form-control" style="width:80%" id="name">
                 </div>
-                @if (auth()->check())    
+                @if (auth()->check())
                 <div class="mb-3">
                     <label class="form-label" for=""> Descripcion</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>                
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 @endif
             </form>
         </div>
         <div title="Información de contacto" id="dialogContact">
-            <div class="row">        
-                <div class="col-3">            
+            <div class="row">
+                <div class="col-3">
                     <img width="120px" height="120px" src="{{url('img/CerikSoluciones.png')}}" alt="">
                 </div>
-                <div class="col-9">            
+                <div class="col-9">
                     <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
                             @csrf
                             <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
-                        
+
                             <div class="mb-3">
                                 <label class="form-label" for=""> Tipo de contacto</label>
                                 <select class="form-select" name="phone_type" style="width:80%" id="phone_type">
@@ -273,112 +276,112 @@
                                 <label class="form-label" for="">
                                     Numero de telefono
                                 </label>
-                                <input type="tel" name="phone" class="form-control"style="width:80%" id="phone">            
+                                <input type="tel" name="phone" class="form-control"style="width:80%" id="phone">
                             </div>
                         </form>
-                </div>                
+                </div>
         </div>
-        <script src="{{url('/js/jquery.js')}}"></script> 
+        <script src="{{url('/js/jquery.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{url('/js/scripts.js')}}"></script>
         <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.js" integrity="sha384-mtJ3+H/dkUyvhmcXYSyIZyaeG0TnEkh91c1JwFkrkBLHBv8oQ3lFjUp8xfDan41b" crossorigin="anonymous"></script>
-        <script src="{{url('/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script> 
+        <script src="{{url('/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
             var app=$("#info").val();
             var urlBase=$("#base_url").val();
-            if( $("#errors").length>0 )            
+            if( $("#errors").length>0 )
             {
                 Swal.fire({
                   title: "Se han encontrado los siguientes errores:",
                   icon: "error",
                   html:$("#errors").html(),
                   draggable: true
-                });            
+                });
             }
-            if( $("#message").length>0 )            
+            if( $("#message").length>0 )
             {
                 Swal.fire({
                   title: "Información",
                   icon: "info",
                   html:$("#message").html(),
                   draggable: true
-                });            
-            }            
-            
+                });
+            }
+
             if($("#seizure"))
             {
-                if($("#seizure").is(':checked'))                
+                if($("#seizure").is(':checked'))
                 {
-                    $("#divCompanySeizure").fadeIn();                
-                }                
+                    $("#divCompanySeizure").fadeIn();
+                }
             }
             if($("#birth_date"))
             {
                 if($("#birth_date").val()!='')
                 {
                    let age=CalculateAge($("#birth_date").val());
-                    $("#age").val(age +" años");               
+                    $("#age").val(age +" años");
                 }
             }
-                  
+
             switch(app)
             {
-                case "client":                    
+                case "client":
                 {
                     $("#cardInfoPersonal").fadeIn();
                     break;
                 }
-                case "contact":                    
+                case "contact":
                 {
                     $("#cardDatosContacto").fadeIn();
                     break;
                 }
-                case 'law':                    
+                case 'law':
                 {
-                    $("#cardInfoLegal").fadeIn();   
-                    break; 
-                }
-                case 'patrimonial':                    
-                {
-                    $("#cardInfoPatrimonial").fadeIn();    
+                    $("#cardInfoLegal").fadeIn();
                     break;
                 }
-                case  'loan':                    
+                case 'patrimonial':
+                {
+                    $("#cardInfoPatrimonial").fadeIn();
+                    break;
+                }
+                case  'loan':
                 {
                     $("#cardInfoCrediticia").fadeIn();
                     break;
                 }
-                case 'employment':                    
+                case 'employment':
                 {
                     $("#cardInfoLaboral").fadeIn();
                     break;
                 }
-            }        
+            }
             if($(".table"))
             {
-                $(".table").DataTable({                    
+                $(".table").DataTable({
                     "paging": true,
                     "lengthChange": true,
                     "searching": true,
                     "ordering": true,
                     "info": true,
                     scrollX: true,
-                    "language": 
-                    {                            
+                    "language":
+                    {
                         "url": "https://cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json"
                     },
-                 /*   "columnDefs": 
+                 /*   "columnDefs":
                     [{
                         className: "dt-head-center", targets: [ 0 ]
-                    }],      */            
-                });                
-            }                      
-            function validar(obj, mensaje) 
+                    }],      */
+                });
+            }
+            function validar(obj, mensaje)
             {
-                console.log(obj.parentElement);   
-                var frm = obj.parentElement;                            
-                Swal.fire({                    
+                console.log(obj.parentElement);
+                var frm = obj.parentElement;
+                Swal.fire({
                     title: mensaje,
                     icon: "question",
                     showCancelButton: true,
@@ -386,100 +389,100 @@
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Si, continuar",
                     cancelButtonText: "Cancelar"
-                    }).then((result) => 
+                    }).then((result) =>
                     {
-                        if(result.isConfirmed)                        
-                        {                            
-                            frm.submit();                                              
+                        if(result.isConfirmed)
+                        {
+                            frm.submit();
                         }
-                       
-                    });              
-            
-            }  
+
+                    });
+
+            }
             function editarPolicy(id)
-            {                
-                url=urlBase+"authorizationPolicies/"+id;//"{{url('/authorizationPolicies')}}/"+id;                
-                $.ajax({                    
-                    url: url,                    
-                    type: "GET",                    
-                    dataType: "json",                    
-                    success: function (result) 
-                    {                        
+            {
+                url=urlBase+"authorizationPolicies/"+id;//"{{url('/authorizationPolicies')}}/"+id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
                         console.log(result);
                         dialogPolicy.dialog("open");
                         $("#frmPolicy #title").val(result.title);
-                        $("#frmPolicy #description").val(result.description);                        
+                        $("#frmPolicy #description").val(result.description);
                         $("#frmPolicy").attr('action',urlBase+"authorizationPolicies/"+id);//"{{url('/authorizationPolicies')}}/"+id);
                         let metodo= '<input type="hidden" name="_method" value="PUT">';
-                        $("#frmPolicy").append(metodo);                        
-                    },                    
-                    error: function (ajaxContext) 
-                    {                                                                
-                        alert(ajaxContext.responseText)                   
-                    }                
+                        $("#frmPolicy").append(metodo);
+                    },
+                    error: function (ajaxContext)
+                    {
+                        alert(ajaxContext.responseText)
+                    }
                 });
             }
             function editarArl(id)
-            {                
-                url=urlBase+"arls/"+id;//"{{url('/arls')}}/"+id;                
-                $.ajax({                    
-                    url: url,                    
-                    type: "GET",                    
-                    dataType: "json",                    
-                    success: function (result) 
-                    {                        
+            {
+                url=urlBase+"arls/"+id;//"{{url('/arls')}}/"+id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
                         console.log(result);
                         dialogArl.dialog("open");
                         $("#frmArl #name").val(result.name);
-                        $("#frmArl #description").val(result.description);                        
+                        $("#frmArl #description").val(result.description);
                         $("#frmArl").attr('action',urlBase+"arls/"+id);// "{{url('/arls')}}/"+id);
                         let metodo= '<input type="hidden" name="_method" value="PUT">';
-                        $("#frmArl").append(metodo);                        
-                    },                    
-                    error: function (ajaxContext) 
-                    {                                                                
-                        alert(ajaxContext.responseText)                   
-                    }                
+                        $("#frmArl").append(metodo);
+                    },
+                    error: function (ajaxContext)
+                    {
+                        alert(ajaxContext.responseText)
+                    }
                 });
-            }            
+            }
             function myGreeting(etiqueta)
-            {            
-                $("#"+etiqueta).fadeOut();                        
-            }       
-            function CalculateAge(dateString)        
-            {        
-                let hoy = new Date();            
-                let fechaNacimiento = new Date(dateString);            
-                let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();                            
-                let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth();            
-                if (                
-                    diferenciaMeses < 0 ||(diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate()))                
-                {                
-                    edad--;            
-                }            
-                return edad;        
+            {
+                $("#"+etiqueta).fadeOut();
+            }
+            function CalculateAge(dateString)
+            {
+                let hoy = new Date();
+                let fechaNacimiento = new Date(dateString);
+                let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+                let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth();
+                if (
+                    diferenciaMeses < 0 ||(diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate()))
+                {
+                    edad--;
+                }
+                return edad;
             }
             function editarEps(id)
             {
-                url=urlBase+"eps/"+id;// "{{url('/eps')}}/"+id;                
-                $.ajax({                    
-                    url: url,                    
-                    type: "GET",                    
-                    dataType: "json",                    
-                    success: function (result) 
-                    {                        
+                url=urlBase+"eps/"+id;// "{{url('/eps')}}/"+id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
                         console.log(result);
                         dialogEps.dialog("open");
                         $("#frmEps #name").val(result.name);
-                        $("#frmEps #description").val(result.description);                        
+                        $("#frmEps #description").val(result.description);
                         $("#frmEps").attr('action',urlBase+"eps/"+id);//"{{url('/eps')}}/"+id);
                         let metodo= '<input type="hidden" name="_method" value="PUT">';
-                        $("#frmEps").append(metodo);                        
-                    },                    
-                    error: function (ajaxContext) 
-                    {                        
-                        alert(ajaxContext.responseText)                   
-                    }                
+                        $("#frmEps").append(metodo);
+                    },
+                    error: function (ajaxContext)
+                    {
+                        alert(ajaxContext.responseText)
+                    }
                 });
             }
             $(".btnPolicy").click(function(){
@@ -491,232 +494,232 @@
             $(".btnArl").click(function(){
                 dialogArl.dialog("open");
             });
-           
+
             $("#birth_date").change(function(){
                 let age=CalculateAge(this.value);
-                   $("#age").val(age +" años");               
+                   $("#age").val(age +" años");
             });
             $(".currency").focus(function(){
-                this.value= "";               
+                this.value= "";
             });
             $(".currency").blur(function(){
               this.value= new Intl.NumberFormat("en-US", {
-                                        style: "currency",                        
+                                        style: "currency",
                                         currency: "USD"
                                         }).format(this.value);
-            });          
+            });
             $("#state").change(function(){
                 console.log(this.value);
                 url=urlBase+"cities/GetCitiesByState/"+this.value;//"{{url('/cities/GetCitiesByState/')}}/"+this.value;
                 $("#city").empty().append('<option value="">Seleccione una ciudad</option>');
-                $.ajax({                    
-                    url: url,                    
-                    type: "GET",                    
-                    dataType: "json",                    
-                    success: function (result) 
-                    {                        
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
                         console.log(result);
-                        $.each(result, function(index, city) 
+                        $.each(result, function(index, city)
                         {
-                            $("#city").append('<option value="' + city.id + '">' + city.name + '</option>');                        
+                            $("#city").append('<option value="' + city.id + '">' + city.name + '</option>');
                         });
-                    },                    
-                    error: function (ajaxContext) 
-                    {                        
-                        alert(ajaxContext.responseText)                   
-                    }                
+                    },
+                    error: function (ajaxContext)
+                    {
+                        alert(ajaxContext.responseText)
+                    }
                 });
             })
             $("#seizure").change(function(){
                 console.log( this.checked);
-                this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();      
-                $("#company_seizure").focus(); 
-                $("#company_seizure").val('');                        
-            });  
+                this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();
+                $("#company_seizure").focus();
+                $("#company_seizure").val('');
+            });
             $("#btnPolAutorizaciones").click(function(){
-                $(".btn").removeClass('btn-info').addClass('btn-primary');     
+                $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnPolAutorizaciones")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
                  $(".card").fadeOut();
-                $("#cardPolAutorizaciones").fadeIn(); 
+                $("#cardPolAutorizaciones").fadeIn();
 
             });
             $("#btnPoltrataDatosPers").click(function(){
-                $(".btn").removeClass('btn-info').addClass('btn-primary');     
+                $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnPoltrataDatosPers")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
                  $(".card").fadeOut();
-                $("#cardPoltrataDatosPers").fadeIn(); 
+                $("#cardPoltrataDatosPers").fadeIn();
 
-            }) ;      
+            }) ;
             $("#btnInfoPatrimonial").click(function(){
-                $(".btn").removeClass('btn-info').addClass('btn-primary');                
+                $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoPatrimonial")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
                  $(".card").fadeOut();
                 $("#cardInfoPatrimonial").fadeIn();
-               
+
             });
-            $("#btnInfoPersonal").click(function(){                
+            $("#btnInfoPersonal").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoPersonal")
                 .removeClass('btn-primary')
                 .addClass('btn-info');
                 $(".card").fadeOut();
                 $("#cardInfoPersonal").fadeIn();
-               
+
             });
             $("#btnInfoLaboral").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoLaboral")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
-                $(".card").fadeOut();                
+                $(".card").fadeOut();
                 $("#cardInfoLaboral").fadeIn();
-                
+
             });
             $("#btnDatosContacto").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnDatosContacto")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
-                $(".card").fadeOut();                       
+                $(".card").fadeOut();
                 $("#cardDatosContacto").fadeIn();
-                
+
             });
             $("#btnInfoLegal").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoLegal")
                  .removeClass('btn-primary')
-                 .addClass('btn-info');                
+                 .addClass('btn-info');
                 $(".card").fadeOut();
                 $("#cardInfoLegal").fadeIn();
             })
             $("#btnInfoCredito").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
-                $("#btnInfoCredito")                
+                $("#btnInfoCredito")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
                 $(".card").fadeOut();
                 $("#cardInfoCrediticia").fadeIn();
-               
+
             });
-            
-            $("#btnContact").click(function()                          
+
+            $("#btnContact").click(function()
             {
-                dialogContact.dialog("open");            
-            }); 
+                dialogContact.dialog("open");
+            });
             var dialogPolicy= $("#dialogPolicy").dialog({
-                autoOpen: false,                
-                height: 350,                      
-                width: 600,                      
-                modal: true,                      
-                buttons: 
+                autoOpen: false,
+                height: 350,
+                width: 600,
+                modal: true,
+                buttons:
                 [{
-                    text: "Guardar",                        
-                    "class": 'btn btn-success',                        
-                    click: function () {                            
-                        $("#frmPolicy")[0].submit();                     
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmPolicy")[0].submit();
                     }
                 },
-                {                        
-                    text: "Salir",                        
-                    "class": 'btn btn-danger',                        
-                    click: function () {                            
-                        dialogPolicy.dialog("close");                        
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogPolicy.dialog("close");
                     }
                 }],
             });
             var dialogArl= $("#dialogArl").dialog({
-                autoOpen: false,                
-                height: 350,                      
-                width: 600,                      
-                modal: true,                      
-                buttons: 
+                autoOpen: false,
+                height: 350,
+                width: 600,
+                modal: true,
+                buttons:
                 [{
-                    text: "Guardar",                        
-                    "class": 'btn btn-success',                        
-                    click: function () {                            
-                        $("#frmArl")[0].submit();                     
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmArl")[0].submit();
                     }
                 },
-                {                        
-                    text: "Salir",                        
-                    "class": 'btn btn-danger',                        
-                    click: function () {                            
-                        dialogArl.dialog("close");                        
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogArl.dialog("close");
                     }
                 }],
             close: function (){
                 $("#frmArl")[0].reset();
-                //form[0].reset();                                                          
+                //form[0].reset();
                 //allFields.removeClass("ui-state-error");
 
             }
             });
             dialogEps= $("#dialogEps").dialog({
-                autoOpen: false,                
-                height: 350,                      
-                width: 600,                      
-                modal: true,                      
-                buttons: 
+                autoOpen: false,
+                height: 350,
+                width: 600,
+                modal: true,
+                buttons:
                 [{
-                    text: "Guardar",                        
-                    "class": 'btn btn-success',                        
-                    click: function () {                            
-                        $("#frmEps")[0].submit();                     
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmEps")[0].submit();
                     }
                 },
-                {                        
-                    text: "Salir",                        
-                    "class": 'btn btn-danger',                        
-                    click: function () {                            
-                        dialogEps.dialog("close");                        
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogEps.dialog("close");
                     }
-                }],                                          
-            close: function () 
+                }],
+            close: function ()
             {
                 $("#frmEps")[0].reset();
-                //form[0].reset();                                                          
-                //allFields.removeClass("ui-state-error");                        
-            }                    
-            });           
-            dialogContact= $("#dialogContact").dialog({                                
-                autoOpen: false,                
-                height: 350,                      
-                width: 600,                      
-                modal: true,                      
-                buttons: 
+                //form[0].reset();
+                //allFields.removeClass("ui-state-error");
+            }
+            });
+            dialogContact= $("#dialogContact").dialog({
+                autoOpen: false,
+                height: 350,
+                width: 600,
+                modal: true,
+                buttons:
                 [
-                    {                    
-                        text: "Guardar",                                            
-                        "class": 'btn btn-success',                    
-                        click: function() 
-                        {                        
-                            $("#frmContact")[0].submit();                                         
-                        }                
-                    },                
                     {
-                        text: "Salir",                    
-                        "class": 'btn btn-danger',                                            
-                        click: function ()
-                        {                        
-                            dialogContact.dialog("close");                                           
+                        text: "Guardar",
+                        "class": 'btn btn-success',
+                        click: function()
+                        {
+                            $("#frmContact")[0].submit();
                         }
-                
+                    },
+                    {
+                        text: "Salir",
+                        "class": 'btn btn-danger',
+                        click: function ()
+                        {
+                            dialogContact.dialog("close");
+                        }
+
                     }
-                ],                                          
-                close: function () 
+                ],
+                close: function ()
                 {
                     $("#frmContact")[0].reset();
-                //form[0].reset();                                                          
-                //allFields.removeClass("ui-state-error");                        
-                }        
-            });        
-        
+                //form[0].reset();
+                //allFields.removeClass("ui-state-error");
+                }
+            });
+
         </script>
     </body>
 </html>

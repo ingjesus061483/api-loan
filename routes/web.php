@@ -9,6 +9,7 @@ use App\Http\Controllers\EpsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ClientPolicyController;
 use App\Http\Controllers\AuthorizationPolicyController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,3 +43,4 @@ Route::delete('login/{id}',[LoginController::class,'destroy']);
 Route::get('login/show',[LoginController::class,'show']);
 Route::resource('arls',ArlController::class);
 Route::resource('eps',EpsController::class);
+Route ::resource('clientPolicies', ClientPolicyController::class);
