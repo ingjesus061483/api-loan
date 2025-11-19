@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("nit",50)->nullable();
             $table->string("branch_address",50)->nullable();
             $table->date("entry_date");
-            $table->decimal("average_monthly_salary",10,2);
+            $table->decimal("average_monthly_salary",22,2);
             $table->string("current_position");
             $table->foreignId('client_id')
             ->constrained('clients')

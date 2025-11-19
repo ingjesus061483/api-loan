@@ -23,7 +23,7 @@ use App\Models\PhoneType;
 use App\Models\QualityHolder;
 use App\Models\State;
 use App\Models\Warranty;
-
+use App\Models\AuthorizationPolicy;
 class ClientController extends Controller
 {
     protected $QualityHolder;
@@ -40,8 +40,10 @@ class ClientController extends Controller
     protected $Warranties;
     protected $States; 
     protected $cities;
+    protected $policies;
     function __construct() {
         $this->cities=City::orderby('name','asc');
+        $this->policies=AuthorizationPolicy::orderby('title','asc');
        $this-> QualityHolder=QualityHolder::orderby('name','asc');
      $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
      $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
@@ -177,6 +179,7 @@ class ClientController extends Controller
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
         $info=session()->has("info")?session('info'):'client';
         $data=[
+            'policies'=>$this->policies->get(),
            'client'=>$client,
            'contactInfos'=>$contactInfos->get(),
            'EmploymentInformation'=>$EmploymentInformation,

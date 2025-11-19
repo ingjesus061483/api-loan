@@ -9,6 +9,7 @@ use App\Http\Controllers\EpsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthorizationPolicyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::get('/',[HomeController::class,'index']);/* function () {
 Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
+Route::resource('authorizationPolicies',AuthorizationPolicyController::class);
 Route::patch('clients/UpdateLawInformation/{id}',[ClientController::class,'UpdateLawInformation']);
 Route::patch('clients/UpdatePatrimonialInformation/{id}',[ClientController::class,'UpdatePatrimonialInformation']);
 Route::get('cities/GetCitiesByState/{stateId}',[CityController::class,'GetCitiesByState']);

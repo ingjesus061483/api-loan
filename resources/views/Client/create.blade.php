@@ -8,28 +8,58 @@
 </div>
 <div style="padding: 5px">           
     <div class="row">                
-        <div class="col-4">            
+        <div class="col-3">            
             <a id="btnInfoPersonal" style="width:100%" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}">Información personal</a>        
         </div>        
-        <div class="col-4">            
+        <div class="col-3">            
             <a id="btnDatosContacto"style="width:100%" class="{{$info=='contact'?'btn btn-info':'btn btn-primary'}}">Información de contacto</a>        
         </div>        
-        <div class="col-4">            
+        <div class="col-3">            
             <a id="btnInfoLaboral"style="width:100%" class="{{$info=='employment'?'btn btn-info':'btn btn-primary'}}">Información laboral</a>        
         </div>
+        <div class="col-3">            
+            <a id="btnInfoPatrimonial"style="width:100%" class="{{$info=='patrimonial'?'btn btn-info':'btn btn-primary'}}">Información patrimonial</a>        
+        </div>  
     </div>    
     <div class="row" style="margin-top: 5px">        
-        <div class="col-4">            
-            <a id="btnInfoPatrimonial"style="width:100%" class="{{$info=='patrimonial'?'btn btn-info':'btn btn-primary'}}">Información patrimonial</a>        
-        </div>        
-        <div class="col-4">            
+              
+        <div class="col-3">            
             <a id="btnInfoLegal"style="width:100%" class="{{$info=='law'?'btn btn-info':'btn btn-primary'}}">Información Legal </a>        
         </div>        
-        <div class="col-4">            
+        <div class="col-3">            
             <a id="btnInfoCredito"style="width:100%" class="{{$info=='loan'?'btn btn-info':'btn btn-primary'}}">Acerca del crédito   </a>
+        </div>
+        <div class="col-3">            
+            <a id="btnPoltrataDatosPers"style="width:100%" class="{{$info=='PersonData'?'btn btn-info':'btn btn-primary'}}">Política de tratamiento de datos perfonales   </a>
+        </div>
+        <div class="col-3">
+            <a id="btnPolAutorizaciones"style="width:100%" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas y autorizaciones    </a>
         </div>
     </div>        
 </div>
+<div class="card mb-4" id="cardPolAutorizaciones"style="display:none;">    
+    <div class="card-header">        
+        <i class="fas fa-table me-1"></i>        
+        POLITICAS Y AUTORIZACIONES
+    </div>    
+    <div class="card-body"> 
+        @foreach($policies as $item)
+            <div style="margin-bottom:20px">
+                <h5><strong>{{$item->title}}</strong></h5>
+                <p>{{$item->description}}</p>
+            </div>
+        @endforeach     
+    </div>
+</div>      
+
+<div class="card mb-4" id="cardPoltrataDatosPers"style="display:none;">    
+    <div class="card-header">        
+        <i class="fas fa-table me-1"></i>        
+        POLITICA DE TRATAMIENTO DE DATOS PERSONALES  
+    </div>    
+    <div class="card-body">  
+    </div>
+</div>      
 <div class="card mb-4" id="cardInfoPersonal"style="display:none;">    
     <div class="card-header">        
         <i class="fas fa-table me-1"></i>        
@@ -56,7 +86,7 @@
                             <div class="mb-3">                        
                                 <label class="form-label" for=""> CALIDAD DEL TITULAR </label>                        
                                 <select class="form-select" name="quality_holder" id="quality_holder">                            
-                                    <option value="">Seleccione una opcion</option>                            
+                                <option value="">Seleccione una opción </option>
                                     @foreach($QualityHolder as $item)                            
                                     <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>                                          
                                     @endforeach                        
@@ -85,16 +115,21 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="mb-3" >
-                                <label class="form-label" for="">FECHA DE NACIMIENTO*</label>
+                            <div class="mb-3" >                               
                                 <div class="row">
-                                    <div class="col-8">                                        
-                                        <input type="date" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"                                        
-                                        id="birth_date">
+                                    <div class="col-8">
+                                        <div class="mb-3" >                                        
+                                            <label class="form-label" for="">FECHA DE NACIMIENTO*</label>
+                                            <input type="date" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"                                        
+                                            id="birth_date">
+                                        </div>
                                     </div>
                                     <div class="col-4">
-                                        <input type="text" readonly class="form-control" id="age" 
-                                        value="{{$client!=null? \Carbon\Carbon::parse($client->date_birth)->age:''}}">
+                                        <div class="mb-3" >                                        
+                                            <label class="form-label" for="">EDAD</label>
+                                            <input type="text" readonly class="form-control" id="age" 
+                                            value="{{$client!=null? \Carbon\Carbon::parse($client->date_birth)->age:''}}">
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -130,9 +165,9 @@
                             <div class="mb-3" >
                             <label class="form-label" for=""> ESTADO CIVIL*</label>
                             <select name="marital_status" class="form-select" id="marital_status">            
-                                    <option value="">Seleccione una opcion</option>
+                            <option value="">Seleccione una opción </option>
                                     @foreach ($maritalstatus as $item)
-                                    <option value="{{$item->id}}"{{$item->id==$client?->marital_status_id?'selected':''}}>{{$item->name}}</option>
+                                    <option value="{{$item->id}}"{{$item->id==$client?->marital_status_id?'selected':''}}{{$item->id==old('marital_status')?'selected':''}}>{{$item->name}}</option>
                                     @endforeach
                             </select>
                             </div>
@@ -147,9 +182,9 @@
                             <div class="mb-3" >
                                 <label class="form-label" for=""> NIVEL DE ESTUDIOS*</label>
                                 <select name="study_level" class="form-select" id="study_level">            
-                                    <option value="">Seleccione una opcion</option>
+                                <option value="">Seleccione una opción </option>
                                     @foreach($studylevels as $item)
-                                    <option value="{{$item->id}}"{{$item->id==$client?->level_study_id?'selected':''}}>{{$item->name}}</option>
+                                    <option value="{{$item->id}}"{{$item->id==$client?->level_study_id?'selected':''}}{{$item->id==old('study_level')?'selected':''}}>{{$item->name}}</option>
                                     @endforeach                             
                                 </select>
                             </div>
@@ -200,10 +235,8 @@
             <i class="fas fa-table me-1"></i>
             INFORMACION LABORAL
         </div>
-        <div class="card-body">
-            <a class= "btnEps btn btn-primary" id="btnEps"> Crear EPS</a>
-            <a class=" btnArl btn btn-primary" id="btnArl">Crear ARL</a>            
-            <form autocomplete="off" action="{{url('/employmentInformations')}}{{$EmploymentInformation!=null?'/'.$EmploymentInformation->id:''}} "method="post">
+        <div class="card-body">            
+             <form autocomplete="off" action="{{url('/employmentInformations')}}{{$EmploymentInformation!=null?'/'.$EmploymentInformation->id:''}} "method="post">
                         @csrf
                         @if($EmploymentInformation!=null)
                             @method('PATCH')
@@ -316,7 +349,7 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="">FRECUENCIA DE PAGOS*</label>
                                     <select class="form-select" name="payment_frequency" id="payment_frequency">
-                                        <option value="">Seleccione una frecuencia de pago</option>
+                                    <option value="">Seleccione una opción </option>
                                         @foreach($PaymentFrecuencies as $item)
                                         <option value="{{$item->id}}" {{$item->id==$EmploymentInformation?->payment_frequency_id?'selected':''}}>{{$item->name}}</option>
                                         @endforeach
@@ -331,7 +364,7 @@
                                         FECHA DE PAGO EMPRESA (FPE)*
                                     </label>
                                     <select class="form-select" name="company_payment_date" id="company_payment_date">
-                                        <option value="">Seleccione una fecha de pago</option>
+                                    <option value="">Seleccione una opción </option>
                                         @foreach($CompanyPaymentDates as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->company_payment_date_id?'selected':''}}>{{$item->name}} </option>
                                         @endforeach            
@@ -344,7 +377,7 @@
                                         FECHA DE PAGO CLIENTE (FPC)*
                                     </label>
                                     <select class="form-select" name="custemer_payment_date" id="customer_payment_date">
-                                        <option value="">Seleccione una fecha de pago</option>
+                                    <option value="">Seleccione una opción </option>
                                         @foreach($CustomerPaymentDates as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->customer_payment_date_id?'selected':''}} >{{$item->name}} </option>
                                         @endforeach
@@ -355,7 +388,7 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="">TIPO DE CONTRATO*</label>
                                     <select class="form-select" name="contract_type" id="contract_type">
-                                        <option value="">Seleccione un tipo de contrato </option>
+                                    <option value="">Seleccione una opción </option>
                                         @foreach($ContractTypes as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->contract_type_id?'selected':''}}>{{$item->name}} </option>
                                         @endforeach
@@ -368,22 +401,24 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="">EPS AFILIADA*</label>
                                     <select class="form-select" name="eps_affiliate" id="eps_affiliate">
-                                        <option value="">Seleccione una EPS </option>
+                                    <option value="">Seleccione una opción </option>
                                         @foreach($EpsAffiliates as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->eps_affiliate_id?'selected':''}} >{{$item->name}} </option>
                                         @endforeach
                                     </select>
+                         <div style="font-size:12px">        <strong>Nota:</strong>   Si su  EPS no existe  en nuestra base de datos por favor creela  <a class="btnEps" href="#" id="btnEps"> aqui</a></div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mb-3">
-                                    <label class="form-label" for="">ARL AFILIADA</label>
+                                    <label class="form-label" for="">ARL AFILIADA*</label>
                                     <select class="form-select" name="arl_affiliate" id="arl_affiliate">
-                                        <option value="">Seleccione una ARL </option>
+                                        <option value="">Seleccione una opción </option>
                                         @foreach($ArlAffiliates as $item)
                                         <option value="{{$item->id}}" {{$item->id==$EmploymentInformation?->arl_affiliate_id?'selected':''}}>{{$item->name}} </option>
                                         @endforeach
                                     </select>
+                                    <div style="font-size:12px">  <strong>Nota:</strong> Si su ARL no existe  en nuestra base de datos por favor creela <a class="btnArl" href="#" id="btnArl">aqui</a></div>
                                 </div>   
                             </div>
                         </div>
@@ -428,7 +463,7 @@
                                         TIPO DE GARANTIA*
                                     </label>    
                                     <select class="form-select" name="warranty" id="warranty">
-                                        <option value="">Seleccione una garantia</option>
+                                    <option value="">Seleccione una opción </option>
                                         @foreach($Warranties as $item)
                                         <option value="{{$item->id}}"{{$item->id==$loan?->warranty_id?'selected':''}}>{{$item->name}}</option>
                                         @endforeach
@@ -441,7 +476,7 @@
             
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoPatrimonial" style="width:70%;margin:0 auto;display: none;">        
+    <div class="card mb-4" id="cardInfoPatrimonial" style="width:40%;margin:0 auto;display: none;">        
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             INFORMACION PATRIMONIAL
@@ -475,8 +510,9 @@
             <i class="fas fa-table me-1"></i>
             INFORMACION LEGAL
         </div>
-        <div class="card-body">            
-            <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post">
+        <div class="card-body">
+            
+                    <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post">
                         @csrf
                         @method('PATCH')   
                         <div class="row">

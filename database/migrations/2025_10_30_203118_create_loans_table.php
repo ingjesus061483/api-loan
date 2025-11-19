@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->string("reference",50)->unique();
-            $table->decimal("ammount",10,2);
-            $table->string("term");
+            $table->decimal("ammount",22,2);
+            $table->decimal("term",10,2);
             $table->foreignId("client_id")
         ->constrained('clients')
         ->onDelete('cascade')

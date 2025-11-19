@@ -201,6 +201,21 @@
                 </footer>
             </div>
         </div>
+        <div title="Autorizaciones y politicas" id="dialogPolicy">
+            <form id ="frmPolicy" action="{{url('/authorizationPolicies')}}" method="POST" autocomplete="off">
+                @csrf                
+                <div class="mb-3">
+                    <label class="form-label" for=""> Titulo*</label>
+                    <input type="text" name="title" class="form-control" style="width:80%" id="title">                    
+                </div>                
+                <div class="mb-3">
+                    <label class="form-label" for=""> Contenido*</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>                
+                </div>
+                
+            </form>
+        </div>
+
         <div title="EPS" id="dialogEps">
             <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
                 @csrf
@@ -381,6 +396,29 @@
                     });              
             
             }  
+            function editarPolicy(id)
+            {                
+                url=urlBase+"authorizationPolicies/"+id;//"{{url('/authorizationPolicies')}}/"+id;                
+                $.ajax({                    
+                    url: url,                    
+                    type: "GET",                    
+                    dataType: "json",                    
+                    success: function (result) 
+                    {                        
+                        console.log(result);
+                        dialogPolicy.dialog("open");
+                        $("#frmPolicy #title").val(result.title);
+                        $("#frmPolicy #description").val(result.description);                        
+                        $("#frmPolicy").attr('action',urlBase+"authorizationPolicies/"+id);//"{{url('/authorizationPolicies')}}/"+id);
+                        let metodo= '<input type="hidden" name="_method" value="PUT">';
+                        $("#frmPolicy").append(metodo);                        
+                    },                    
+                    error: function (ajaxContext) 
+                    {                                                                
+                        alert(ajaxContext.responseText)                   
+                    }                
+                });
+            }
             function editarArl(id)
             {                
                 url=urlBase+"arls/"+id;//"{{url('/arls')}}/"+id;                
@@ -444,6 +482,9 @@
                     }                
                 });
             }
+            $(".btnPolicy").click(function(){
+                dialogPolicy.dialog("open");
+            });
             $(".btnEps").click(function(){
                 dialogEps.dialog("open");
             });
@@ -491,84 +532,104 @@
                 this.checked?$("#divCompanySeizure").fadeIn():$("#divCompanySeizure").fadeOut();      
                 $("#company_seizure").focus(); 
                 $("#company_seizure").val('');                        
-            });          
+            });  
+            $("#btnPolAutorizaciones").click(function(){
+                $(".btn").removeClass('btn-info').addClass('btn-primary');     
+                $("#btnPolAutorizaciones")
+                 .removeClass('btn-primary')
+                 .addClass('btn-info');
+                 $(".card").fadeOut();
+                $("#cardPolAutorizaciones").fadeIn(); 
+
+            });
+            $("#btnPoltrataDatosPers").click(function(){
+                $(".btn").removeClass('btn-info').addClass('btn-primary');     
+                $("#btnPoltrataDatosPers")
+                 .removeClass('btn-primary')
+                 .addClass('btn-info');
+                 $(".card").fadeOut();
+                $("#cardPoltrataDatosPers").fadeIn(); 
+
+            }) ;      
             $("#btnInfoPatrimonial").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');                
                 $("#btnInfoPatrimonial")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
+                 $(".card").fadeOut();
                 $("#cardInfoPatrimonial").fadeIn();
-                $("#cardInfoPersonal").fadeOut();
-                $("#cardInfoLaboral").fadeOut();
-                $("#cardInfoCrediticia").fadeOut();
-                $("#cardDatosContacto").fadeOut();
-                $("#cardInfoLegal").fadeOut();
+               
             });
             $("#btnInfoPersonal").click(function(){                
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoPersonal")
                 .removeClass('btn-primary')
                 .addClass('btn-info');
+                $(".card").fadeOut();
                 $("#cardInfoPersonal").fadeIn();
-                $("#cardInfoLaboral").fadeOut();
-                $("#cardInfoCrediticia").fadeOut();
-                $("#cardDatosContacto").fadeOut();
-                $("#cardInfoPatrimonial").fadeOut();
-                $("#cardInfoLegal").fadeOut();
+               
             });
             $("#btnInfoLaboral").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoLaboral")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
-                $("#cardInfoPersonal").fadeOut();
+                $(".card").fadeOut();                
                 $("#cardInfoLaboral").fadeIn();
-                $("#cardInfoCrediticia").fadeOut();
-                $("#cardDatosContacto").fadeOut();
-                $("#cardInfoPatrimonial").fadeOut();
-                $("#cardInfoLegal").fadeOut();
+                
             });
             $("#btnDatosContacto").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnDatosContacto")
                  .removeClass('btn-primary')
                  .addClass('btn-info');
+                $(".card").fadeOut();                       
                 $("#cardDatosContacto").fadeIn();
-                $("#cardInfoPersonal").fadeOut();
-                $("#cardInfoLaboral").fadeOut();
-                $("#cardInfoCrediticia").fadeOut();
-                $("#cardInfoPatrimonial").fadeOut();
-                $("#cardInfoLegal").fadeOut();
+                
             });
             $("#btnInfoLegal").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
                 $("#btnInfoLegal")
                  .removeClass('btn-primary')
                  .addClass('btn-info');                
-                $("#cardInfoPatrimonial").fadeOut();
-                $("#cardDatosContacto").fadeOut();
-                $("#cardInfoPersonal").fadeOut();
-                $("#cardInfoLaboral").fadeOut();
-                $("#cardInfoCrediticia").fadeOut();
+                $(".card").fadeOut();
                 $("#cardInfoLegal").fadeIn();
             })
             $("#btnInfoCredito").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
-                $("#btnInfoCredito")
+                $("#btnInfoCredito")                
                  .removeClass('btn-primary')
                  .addClass('btn-info');
-                $("#cardInfoPatrimonial").fadeOut();
-                $("#cardDatosContacto").fadeOut();
-                $("#cardInfoPersonal").fadeOut();
-                $("#cardInfoLaboral").fadeOut();
+                $(".card").fadeOut();
                 $("#cardInfoCrediticia").fadeIn();
-                $("#cardInfoLegal").fadeOut();
+               
             });
             
             $("#btnContact").click(function()                          
             {
                 dialogContact.dialog("open");            
             }); 
+            var dialogPolicy= $("#dialogPolicy").dialog({
+                autoOpen: false,                
+                height: 350,                      
+                width: 600,                      
+                modal: true,                      
+                buttons: 
+                [{
+                    text: "Guardar",                        
+                    "class": 'btn btn-success',                        
+                    click: function () {                            
+                        $("#frmPolicy")[0].submit();                     
+                    }
+                },
+                {                        
+                    text: "Salir",                        
+                    "class": 'btn btn-danger',                        
+                    click: function () {                            
+                        dialogPolicy.dialog("close");                        
+                    }
+                }],
+            });
             var dialogArl= $("#dialogArl").dialog({
                 autoOpen: false,                
                 height: 350,                      
