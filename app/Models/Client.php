@@ -10,11 +10,9 @@ class Client extends Model
   protected   $fillable = [
         'identification',
         'name_last_name',
-        
-     
         'address',
         'email',
-        'reference',        
+        'reference',
          'value_Title',
          'date_birth',
          'expedition_date',
@@ -25,7 +23,7 @@ class Client extends Model
           'company_seizure',
          'quality_holder_id',
          'marital_status_id',
-         'level_study_id'  
+         'level_study_id'
     ];
     use HasFactory;
     public function Marital_Status()
@@ -49,6 +47,9 @@ class Client extends Model
     }
     public function loans(){
       return $this ->hasMany(Loan::class,'client_id');
+    }
+    public function client_policies(){
+      return $this ->hasMany(ClientPolicy::class,'client_id');
     }
 
 }

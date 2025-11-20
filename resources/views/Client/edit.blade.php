@@ -43,18 +43,29 @@
         POLITICAS Y AUTORIZACIONES
     </div>
     <div class="card-body">
+         @foreach ($policyclients as $item )
+            <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                <p style="font-size:14px; text-align: justify; padding:5px">
+                    <i class="fa-solid fa-circle-check"></i>&nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
+                </p>
+
+            </div>
+
+        @endforeach
+
            @foreach($policies as $item)
+
                 <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                     <form action="{{url('/clientPolicies')}}" method="post">
                         @csrf
                         <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
                         <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
                         <p style="font-size:14px; text-align: justify; padding:5px">
-                        {{$item->description}}
+                    <strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
                         </p>
-                        <div style="padding: 5px">                       
-                        <button type="button" onclick="validar(this.parentElement,'Acepta las condiciones?')" class="btn btn-success">Aceptar</button>
-                        
+                        <div style="padding: 5px">
+                            <button type="button" onclick="validar(this.parentElement,'Acepta las condiciones?')" class="btn btn-success">Aceptar</button>
+
                         </div>
                     </form>
                 </div>

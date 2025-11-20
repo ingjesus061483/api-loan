@@ -1,6 +1,6 @@
 @extends('shared/layout')
 @section('title','Listado de clientes')
-@section('content')  
+@section('content')
 
 <div class="card mb-4">
     <div class="card-header">
@@ -8,15 +8,15 @@
         Solicitudes de credito
     </div>
     <div class="card-body">
-        <div style="padding: 5px">            
-            <a href="{{url('/clients/create')}}" title="Crear cliente" class="btn btn-primary" ><i class="fa-solid fa-user-tie"></i></a>        
-        </div>  
+        <div style="padding: 5px">
+            <a href="{{url('/clients/create')}}" title="Crear cliente" class="btn btn-primary" ><i class="fa-solid fa-user-tie"></i></a>
+        </div>
 
         <table  class="table table-hover table-bordered" style="width:100%">
-            <thead >
-                <tr>                    
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>     
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>               
+            <thead style ="font-size: 14px" >
+                <tr>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th style="text-align:center">FECHA DE SOLICITUD </th>
                     <th style="text-align:center">REFERENCIA</th>
                     <th style="text-align:center">CALIDAD DEL TITULAR</th>
@@ -24,7 +24,7 @@
                     <th style="text-align:center">NOMBRES Y APELLIDOS</th>
                     <th style="text-align:center">IDENTIFICACION</th>
                     <th style="text-align:center">FECHA DE NACIMIENTO</th>
-                    <th style="text-align:center">EDAD</th>                    
+                    <th style="text-align:center">EDAD</th>
                     <th style="text-align:center">FECHA DE EXPEDICION</th>
                     <th style="text-align:center">DIRECCION</th>
                     <th style="text-align:center">EMAIL</th>
@@ -52,22 +52,22 @@
                     <th style="text-align:center">EMBARGO </th>
                     <th style="text-align:center">CREDITO SOLICITADO ($ Cop) </th>
                     <th style="text-align:center">PLAZO (Meses)   </th>
-                    <th style="text-align:center">GARANTIA  </th>               
+                    <th style="text-align:center">GARANTIA  </th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($clients as $item)        
+            <tbody style ="font-size: 12px">
+                @foreach ($clients as $item)
                 <tr>
                     <td style="width:100%">
                         <form method="POST"  action="{{url('/clients')}}/{{$item->id}}"  style="display:inline">
                             @csrf
-                            {{method_field('DELETE')}}                            
+                            {{method_field('DELETE')}}
                             <button type="button" title="Eliminar" onclick="validar(this,'¿Desea eliminar el registro?')" class="btn btn-danger btn-sm" ><i class="fa-solid fa-trash"></i></button>
-                        </form>                        
-                        
+                        </form>
+
                     </td>
                     <td><a href="{{url('/clients')}}/{{$item->id}}/edit" title="Editar" class="btn btn-warning btn-sm"><i class="fa-solid fa-pencil"></i></a></td>
-                    <td>{{date("d/m/Y", strtotime($item->created_at))}}</td>                    
+                    <td>{{date("d/m/Y", strtotime($item->created_at))}}</td>
                     <td>{{$item->reference}}</td>
                     <td>{{$item->quality_holders}}</td>
                     <td>{{$item->value_Title}}</td>
@@ -103,9 +103,9 @@
                     <td>${{number_format( $item->ammount)}}  </td>
                     <td>{{$item->term}}    </td>
                     <td>{{$item->warranty}}  </td>
-                    
+
                 </tr>
-                @endforeach     
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -13,4 +13,12 @@ class ClientPolicy extends Model
         'policy_id',
         'acept',
     ];
+    public function policy()
+    {
+        return $this->belongsTo(AuthorizationPolicy::class, 'policy_id');
+    }
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 }
