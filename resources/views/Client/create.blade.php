@@ -52,7 +52,11 @@
                         <p style="font-size:14px; text-align: justify; padding:5px">
                         {{$item->description}}
                         </p>
-                        <button type="button" class="btn btn-primary" onclick="validar(this,'Acepta esta condicion')"> Acepto esta condicion</button>
+                        @if($policyclient!=null && $policyclient->policy_id==$item->id)
+                            aceptado
+                        @else
+                            <button type="button" onclick="validar(this.parentElement,'Acepta las condiciones?')" class="btn btn-success">Aceptar</button>
+                        @endif
                     </form>
                 </div>
             @endforeach

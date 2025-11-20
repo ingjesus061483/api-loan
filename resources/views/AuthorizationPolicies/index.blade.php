@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($policies as $item)        
+                @foreach ($AuthorizationPolicies as $item)        
                 <tr>
                     <td>
                         <form method="POST" action="{{url('/authorizationPolicies')}}/{{$item->id}}"  style="display:inline">

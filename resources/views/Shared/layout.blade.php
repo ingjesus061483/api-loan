@@ -357,6 +357,11 @@
                     $("#cardInfoLaboral").fadeIn();
                     break;
                 }
+                case 'AuthorizeProtocol':
+                {
+                    $("#cardPolAutorizaciones").fadeIn();
+                    break;
+                }
             }
             if($(".table"))
             {

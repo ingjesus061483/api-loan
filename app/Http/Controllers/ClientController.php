@@ -24,6 +24,8 @@ use App\Models\QualityHolder;
 use App\Models\State;
 use App\Models\Warranty;
 use App\Models\AuthorizationPolicy;
+use App\Models\ClientPolicy;
+
 class ClientController extends Controller
 {
     protected $QualityHolder;
@@ -43,7 +45,7 @@ class ClientController extends Controller
     protected $policies;
     function __construct() {
         $this->cities=City::orderby('name','asc');
-        $this->policies=AuthorizationPolicy::orderby('title','asc');
+        $this->policies=AuthorizationPolicy::select('*');
        $this-> QualityHolder=QualityHolder::orderby('name','asc');
      $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
      $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
@@ -172,14 +174,21 @@ class ClientController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {     
+    {
+        $arr=[];     
         $client=session()->has('client')?session('client'):null;
+        $policiesclients=ClientPolicy::where('client_id',$client?->id);    
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();            
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
         $info=session()->has("info")?session('info'):'client';
+        foreach($policiesclients->get() as $pc)
+        {
+            $arr[]=$pc->policy_id;
+        }
         $data=[
-            'policies'=>$this->policies->get(),
+            'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
+'policyclients'=>$policiesclients->get(),
            'client'=>$client,
            'contactInfos'=>$contactInfos->get(),
            'EmploymentInformation'=>$EmploymentInformation,
@@ -249,12 +258,20 @@ class ClientController extends Controller
     public function edit( AutorizeRequest $request,int $id)
     {      
         $client=Client::find($id);
+        $arr=[];
+        $policiesclients=ClientPolicy::where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();            
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
         $info=session()->has("info")?session('info'):'client';
+        foreach($policiesclients->get() as $pc)
+        {
+            $arr[]=$pc->policy_id;
+        }
         $data=[
            'client'=>$client,
+           'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
+           'policyclients'=>$policiesclients->get(),
            'contactInfos'=>$contactInfos->get(),
            'EmploymentInformation'=>$EmploymentInformation,
            'loan'=>$loan,
