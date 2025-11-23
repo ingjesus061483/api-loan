@@ -210,6 +210,19 @@
                 </footer>
             </div>
         </div>
+        <div title="Adjuntar documentos" id ="dialogAttach">
+            <form id="frmAttach" autocomplete="off" action="">
+                <div class="mb-3">
+                    <label class="form-label" for=""> Tipo de documento</label>                     
+                    <select name="" class="form-select" id="">                        
+                        <option value="">Seleccione una opción</option>                    
+                    </select>
+                </div>
+                <div class="mb-3">                    
+                    <input type="file" name="" id="">
+                </div>
+            </form>
+        </div>
         <div title="Autorizaciones y politicas" id="dialogPolicy">
             <form id ="frmPolicy" action="{{url('/authorizationPolicies')}}" method="POST" autocomplete="off">
                 @csrf
@@ -224,6 +237,7 @@
 
             </form>
         </div>
+
 
         <div title="EPS" id="dialogEps">
             <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
@@ -638,10 +652,41 @@
                 $("#cardInfoCrediticia").fadeIn();
 
             });
-
+            $("#btnAttach").click(function()
+            {
+                dialogAttach.dialog("open");
+            });
             $("#btnContact").click(function()
             {
                 dialogContact.dialog("open");
+            });
+            var dialogAttach= $("#dialogAttach").dialog({
+                autoOpen: false,
+                height: 250,
+                width: 500,
+                modal: true,
+                buttons:
+                [{
+                    text: "Adjuntar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        //$("#frmPolicy")[0].submit();
+                    }
+                },
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogAttach.dialog("close");
+                    }
+                }], 
+                close: function ()
+                {
+                    $("#frmArl")[0].reset();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                }             
             });
             var dialogPolicy= $("#dialogPolicy").dialog({
                 autoOpen: false,

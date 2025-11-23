@@ -387,5 +387,14 @@
         @endforeach    
     </div>
 </div>
-
+<div class="card mb-4" id="cardPolAutorizaciones"style="width:85%;margin:0 auto; ">
+    <div class="card-header">
+        <i class="fa-solid fa-image"></i>
+        DOCUMENTOS ADJUNTOS
+    </div>
+    <div class="card-body">
+        <a title="adjuntar documentos" class="btn btn-primary" id="btnAttach" ><i class="fa-solid fa-paperclip"></i></a>
+          
+    </div>
+</div>
 @endsection
