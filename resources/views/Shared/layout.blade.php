@@ -18,18 +18,24 @@
     <body class="sb-nav-fixed">
         <input type="hidden" id="base_url" value="{{url('/')}}/">
         <input type="hidden" id="info" value="{{isset($info)?$info:''}}">
+        <input type="hidden" id="user" value="{{auth()->check()? auth()->user()->id :''}}">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="{{url('/')}}">Magestad</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            @if(!isset($client))
+            <form action="{{url('/clients/0')}}" method="GET" autocapitalize="off" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    <input name="identification" class="form-control" type="text" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
                 </div>
             </form>
+            @else
+            <a href="{{url('/clients')}}/{{$client->id}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
+                <i class="fa-solid fa-user-tie"></i>&nbsp;{{$client->name_last_name}}</a>
+            @endif
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 @if (auth()->check())
@@ -288,6 +294,7 @@
         <script src="{{url('/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
+            var user=$("#user").val();
             var app=$("#info").val();
             var urlBase=$("#base_url").val();
             if( $("#errors").length>0 )
@@ -329,7 +336,12 @@
             {
                 case "client":
                 {
+                    if(user==''){
                     $("#cardInfoPersonal").fadeIn();
+
+                   }                   
+                  
+      
                     break;
                 }
                 case "contact":
@@ -570,11 +582,25 @@
             });
             $("#btnInfoPersonal").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
-                $("#btnInfoPersonal")
+              
+                $(".card").fadeOut();
+                if(user!=''){
+                    $("#btnInfoPersonal")
                 .removeClass('btn-primary')
                 .addClass('btn-info');
-                $(".card").fadeOut();
-                $("#cardInfoPersonal").fadeIn();
+                    $("#cardInfoPersonal").fadeIn();
+
+                   }                   
+                   else
+                   {
+                       Swal.fire({
+                        title: "Advertencia",
+                        icon: "warning",
+                        html:"La informacion ya se encuentra registrada, si desea actualizarla por favor contacte al administrador",                  
+                        draggable: true
+                        });
+                    }
+ 
 
             });
             $("#btnInfoLaboral").click(function(){

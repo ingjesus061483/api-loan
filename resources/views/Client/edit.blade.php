@@ -2,12 +2,9 @@
 @section('img',url('img/CerikSoluciones.png'))
 @section('title','Formulario de solicitud de credito')
 @section('content')
-
-<div>
-    <h6>Los campos marcados con * deben ser llenados obligatoriamente </h6>
-</div>
-<div style="padding: 5px">
+<div style="padding: 5px; font-size:14px; " >
     <div class="row">
+        
         <div class="col-3">
             <a id="btnInfoPersonal" style="width:100%" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}">Información personal</a>
         </div>
@@ -35,18 +32,18 @@
         <div class="col-3">
             <a id="btnPolAutorizaciones"style="width:100%" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas y autorizaciones    </a>
         </div>
-    </div>
+    </div> 
 </div>
 <div class="card mb-4" id="cardPolAutorizaciones"style="width:60%;margin:0 auto; display:none;">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
+        <i class="fa-solid fa-building-shield"></i>
         POLITICAS Y AUTORIZACIONES
     </div>
     <div class="card-body">
-         @foreach ($policyclients as $item )
+        @foreach ($policyclients as $item )
             <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                 <p style="font-size:14px; text-align: justify; padding:5px">
-                    <i class="fa-solid fa-circle-check"></i>&nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
+  <i class="fa-solid fa-circle-check"></i>&nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
                 </p>
 
             </div>
@@ -54,14 +51,13 @@
         @endforeach
 
            @foreach($policies as $item)
-
                 <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                     <form action="{{url('/clientPolicies')}}" method="post">
                         @csrf
                         <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
                         <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
                         <p style="font-size:14px; text-align: justify; padding:5px">
-                    <strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
+                       <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
                         </p>
                         <div style="padding: 5px">
                             <button type="button" onclick="validar(this.parentElement,'Acepta las condiciones?')" class="btn btn-success">Aceptar</button>
@@ -77,20 +73,22 @@
 
 <div class="card mb-4" id="cardPoltrataDatosPers"style="display:none;">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
+        <<i class="fa-solid fa-database"></i>
         POLITICA DE TRATAMIENTO DE DATOS PERSONALES
     </div>
     <div class="card-body">
     </div>
 </div>
-<div class="card mb-4" id="cardInfoPersonal"style="display:none;">
+<div class="card mb-4" id="cardInfoPersonal"style="display:none; width:85%;margin:0 auto;">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
+        <i class="fa-solid fa-id-card"></i>
         INFORMACION PERSONAL
     </div>
     <div class="card-body">
-
-                <form autocomplete="off" action="{{url('/clients')}}{{$client!=null?'/'.$client->id:''}}" method="post">
+        <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
+            Los campos marcados con * deben ser llenados obligatoriamente
+        </div>
+                <form autocomplete="off" action="{{url('/clients')}}{{$client!=null?'/'.$client->id:''}}" method="post" style="font-size: 14px"id="frmclient">
                     @csrf
                         <input type="hidden" name="id" value="{{$client?->id}}" id="id" >
                     @if($client!=null)
@@ -101,14 +99,14 @@
                         <div  class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for=""> REFERENCIA </label>
-                                <input type="text" class="form-control"value="{{$client!=null?$client->reference: old('reference')}}"
+                                <input style="font-size: 12px" type="text" class="form-control"value="{{$client!=null?$client->reference: old('reference')}}"
                                     name="reference" id="reference">
                             </div>
                         </div>
                         <div  class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for=""> CALIDAD DEL TITULAR </label>
-                                <select class="form-select" name="quality_holder" id="quality_holder">
+                                <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
                                 <option value="">Seleccione una opción </option>
                                     @foreach($QualityHolder as $item)
                                     <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>
@@ -119,7 +117,7 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for="">TITULO VALOR </label>
-                                <input type="text" class="form-control" name ="value_Title" value="{{$client!=null?$client->value_Title:old('value_Title')}}" id="value_Title"/>
+                                <input type="text" style="font-size: 12px" class="form-control" name ="value_Title" value="{{$client!=null?$client->value_Title:old('value_Title')}}" id="value_Title"/>
                             </div>
                         </div>
                     </div>
@@ -128,13 +126,13 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for="">NOMBRES Y APELLIDOS* </label>
-                                <input type="text" class="form-control" name ="name_last_name" value="{{$client!=null?$client->name_last_name:old('name_last_name')}}" id="name_last_name"/>
+                                <input type="text" style="font-size: 12px" class="form-control" name ="name_last_name" value="{{$client!=null?$client->name_last_name:old('name_last_name')}}" id="name_last_name"/>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for=""># DOCUMENTO*</label>
-                                <input type="text" name="identification" id="identification" class="form-control" value="{{$client!=null?$client->identification:old('identification')}}">
+                                <input type="text" style="font-size: 12px" name="identification" id="identification" class="form-control" value="{{$client!=null?$client->identification:old('identification')}}">
                             </div>
                         </div>
                         <div class="col-4">
@@ -143,14 +141,14 @@
                                     <div class="col-8">
                                         <div class="mb-3" >
                                             <label class="form-label" for="">FECHA DE NACIMIENTO*</label>
-                                            <input type="date" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"
+                                            <input type="date" style="font-size: 12px" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"
                                             id="birth_date">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="mb-3" >
                                             <label class="form-label" for="">EDAD</label>
-                                            <input type="text" readonly class="form-control" id="age"
+                                            <input type="text" style="font-size: 12px" readonly class="form-control" id="age"
                                             value="{{$client!=null? \Carbon\Carbon::parse($client->date_birth)->age:''}}">
                                         </div>
                                     </div>
@@ -164,7 +162,7 @@
                         <div class="col-4">
                             <div class="mb-3" >
                                 <label class="form-label" for="">FECHA DE EXPEDICION*</label>
-                                <input type="date" name="expedition_date" class="form-control" value="{{$client!=null?
+                                <input type="date" style="font-size: 12px" name="expedition_date" class="form-control" value="{{$client!=null?
                                                                                                         $client->expedition_date
                                                                                                         :old('expedition_date')}}"
                                                                                                         id="expedition_date">
@@ -173,13 +171,13 @@
                         <div class="col-4">
                             <div class="mb-3" >
                                 <label class="form-label" for="">DIRECCION RESIDENCIA*</label>
-                                <input type="text" class="form-control" value="{{$client!=null?$client->address:old('address')}}" name="address" id="address">
+                                <input type="text" style="font-size: 12px" class="form-control" value="{{$client!=null?$client->address:old('address')}}" name="address" id="address">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for="">BARRIO* </label>
-                                <input type="text" name="neighborhood" value="{{$client!=null?$client->neighborhood:old('neighborhood')}}" class="form-control" id="neighborhood">
+                                <input type="text" style="font-size: 12px" name="neighborhood" value="{{$client!=null?$client->neighborhood:old('neighborhood')}}" class="form-control" id="neighborhood">
                             </div>
                         </div>
                     </div>
@@ -187,7 +185,7 @@
                         <div class="col-4">
                             <div class="mb-3" >
                             <label class="form-label" for=""> ESTADO CIVIL*</label>
-                            <select name="marital_status" class="form-select" id="marital_status">
+                            <select name="marital_status" class="form-select" style="font-size: 12px" id="marital_status">
                             <option value="">Seleccione una opción </option>
                                     @foreach ($maritalstatus as $item)
                                     <option value="{{$item->id}}"{{$item->id==$client?->marital_status_id?'selected':''}}{{$item->id==old('marital_status')?'selected':''}}>{{$item->name}}</option>
@@ -198,13 +196,13 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label" for=""> EMAIL*</label>
-                                <input type="email" value="{{$client!=null?$client->email:old('email')}}" class="form-control" name="email" id="email">
+                                <input type="email" value="{{$client!=null?$client->email:old('email')}}" style="font-size: 12px" class="form-control" name="email" id="email">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3" >
                                 <label class="form-label" for=""> NIVEL DE ESTUDIOS*</label>
-                                <select name="study_level" class="form-select" id="study_level">
+                                <select name="study_level" class="form-select" style="font-size: 12px" id="study_level">
                                 <option value="">Seleccione una opción </option>
                                     @foreach($studylevels as $item)
                                     <option value="{{$item->id}}"{{$item->id==$client?->level_study_id?'selected':''}}{{$item->id==old('study_level')?'selected':''}}>{{$item->name}}</option>
@@ -220,7 +218,7 @@
 </div>
     <div class="card mb-4" id="cardDatosContacto" style="width:85%;margin:0 auto; display: none;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-address-book"></i>
             INFORMACION DE CONTACTO
         </div>
         <div class="card-body">
@@ -253,13 +251,16 @@
 
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoLaboral" style="display:none">
+    <div class="card mb-4" id="cardInfoLaboral" style="display:none ; width:85%;margin:0 auto;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-user-tie"></i>
             INFORMACION LABORAL
         </div>
         <div class="card-body">
-             <form autocomplete="off" action="{{url('/employmentInformations')}}{{$EmploymentInformation!=null?'/'.$EmploymentInformation->id:''}} "method="post">
+             <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
+                Los campos marcados con * deben ser llenados obligatoriamente
+            </div>
+             <form autocomplete="off" action="{{url('/employmentInformations')}}{{$EmploymentInformation!=null?'/'.$EmploymentInformation->id:''}} "method="post" style="font-size: 14px">
                         @csrf
                         @if($EmploymentInformation!=null)
                             @method('PATCH')
@@ -271,7 +272,7 @@
                                     <label class="form-label" for="">
                                         EMPRESA DONDE LABORA*
                                     </label>
-                                    <input type="text"value="{{$EmploymentInformation!=null?$EmploymentInformation->company_works:old('company_works')}}" class="form-control" name="company_works" id="company_works">
+                                    <input type="text"value="{{$EmploymentInformation!=null?$EmploymentInformation->company_works:old('company_works')}}" class="form-control" name="company_works" id="company_works" style="font-size: 12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -279,7 +280,7 @@
                                     <label class="form-label" for="">
                                         NIT #*
                                     </label>
-                                    <input type="text" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit_company_work:old('nit_company_works')}}" name="nit_company_works" id="nit_company_works">
+                                    <input type="text" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit_company_work:old('nit_company_works')}}" name="nit_company_works" id="nit_company_works"style="font-size: 12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -287,7 +288,7 @@
                                     <label class="form-label" for="">
                                         DIRECCION OFICINA PRINCIPAL*
                                     </label>
-                                    <input type="text" name="main_address" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->main_address:old('main_address')}}" id="main_address">
+                                    <input type="text" name="main_address" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->main_address:old('main_address')}}" id="main_address"style="font-size: 12px">
                                 </div>
                             </div>
                         </div>
@@ -297,7 +298,7 @@
                                     <label class="form-label" for="">
                                         DEPARTAMENTO*
                                     </label>
-                                    <select class="form-select" name="state" id="state">
+                                    <select class="form-select" name="state" id="state"style="font-size: 12px">
                                         <option value="">Escoge un departamento </option>
                                         @foreach ($States as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->state_id?'selected':''}}>{{$item->name}} </option>
@@ -310,7 +311,7 @@
                                     <label class="form-label" for="">
                                         CIUDAD*
                                     </label>
-                                    <select class="form-select" name="city" id="city">
+                                    <select class="form-select" name="city" id="city"style="font-size: 12px">
                                         <option value="">Escoge una ciudad  </option>
                                         @foreach ($cities as $item)
                                         <option value ="{{$item->id}}"{{$item->id==$EmploymentInformation?->city_id?'selected':''}} >{{$item->name}}</option>
@@ -323,7 +324,7 @@
                                     <label class="form-label" for="">
                                         EMPRESA EN MISION
                                     </label>
-                                    <input type="text" name="company_on_mission" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->company_on_mission:old('company_on_mission')}}" id="company_on_mission">
+                                    <input type="text" name="company_on_mission" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->company_on_mission:old('company_on_mission')}}" id="company_on_mission"style="font-size: 12px">
                                 </div>
                             </div>
                         </div>
@@ -333,7 +334,7 @@
                                     <label class="form-label" for="">
                                         NIT EMPRESA EN MISION
                                     </label>
-                                    <input class="form-control" type="text" name="nit_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit:old('nit_company_on_mission')}}" id="nit_company_on_mission">
+                                    <input class="form-control" type="text" name="nit_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit:old('nit_company_on_mission')}}" id="nit_company_on_mission"style="font-size: 12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -341,7 +342,7 @@
                                     <label class="form-label" for="">
                                         DIRECCION SEDE
                                     </label>
-                                    <input class="form-control" type="text" name="address_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->branch_address:old('address_company_on_mission')}}" id="address_company_on_mission">
+                                    <input class="form-control" type="text" name="address_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->branch_address:old('address_company_on_mission')}}" id="address_company_on_mission"style="font-size: 12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -349,7 +350,7 @@
                                     <label class="form-label" for="">
                                         FECHA DE INGRESO*
                                     </label>
-                                    <input type="date" name="entry_date" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->entry_date:old('entry_date')}}" id="entry_date">
+                                    <input type="date" name="entry_date" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->entry_date:old('entry_date')}}" id="entry_date"style="font-size: 12px">
                                 </div>
                             </div>
                         </div>
@@ -357,7 +358,7 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label class="form-label" for="">SALARIO MENSUAL PROMEDIO*</label>
-                                    <input type="text" class="currency form-control" name="average_monthly_salary" value="${{$EmploymentInformation!=null?number_format($EmploymentInformation->average_monthly_salary):old('average_monthly_salary')}}" id="average_monthly_salary">
+                                    <input type="text" class="currency form-control" name="average_monthly_salary" value="${{$EmploymentInformation!=null?number_format($EmploymentInformation->average_monthly_salary):old('average_monthly_salary')}}" id="average_monthly_salary"style="font-size: 12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -365,13 +366,13 @@
                                     <label class="form-label" for="">
                                         CARGO ACTUAL*
                                     </label>
-                                    <input type="text" class="form-control" name="current_position" value="{{$EmploymentInformation!=null?$EmploymentInformation->current_position:old('current_position')}}" id="current_position">
+                                    <input type="text" class="form-control" name="current_position" value="{{$EmploymentInformation!=null?$EmploymentInformation->current_position:old('current_position')}}" id="current_position"style="font-size: 12px">
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label class="form-label" for="">FRECUENCIA DE PAGOS*</label>
-                                    <select class="form-select" name="payment_frequency" id="payment_frequency">
+                                    <select class="form-select" name="payment_frequency" id="payment_frequency"style="font-size: 12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($PaymentFrecuencies as $item)
                                         <option value="{{$item->id}}" {{$item->id==$EmploymentInformation?->payment_frequency_id?'selected':''}}>{{$item->name}}</option>
@@ -386,7 +387,7 @@
                                     <label class="form-label" for="">
                                         FECHA DE PAGO EMPRESA (FPE)*
                                     </label>
-                                    <select class="form-select" name="company_payment_date" id="company_payment_date">
+                                    <select class="form-select" name="company_payment_date" id="company_payment_date"style="font-size: 12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($CompanyPaymentDates as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->company_payment_date_id?'selected':''}}>{{$item->name}} </option>
@@ -399,7 +400,7 @@
                                     <label class="form-label" for="">
                                         FECHA DE PAGO CLIENTE (FPC)*
                                     </label>
-                                    <select class="form-select" name="custemer_payment_date" id="customer_payment_date">
+                                    <select class="form-select" name="custemer_payment_date" id="customer_payment_date"style="font-size: 12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($CustomerPaymentDates as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->customer_payment_date_id?'selected':''}} >{{$item->name}} </option>
@@ -410,7 +411,7 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label class="form-label" for="">TIPO DE CONTRATO*</label>
-                                    <select class="form-select" name="contract_type" id="contract_type">
+                                    <select class="form-select" name="contract_type" id="contract_type"style="font-size: 12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($ContractTypes as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->contract_type_id?'selected':''}}>{{$item->name}} </option>
@@ -423,7 +424,7 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label class="form-label" for="">EPS AFILIADA*</label>
-                                    <select class="form-select" name="eps_affiliate" id="eps_affiliate">
+                                    <select class="form-select" name="eps_affiliate" id="eps_affiliate"style="font-size: 12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($EpsAffiliates as $item)
                                         <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->eps_affiliate_id?'selected':''}} >{{$item->name}} </option>
@@ -435,7 +436,7 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label class="form-label" for="">ARL AFILIADA*</label>
-                                    <select class="form-select" name="arl_affiliate" id="arl_affiliate">
+                                    <select class="form-select" name="arl_affiliate" id="arl_affiliate"style="font-size: 12px">
                                         <option value="">Seleccione una opción </option>
                                         @foreach($ArlAffiliates as $item)
                                         <option value="{{$item->id}}" {{$item->id==$EmploymentInformation?->arl_affiliate_id?'selected':''}}>{{$item->name}} </option>
@@ -450,14 +451,17 @@
 
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoCrediticia" style="display:none">
+    <div class="card mb-4" id="cardInfoCrediticia" style="display:none; width:85%;margin:0 auto;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-credit-card"></i>
             ACERCA EL CREDITO
         </div>
         <div class="card-body">
+            <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
+                <h6>Los campos marcados con * deben ser llenados obligatoriamente </h6>
+            </div>
 
-                    <form autocomplete="off" action="{{url('/loans')}}{{$loan!=null?'/'.$loan->id:''}}"method="post">
+                    <form autocomplete="off" action="{{url('/loans')}}{{$loan!=null?'/'.$loan->id:''}}"method="post" style="font-size:14px">
                         @if($loan!=null)
                             @method('PATCH')
                         @endif
@@ -469,7 +473,7 @@
                                     <label class="form-label" for="">
                                         CREDITO SOLICITADO (COP)*
                                     </label>
-                                    <input class="currency form-control" type="text" name="ammount" value="${{$loan!=null?number_format($loan->ammount):old('ammount')}}" id="ammount">
+                                    <input class="currency form-control" type="text" name="ammount" value="${{$loan!=null?number_format($loan->ammount):old('ammount')}}" id="ammount" style="font-size:12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -477,7 +481,7 @@
                                     <label class="form-label" for="">
                                         PLAZO SOLICITADO (Meses)*
                                     </label>
-                                    <input class="form-control" type="number" name="term" value="{{$loan!=null?$loan->term:old('term')}}" id="term">
+                                    <input class="form-control" type="number" name="term" value="{{$loan!=null?$loan->term:old('term')}}" id="term" style="font-size:12px">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -485,7 +489,7 @@
                                     <label class="form-label" for="">
                                         TIPO DE GARANTIA*
                                     </label>
-                                    <select class="form-select" name="warranty" id="warranty">
+                                    <select class="form-select" name="warranty" id="warranty" style="font-size:12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($Warranties as $item)
                                         <option value="{{$item->id}}"{{$item->id==$loan?->warranty_id?'selected':''}}>{{$item->name}}</option>
@@ -501,12 +505,12 @@
     </div>
     <div class="card mb-4" id="cardInfoPatrimonial" style="width:40%;margin:0 auto;display: none;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-building-user"></i>
             INFORMACION PATRIMONIAL
         </div>
         <div class="card-body">
 
-                    <form autocomplete="off" action="{{url('/clients/UpdatePatrimonialInformation')}}/{{$client!=null?$client->id:0}}"method="post">
+                    <form autocomplete="off" action="{{url('/clients/UpdatePatrimonialInformation')}}/{{$client!=null?$client->id:0}}"method="post" style="font-size:14px">
                         @csrf
                         @method('PATCH')
                         <div class="form-check form-check-inline">
@@ -530,12 +534,12 @@
     </div>
     <div class="card mb-4" id="cardInfoLegal" style="width:85%;margin:0 auto;display: none;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-scale-balanced"></i>
             INFORMACION LEGAL
         </div>
         <div class="card-body">
 
-                    <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post">
+                    <form autocomplete="off" action="{{url('/clients/UpdateLawInformation')}}/{{$client!=null?$client->id:0}}"method="post"style="font-size:14px">
                         @csrf
                         @method('PATCH')
                         <div class="row">

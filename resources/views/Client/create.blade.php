@@ -4,6 +4,7 @@
 @section('content')
 <div style="padding: 5px; font-size:14px; " >
     <div class="row">
+        
         <div class="col-3">
             <a id="btnInfoPersonal" style="width:100%" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}">Información personal</a>
         </div>
@@ -31,18 +32,11 @@
         <div class="col-3">
             <a id="btnPolAutorizaciones"style="width:100%" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas y autorizaciones    </a>
         </div>
-    </div>
-    <div class="row" style="margin-top: 5px">
-         @if($client!=null)
-        <div class="col-3">
-            <a id="btnAnexo"style="width:100%" class="{{$info=='anex'?'btn btn-info':'btn btn-primary'}}">Anexos </a>
-        </div>
-        @endif
-    </div>
+    </div> 
 </div>
 <div class="card mb-4" id="cardPolAutorizaciones"style="width:60%;margin:0 auto; display:none;">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
+        <i class="fa-solid fa-building-shield"></i>
         POLITICAS Y AUTORIZACIONES
     </div>
     <div class="card-body">
@@ -79,7 +73,7 @@
 
 <div class="card mb-4" id="cardPoltrataDatosPers"style="display:none;">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
+        <<i class="fa-solid fa-database"></i>
         POLITICA DE TRATAMIENTO DE DATOS PERSONALES
     </div>
     <div class="card-body">
@@ -87,14 +81,14 @@
 </div>
 <div class="card mb-4" id="cardInfoPersonal"style="display:none; width:85%;margin:0 auto;">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
+        <i class="fa-solid fa-id-card"></i>
         INFORMACION PERSONAL
     </div>
     <div class="card-body">
         <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
             Los campos marcados con * deben ser llenados obligatoriamente
         </div>
-                <form autocomplete="off" action="{{url('/clients')}}{{$client!=null?'/'.$client->id:''}}" method="post" style="font-size: 14px">
+                <form autocomplete="off" action="{{url('/clients')}}{{$client!=null?'/'.$client->id:''}}" method="post" style="font-size: 14px"id="frmclient">
                     @csrf
                         <input type="hidden" name="id" value="{{$client?->id}}" id="id" >
                     @if($client!=null)
@@ -224,7 +218,7 @@
 </div>
     <div class="card mb-4" id="cardDatosContacto" style="width:85%;margin:0 auto; display: none;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-address-book"></i>
             INFORMACION DE CONTACTO
         </div>
         <div class="card-body">
@@ -259,7 +253,7 @@
     </div>
     <div class="card mb-4" id="cardInfoLaboral" style="display:none ; width:85%;margin:0 auto;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-user-tie"></i>
             INFORMACION LABORAL
         </div>
         <div class="card-body">
@@ -459,7 +453,7 @@
     </div>
     <div class="card mb-4" id="cardInfoCrediticia" style="display:none; width:85%;margin:0 auto;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-credit-card"></i>
             ACERCA EL CREDITO
         </div>
         <div class="card-body">
@@ -511,7 +505,7 @@
     </div>
     <div class="card mb-4" id="cardInfoPatrimonial" style="width:40%;margin:0 auto;display: none;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-building-user"></i>
             INFORMACION PATRIMONIAL
         </div>
         <div class="card-body">
@@ -540,7 +534,7 @@
     </div>
     <div class="card mb-4" id="cardInfoLegal" style="width:85%;margin:0 auto;display: none;">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fa-solid fa-scale-balanced"></i>
             INFORMACION LEGAL
         </div>
         <div class="card-body">

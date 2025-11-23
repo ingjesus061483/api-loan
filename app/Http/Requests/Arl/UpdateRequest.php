@@ -43,8 +43,7 @@ class UpdateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'nombre de la ARL',
- 
+            'name' => 'nombre de la ARL', 
         ];
     }    
 }

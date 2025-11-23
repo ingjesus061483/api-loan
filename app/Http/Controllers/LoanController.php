@@ -25,12 +25,11 @@ class LoanController extends Controller
     public function store(StoreRequest $request)
     {
         $client=session()->has('client')?session('client'):null;
-        $ammount=$this->convert_to_number($request->ammount);// str_replace(',','', str_replace('.00','',$cur));
-        //print_r($request->all());
-      //$cur= str_replace('$','',$request->ammount) ;
+        $ammount=$this->convert_to_number($request->ammount);      
         if($client==null)
         {
-            return redirect()->to(url('/clients/create'))  ->withErrors("La información personal no ha sido llena");                       
+            return redirect()->to(url('/clients/create'))  ->withErrors("La información personal no ha 
+                                                                         sido llena");                       
         }
         $arrloan=[
             'reference'=>date_timestamp_get(date_create()).$client->identification,

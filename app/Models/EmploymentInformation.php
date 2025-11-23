@@ -34,4 +34,29 @@ class EmploymentInformation extends Model
         'eps_affiliate_id',
         'arl_affiliate_id' 
     ];
+    public function city(){
+        return $this->belongsTo(City::class,'city_id');
+    }
+    public function state(){
+        return $this->belongsTo(State::class,'state_id');
+    }
+    public function payment_frequency(){
+        return $this->belongsTo(PaymentFrecuency::class,'payment_frequency_id');
+    }
+    public function company_payment_date(){
+        return $this->belongsTo(CompanyPaymentDate::class,'company_payment_date_id');
+    }
+    public function customer_payment_date(){
+        return $this->belongsTo(CustomerPaymentDate::class,'customer_payment_date_id');
+    }
+    public function contract_type(){
+        return $this->belongsTo(ContractType::class,'contract_type_id');
+    }
+    public function eps_affiliate(){
+        return $this->belongsTo(EpsAffiliate::class,'eps_affiliate_id');
+    }
+    public function arl_affiliate(){
+        return $this->belongsTo(ArlAffiliate::class,'arl_affiliate_id');
+    }
+   
 }

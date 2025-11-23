@@ -66,8 +66,7 @@ class EmploymentInformationController extends Controller
         ];
         $EmploymentInformation=EmploymentInformation::create($arrEmployment);
         session(["info"=>"employment"]);
-        return back()->with(['message'=>'Información de empleo guardada correctamente']);
-     
+        return back()->with(['message'=>'Información de empleo guardada correctamente']);     
     }
     //
 }

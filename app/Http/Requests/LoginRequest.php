@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
         return [
             'email.required' => 'El :attribute es obligatorio.',               
             'email.email' => 'El :attribute debe ser una dirección de correo válida.',
-            'password.required' => 'La contraseña es obligatoria.',
+            'password.required' => 'La :attribute es obligatoria.',
             
         ];    
     }
@@ -40,6 +40,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'Email del usuario',
+            'password' => 'Contraseña',
  
         ];
     }

@@ -43,22 +43,23 @@ class ClientController extends Controller
     protected $States; 
     protected $cities;
     protected $policies;
-    function __construct() {
+    function __construct()
+    {
         $this->cities=City::orderby('name','asc');
         $this->policies=AuthorizationPolicy::select('*');
-       $this-> QualityHolder=QualityHolder::orderby('name','asc');
-     $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
-     $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
-     $this->CompanyPaymentDates=CompanyPaymentDate::select('*');
-     $this->CustomerPaymentDates=CustomerPaymentDate::select('*');
-     $this->PaymentFrecuencies=PaymentFrecuency::select('*');
-     $this->ContractTypes=ContractType ::orderby('name','asc');
-     $this->studylevels=LevelStudy::select('*');     
-     $this->maritalstatus =MaritalStatus::orderby('name','asc');
-     $this->phonetypes=PhoneType::orderby('name','asc');
-     $this->Warranties=Warranty::orderby('name','asc');
-     $this->States =State::orderby('name','asc');
-     $this->clients=Client::select('clients.id',
+        $this-> QualityHolder=QualityHolder::orderby('name','asc');
+        $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
+        $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
+        $this->CompanyPaymentDates=CompanyPaymentDate::select('*');
+        $this->CustomerPaymentDates=CustomerPaymentDate::select('*');
+        $this->PaymentFrecuencies=PaymentFrecuency::select('*');
+        $this->ContractTypes=ContractType ::orderby('name','asc');
+        $this->studylevels=LevelStudy::select('*');     
+        $this->maritalstatus =MaritalStatus::orderby('name','asc');
+        $this->phonetypes=PhoneType::orderby('name','asc');
+        $this->Warranties=Warranty::orderby('name','asc');
+        $this->States =State::orderby('name','asc');
+        $this->clients=Client::select('clients.id',
                                    'clients.reference', 
                                    'q.name as quality_holder',
                                    'clients.value_Title',
@@ -149,8 +150,7 @@ class ClientController extends Controller
         session(["info"=>"patrimonial"]);
         session(['client' => $client]);         
       //  return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
-      return back() ->with(['message'=>'Se ha actualizado la información patrimonial']);
-
+        return back() ->with(['message'=>'Se ha actualizado la información patrimonial']);
     }
     /**
      * Display a listing of the resource.
@@ -179,8 +179,8 @@ class ClientController extends Controller
         $client=session()->has('client')?session('client'):null;
         $policiesclients=ClientPolicy::where('client_id',$client?->id);    
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
-        $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();            
-        $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
+        $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();            
+        $loan=Loan::where('client_id',$client?->id)->first();
         $info=session()->has("info")?session('info'):'client';
         foreach($policiesclients->get() as $pc)
         {
@@ -188,11 +188,11 @@ class ClientController extends Controller
         }
         $data=[
             'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
-'policyclients'=>$policiesclients->get(),
-           'client'=>$client,
-           'contactInfos'=>$contactInfos->get(),
-           'EmploymentInformation'=>$EmploymentInformation,
-           'loan'=>$loan,
+            'policyclients'=>$policiesclients->get(),
+            'client'=>$client,
+            'contactInfos'=>$contactInfos->get(),
+            'EmploymentInformation'=>$EmploymentInformation,
+            'loan'=>$loan,
             'QualityHolder'=>$this-> QualityHolder->get(),
             'ArlAffiliates'=>$this-> ArlAffiliates->get(),
             'EpsAffiliates'=>$this-> EpsAffiliates->get(),
@@ -242,13 +242,64 @@ class ClientController extends Controller
        
         //
     }
+    public function redirectToClient($client)
+    {
+        session(['client' => $client]);                                            
+        $policies=AuthorizationPolicy::count();
+        $policiesclients=ClientPolicy::where('client_id',$client?->id);    
+        $contactInfos=ContactInformation::where ('client_id',$client?->id);
+        $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();            
+        $loan=Loan::where('client_id',$client?->id)->first();  
+        if($contactInfos->count()==0)
+        { 
+            session(["info"=>"contact"]);        
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
+        if($EmploymentInformation==null)
+        {
+            session(["info"=>"employment"]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
+        if($loan==null)
+        {
+            session(["info"=>"loan"]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
+        if($policiesclients->count()<$policies)
+        {
+            session(["info"=>"AuthorizeProtocol"]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
+        $data =
+        [            
+            'client'=> $client
+        ]; 
+        session(['client' => $client]);                                            
+        return view('Client.show',$data);        
+    }
 
     /**
      * Display the specified resource.
      */
     public function show($id)
-    {
-        return response()->json(Client::find($id));
+    {         
+        if(request()-> has('identification'))
+        {
+           $client=Client::where('identification','=',request()->identification)->first();
+           if($client==null)           
+           {
+             return redirect()->to(url('/clients/create'))->withErrors('No se ha encontrado un cliente 
+                                                                        con la identificación ingresada');   
+           }                     
+          return $this-> redirectToClient($client);
+        }
+        $client=session()->has('client')?session('client'):null;
+        if($client!=null)
+        {            
+           return $this-> redirectToClient($client);
+        }
+        $client=Client::find($id);                
+        return $this-> redirectToClient($client);     
         //
     }
 
@@ -269,12 +320,12 @@ class ClientController extends Controller
             $arr[]=$pc->policy_id;
         }
         $data=[
-           'client'=>$client,
-           'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
-           'policyclients'=>$policiesclients->get(),
-           'contactInfos'=>$contactInfos->get(),
-           'EmploymentInformation'=>$EmploymentInformation,
-           'loan'=>$loan,
+            'client'=>$client,
+            'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
+            'policyclients'=>$policiesclients->get(),
+            'contactInfos'=>$contactInfos->get(),
+            'EmploymentInformation'=>$EmploymentInformation,
+            'loan'=>$loan,
             'QualityHolder'=>$this-> QualityHolder->get(),
             'ArlAffiliates'=>$this-> ArlAffiliates->get(),
             'EpsAffiliates'=>$this-> EpsAffiliates->get(),
@@ -289,8 +340,7 @@ class ClientController extends Controller
             'studylevels'=>$this-> studylevels->get(),
             'Warranties'=>$this->Warranties->get(),
             'States'=>$this->States->get(),
-        ];
-     
+        ];     
         return view ('Client.edit',$data);
         //
     }
@@ -301,31 +351,28 @@ class ClientController extends Controller
     public function update(UpdateRequest $request, $id)
     {        
        $arrclient=[
-        'identification'=>$request->identification,
-        'name_last_name'=>$request->name_last_name,        
-        'phone'=>$request->phone,
-        'address'=>$request->address,
-        'email'=>$request->email,
-        'reference'=>$request->reference,        
-        'value_Title'=>$request->value_Title,
-        'date_birth'=>$request->birth_date,
-        'expedition_date'=>$request->expedition_date,
-        'neighborhood'=>$request->neighborhood,
-        'vehicle'=>$request->vehicle==null?0:(bool)$request->vehicle ,
-        'estate'=>$request->estate==null?0:(bool)$request->estate,
-        'seizure'=>$request->seizure==null?0:(bool)$request->seizure,
-        'quality_holder_id'=>$request->quality_holder,
-        'marital_status_id'=>$request->marital_status,
-        'level_study_id'=>$request->study_level
-    ];        
-  
+            'identification'=>$request->identification,
+            'name_last_name'=>$request->name_last_name,        
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'email'=>$request->email,
+            'reference'=>$request->reference,        
+            'value_Title'=>$request->value_Title,
+            'date_birth'=>$request->birth_date,
+            'expedition_date'=>$request->expedition_date,
+            'neighborhood'=>$request->neighborhood,
+            'vehicle'=>$request->vehicle==null?0:(bool)$request->vehicle ,
+            'estate'=>$request->estate==null?0:(bool)$request->estate,
+            'seizure'=>$request->seizure==null?0:(bool)$request->seizure,
+            'quality_holder_id'=>$request->quality_holder,
+            'marital_status_id'=>$request->marital_status,
+            'level_study_id'=>$request->study_level
+        ];          
         $client = Client::find($id);
         $client->update($arrclient);
         session(['client' => $client]);
         session(["info"=>"client"]);
-        return back()->with(['message'=>'Se ha actualizado la información del cliente']);
-
-
+        return back()->with(['message'=>'Se ha actualizado la información del cliente']);        
         //
     }
 

@@ -18,20 +18,12 @@ class AutorizeRequest extends FormRequest
     // Source - https://stackoverflow.com/questions/49403226/redirect-if-request-authorization-is-failed-in-laravel
 // Posted by dgregory
 // Retrieved 4/11/2025, License - CC-BY-SA 4.0
-
-protected function failedAuthorization()
-{
-    
-    throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
+    protected function failedAuthorization()
+    {    
+        throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
         ->with(['error' => 'Esta accion no esta autorizada!']));
-}
+    }
 
- /*   protected function failedAuthorization()
-    {
-
-      return redirect()->to(url('/UnAutorize'));
-
-    }*/
       
     /**
      * Get the validation rules that apply to the request.

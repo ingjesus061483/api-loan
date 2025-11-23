@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'client_id'=>'required',
-              'ammount'=>'required|max:20',
+            'ammount'=>'required|max:20',
             'term'=>'required|numeric',
             'warranty'=>'required'
             //

@@ -28,7 +28,7 @@ class ArlController extends Controller
         $ArlAffiliate->name=$request->name;
         $ArlAffiliate->description=$request->description;
         $ArlAffiliate->save();                
-     return back()->with(['message'=>'ARL afiliada creada correctamente']);
+        return back()->with(['message'=>'ARL afiliada creada correctamente']);
     }
     public function destroy($id)
     {        
