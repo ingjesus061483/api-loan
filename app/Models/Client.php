@@ -51,5 +51,8 @@ class Client extends Model
     public function client_policies(){
       return $this ->hasMany(ClientPolicy::class,'client_id');
     }
+    public function documents(){
+      return $this ->hasMany(Document::class,'client_id');
+    }
 
 }

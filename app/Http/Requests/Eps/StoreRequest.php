@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Eps;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreRequest extends FormRequest
 {
     /**
@@ -11,9 +12,14 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::check();
     }
-
+    protected function failedAuthorization()
+    {
+        
+        throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
+            ->with(['error' => 'Esta accion no esta autorizada!']));
+    }
     /**
      * Get the validation rules that apply to the request.
      *

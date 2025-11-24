@@ -25,6 +25,7 @@ use App\Models\State;
 use App\Models\Warranty;
 use App\Models\AuthorizationPolicy;
 use App\Models\ClientPolicy;
+use App\Models\DocumentType;
 
 class ClientController extends Controller
 {
@@ -43,8 +44,11 @@ class ClientController extends Controller
     protected $States; 
     protected $cities;
     protected $policies;
+    protected $documenttypes;
     function __construct()
     {
+        $this->documenttypes=DocumentType::select('*');
+
         $this->cities=City::orderby('name','asc');
         $this->policies=AuthorizationPolicy::select('*');
         $this-> QualityHolder=QualityHolder::orderby('name','asc');
@@ -244,7 +248,8 @@ class ClientController extends Controller
     }
     public function redirectToClient($client)
     {
-        session(['client' => $client]);                                            
+        session(['client' => $client]);   
+
         $policies=AuthorizationPolicy::count();
         $policiesclients=ClientPolicy::where('client_id',$client?->id);    
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
@@ -272,6 +277,7 @@ class ClientController extends Controller
         }
         $data =
         [            
+            'documenttypes'=>$this->documenttypes->get(),
             'client'=> $client
         ]; 
         session(['client' => $client]);                                            

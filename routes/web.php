@@ -11,7 +11,10 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientPolicyController;
 use App\Http\Controllers\AuthorizationPolicyController;
+use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\DocumentController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +47,5 @@ Route::get('login/show',[LoginController::class,'show']);
 Route::resource('arls',ArlController::class);
 Route::resource('eps',EpsController::class);
 Route ::resource('clientPolicies', ClientPolicyController::class);
+Route::resource('DocumentType',DocumentTypeController::class);
+Route::resource('documents',DocumentController::class);

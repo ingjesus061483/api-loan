@@ -75,12 +75,13 @@
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="nav"> 
                             @if(auth()->check())
+                            <div class="sb-sidenav-menu-heading">Core</div>                           
                             <a class="nav-link" href="{{url('/authorizationPolicies')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Politicas y autorizaciones
+                            </a>
                             <a class="nav-link" href="{{url('/arls')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 ARL
@@ -88,19 +89,17 @@
                             <a class="nav-link" href="{{url('/eps')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 EPS
+                            </a>                
+                            <a class="nav-link" href="{{url('/DocumentType')}}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-file"></i></div>
+                                Tipo de documentos
                             </a>
-                            @endif
-                            @if(auth()->check())
                             <a class="nav-link" href="{{url('/clients')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-comment-dots"></i></div>
                                 Clientes
                             </a>
                             @else
-                            <a class="nav-link" href="{{url('/clients/create')}}">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-comment-dots"></i></div>
-                                Solicitud de credito
-                            </a>
-                            @endif
+                                               
                             <div class="sb-sidenav-menu-heading">Formatos</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -154,6 +153,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>
+                            @endif
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -210,16 +210,38 @@
                 </footer>
             </div>
         </div>
+        <div title="Tipo de documento" id="dialogDocumentType">
+            <form id ="frmDocumentType" action="{{url('/DocumentType')}}" method="POST" autocomplete="off">
+                @csrf     
+                <div class="mb-3">
+                    <label class="form-label" for=""> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%" id="name">
+                </div>
+                @if (auth()->check())
+                <div class="mb-3">
+                    <label class="form-label" for=""> Descripcion</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+                @endif
+            </form>
+        </div>
         <div title="Adjuntar documentos" id ="dialogAttach">
-            <form id="frmAttach" autocomplete="off" action="">
+            <form id="frmAttach" autocomplete="off" enctype="multipart/form-data" method="POST" action=" {{url('/documents')}}">
+                @csrf
+                <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client" id="client" >
                 <div class="mb-3">
                     <label class="form-label" for=""> Tipo de documento</label>                     
-                    <select name="" class="form-select" id="">                        
-                        <option value="">Seleccione una opción</option>                    
+                    <select name="document_type" class="form-select" id="document_type">                        
+                        <option value="">Seleccione una opción</option>     
+                        @if(isset($documenttypes))
+                        @foreach($documenttypes as $item)
+                        <option value="{{$item->id}}">{{ $item->name}}</option>
+                        @endforeach
+                        @endif               
                     </select>
                 </div>
                 <div class="mb-3">                    
-                    <input type="file" name="" id="">
+                    <input type="file"accept="image/*" name="file"  class="form-control"  id="file">
                 </div>
             </form>
         </div>
@@ -430,6 +452,29 @@
                     });
 
             }
+            function editarDocumentType(id)
+            {
+                url=urlBase+"DocumentType/"+id;//"{{url('/DocumentType')}}/"+id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result);
+                        dialogDocumentType.dialog("open");
+                        $("#frmDocumentType #name").val(result.name);
+                        $("#frmDocumentType #description").val(result.description);
+                        $("#frmDocumentType").attr('action',urlBase+"DocumentType/"+id);//"{{url('/DocumentType')}}/"+id);
+                        let metodo= '<input type="hidden" name="_method" value="PUT">';
+                        $("#frmDocumentType").append(metodo);
+                    },
+                    error: function (ajaxContext)
+                    {
+                        alert(ajaxContext.responseText)
+                    }
+                });
+            }
             function editarPolicy(id)
             {
                 url=urlBase+"authorizationPolicies/"+id;//"{{url('/authorizationPolicies')}}/"+id;
@@ -594,6 +639,9 @@
                 $("#cardInfoPatrimonial").fadeIn();
 
             });
+            $("#btnDocumenType").click(function(){
+                dialogDocumentType.dialog("open");
+            });
             $("#btnInfoPersonal").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
               
@@ -660,6 +708,34 @@
             {
                 dialogContact.dialog("open");
             });
+            var dialogDocumentType= $("#dialogDocumentType").dialog({
+                autoOpen: false,
+                height: 250,
+                width: 500,
+                modal: true,
+                buttons:
+                [{
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmDocumentType")[0].submit();
+                    }
+                },
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogDocumentType.dialog("close");
+                    }
+                }], 
+                close: function ()
+                {
+                    $("#frmDocumentType")[0].reset();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                }             
+            });
             var dialogAttach= $("#dialogAttach").dialog({
                 autoOpen: false,
                 height: 250,
@@ -670,7 +746,7 @@
                     text: "Adjuntar",
                     "class": 'btn btn-success',
                     click: function () {
-                        //$("#frmPolicy")[0].submit();
+                       $("#frmAttach")[0].submit();
                     }
                 },
                 {
@@ -682,7 +758,7 @@
                 }], 
                 close: function ()
                 {
-                    $("#frmArl")[0].reset();
+                    $("#frmAttach")[0].reset();
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 

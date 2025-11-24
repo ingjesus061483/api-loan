@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Arl;
+namespace App\Http\Requests\DocumentType;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,12 @@ class StoreRequest extends FormRequest
     {
         return Auth::check();
     }
-
+    protected function failedAuthorization()
+    {
+        
+        throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
+            ->with(['error' => 'Esta accion no esta autorizada!']));
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,12 +32,6 @@ class StoreRequest extends FormRequest
             //
         ];
     }
-    protected function failedAuthorization()
-    {
-        
-        throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
-            ->with(['error' => 'Esta accion no esta autorizada!']));
-    }
     public function messages()
     {
         return [
@@ -43,7 +42,7 @@ class StoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'nombre de la ARL', 
+            'name' => 'nombre del tipo de documento', 
         ];
     }
 }

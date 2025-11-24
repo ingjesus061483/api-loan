@@ -394,7 +394,16 @@
     </div>
     <div class="card-body">
         <a title="adjuntar documentos" class="btn btn-primary" id="btnAttach" ><i class="fa-solid fa-paperclip"></i></a>
-          
+         <ul>
+            @foreach ($client->documents as $item )
+                <li style="list-style: none; margin-top:10px;">
+                    <a href="{{url('/documents')}}/{{$item->id}}" target="_blank">
+                        <i class="fa-solid fa-file-pdf"></i>&nbsp;{{$item->name}}
+                    </a>
+                </li>
+            @endforeach
+            
+        </ul> 
     </div>
 </div>
 @endsection
