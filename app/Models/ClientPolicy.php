@@ -11,8 +11,12 @@ class ClientPolicy extends Model
     protected $fillable = [
         'client_id',
         'policy_id',
-        'acept',
+        'state_policy_id',
     ];
+    public function state_policy()
+    {
+        return $this->belongsTo(StatePolicy::class, 'state_policy_id');
+    }
     public function policy()
     {
         return $this->belongsTo(AuthorizationPolicy::class, 'policy_id');

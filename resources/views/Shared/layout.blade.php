@@ -229,20 +229,11 @@
             <form id="frmAttach" autocomplete="off" enctype="multipart/form-data" method="POST" action=" {{url('/documents')}}">
                 @csrf
                 <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client" id="client" >
-                <div class="mb-3">
-                    <label class="form-label" for=""> Tipo de documento</label>                     
-                    <select name="document_type" class="form-select" id="document_type">                        
-                        <option value="">Seleccione una opción</option>     
-                        @if(isset($documenttypes))
-                        @foreach($documenttypes as $item)
-                        <option value="{{$item->id}}">{{ $item->name}}</option>
-                        @endforeach
-                        @endif               
-                    </select>
-                </div>
+                <input type="text" name="document_type" id="document_type">
+              
                 <div class="mb-3">                    
                     <input type="file"accept="image/*" name="file"  class="form-control"  id="file">
-                </div>
+                </div>               
             </form>
         </div>
         <div title="Autorizaciones y politicas" id="dialogPolicy">
@@ -302,7 +293,6 @@
                     <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
                             @csrf
                             <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
-
                             <div class="mb-3">
                                 <label class="form-label" for=""> Tipo de contacto</label>
                                 <select class="form-select" name="phone_type" style="width:80%" id="phone_type">
@@ -430,6 +420,13 @@
                     }],      */
                 });
             }
+            function submitPolicy(state)
+            {
+                $("#frmClientPolicy #state_policy_id").val(state);
+                $("#frmClientPolicy").submit();
+
+
+            }
             function validar(obj, mensaje)
             {
                 console.log(obj.parentElement);
@@ -537,6 +534,12 @@
                     edad--;
                 }
                 return edad;
+            }
+            function attach(documentTypeId)
+            {
+                $("#frmAttach #document_type").val(documentTypeId);
+                dialogAttach.dialog("open");
+                
             }
             function editarEps(id)
             {
@@ -700,10 +703,7 @@
                 $("#cardInfoCrediticia").fadeIn();
 
             });
-            $("#btnAttach").click(function()
-            {
-                dialogAttach.dialog("open");
-            });
+          
             $("#btnContact").click(function()
             {
                 dialogContact.dialog("open");

@@ -43,7 +43,26 @@
         @foreach ($policyclients as $item )
             <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                 <p style="font-size:14px; text-align: justify; padding:5px">
-  <i class="fa-solid fa-circle-check"></i>&nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
+                    @switch($item->state_policy_id)
+                        @case(1)
+                            <i class="fa-solid fa-circle-check"></i>&nbsp;
+                            <strong>{{$item->policy?->title}}</strong>&nbsp;|
+                            &nbsp;{{$item->policy?->description}}                            
+                            @break
+                        @case(2)
+                            <i class="fa-solid fa-circle-xmark"></i>&nbsp;
+                            <strong> {{$item->policy?->title}}</strong>&nbsp;|
+                            &nbsp;{{$item->policy?->description}}                                
+                            @break
+                        @case(3)
+                            <i class="fa-solid fa-circle-question"></i>
+                            &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
+                            &nbsp;{{$item->policy?->description}}                                 
+                            @break
+                        
+                            
+                    @endswitch
+ 
                 </p>
 
             </div>
@@ -52,16 +71,24 @@
 
            @foreach($policies as $item)
                 <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
-                    <form action="{{url('/clientPolicies')}}" method="post">
+                    <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
                         @csrf
                         <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
+                        <input type="hidden" name="state_policy_id" id="state_policy_id">
                         <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
                         <p style="font-size:14px; text-align: justify; padding:5px">
                        <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
                         </p>
                         <div style="padding: 5px">
-                            <button type="button" onclick="validar(this.parentElement,'Acepta las condiciones?')" class="btn btn-success">Aceptar</button>
-
+                            <button type="button" onclick="submitPolicy(1)" class="btn btn-success">
+                                <i class="fa-solid fa-circle-check"></i>&nbsp;Acepto
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="submitPolicy(2)">
+                                  <i class="fa-solid fa-circle-xmark"></i>&nbsp;No acepto
+                            </button>
+                            <button type="button" class="btn btn-warning" onclick="submitPolicy(3)">
+                                 <i class="fa-solid fa-circle-question"></i>&nbsp;No entiendo                                
+                            </button>
                         </div>
                     </form>
                 </div>

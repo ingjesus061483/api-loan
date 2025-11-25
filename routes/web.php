@@ -49,3 +49,4 @@ Route::resource('eps',EpsController::class);
 Route ::resource('clientPolicies', ClientPolicyController::class);
 Route::resource('DocumentType',DocumentTypeController::class);
 Route::resource('documents',DocumentController::class);
+Route::get('documents/download/{id}',[DocumentController::class,'Download']);

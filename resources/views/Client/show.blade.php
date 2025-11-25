@@ -19,7 +19,7 @@
             <div class="col-4">                
                 <div class="mb-3">                    
                     <label class="form-label" for=""style="font-weight:bold"> CALIDAD DEL TITULAR: </label>                    
-                    {{$client->quality_holder->name}}                
+                    {{$client->quality_holder?->name}}                
                 </div>            
             </div>            
             <div class="col-4">                
@@ -381,7 +381,26 @@
         @foreach ($client->client_policies as $item )
             <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                 <p style="font-size:14px; text-align: justify; padding:5px">
-                      <i class="fa-solid fa-circle-check"></i>&nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|&nbsp;{{$item->policy?->description}}
+                    @switch($item->state_policy_id)
+                        @case(1)
+                            <i class="fa-solid fa-circle-check"></i>&nbsp;
+                            <strong>{{$item->policy?->title}}</strong>&nbsp;|
+                            &nbsp;{{$item->policy?->description}}                            
+                            @break
+                        @case(2)
+                            <i class="fa-solid fa-circle-xmark"></i>&nbsp;
+                            <strong> {{$item->policy?->title}}</strong>&nbsp;|
+                            &nbsp;{{$item->policy?->description}}                                
+                            @break
+                        @case(3)
+                            <i class="fa-solid fa-circle-question"></i>
+                            &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
+                            &nbsp;{{$item->policy?->description}}                                 
+                            @break
+                        
+                            
+                    @endswitch
+ 
                 </p>
             </div>
         @endforeach    
@@ -393,7 +412,37 @@
         DOCUMENTOS ADJUNTOS
     </div>
     <div class="card-body">
-        <a title="adjuntar documentos" class="btn btn-primary" id="btnAttach" ><i class="fa-solid fa-paperclip"></i></a>
+        <table class="table table-bordered" style="width: 100%" >
+            <thead style ="font-size: 14px" >
+                <tr>
+                    <th style="text-align:center">TIPO DE DOCUMENTO </th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($documenttypes as $item )
+                    <tr>
+                        <td>{{$item->name}}</td>
+                        <td>
+                            <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
+                                <i class="fa-solid fa-paperclip"></i>
+                            </a>                        
+                        </td>
+                        <td>
+                            <form method="GET" action="{{url('/documents')}}"  style="display:inline">
+                                @csrf
+                                <input type="hidden" name="client_id" value="{{$client->id}}">
+                                <input type="hidden" name="document_type_id" value="{{$item->id}}">
+                                <button type="submit" title="Ver documentos" class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <!--<a title="adjuntar documentos" class="btn btn-primary" id="btnAttach" ><i class="fa-solid fa-paperclip"></i></a>
          <ul>
             @foreach ($client->documents as $item )
                 <li style="list-style: none; margin-top:10px;">
@@ -403,7 +452,7 @@
                 </li>
             @endforeach
             
-        </ul> 
+        </ul> -->
     </div>
 </div>
 @endsection

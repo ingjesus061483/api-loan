@@ -22,7 +22,35 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'document_type' => 'required|exists:document_types,id',
+            'client' => 'required|exists:clients,id',
             //
         ];
+
     }
+    public function messages()
+    {
+        return [
+
+            'file.required' => 'El :attribute es obligatorio.',
+            'file.file' => 'El :attribute debe ser un archivo válido.',
+            'file.mimes' => 'El :attribute debe ser un archivo de tipo: pdf, jpg, jpeg, png.',
+            'file.max' => 'El :attribute no debe ser mayor a 2MB.',
+            'document_type_id.required' => 'El :attribute es obligatorio.',
+            'document_type_id.exists' => 'El :attribute seleccionado no es válido.',
+            'client_id.required' => 'El :attribute es obligatorio.',
+            'client_id.exists' => 'El :attribute seleccionado no es válido.',
+        ];
+    }
+    public function attributes()
+    {
+        return [
+
+            'file' => 'archivo del documento',
+            'document_type_id' => 'tipo de documento',
+            'client_id' => 'cliente',
+        ];
+    }
+
 }

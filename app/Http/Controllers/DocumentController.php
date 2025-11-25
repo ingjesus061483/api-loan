@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Document\ShowRequest;
 use App\Models\Document;
 use App\Http\Requests\Document\StoreRequest;
 use App\Http\Requests\Document\UpdateRequest;
@@ -10,14 +11,22 @@ use App\Models\DocumentType;
 
 class DocumentController extends Controller
 {
+    public function Download($id)
+    {
+        $document=Document::find($id);
+        return response()->download(public_path('img/'.$document->name));
+    }
+    
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ShowRequest $request)
     {
-        //
+        $documents=Document::where('client_id',$request->client_id)
+                           ->where('document_type_id',$request->document_type_id)   
+                           ->get();
+        return view('Document.index',['documents'=>$documents]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -33,7 +42,9 @@ class DocumentController extends Controller
     {
         $client= Client::find($request->client);
         $document_type=DocumentType::find($request->document_type);
-        $name= $this->getImage($request,$client->identification.'-'.$document_type->name);
+        $document=document::where('client_id',$request->client)->where('document_type_id',$request->document_type)->orderby('id','desc')->first();
+        $id=$document? $document->id +1 :1;
+        $name= $this->getImage($request,$document_type->name.$client->identification.$id);
          Document::create([
             'client_id'=>$request->client,
             'document_type_id'=>$request->document_type,
@@ -50,7 +61,7 @@ class DocumentController extends Controller
     public function show($id)    
     {
         $document=Document::find($id);
-        return response()->download(public_path('img/'.$document->name));
+        return response()->json($document);
         //
     }
 
@@ -73,8 +84,11 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Document $document)
+    public function destroy($id)
     {
+        $document=Document::find($id);
+        $document->delete();
+        return back()->with(['message'=>'Documento eliminado correctamente']);
         //
     }
 }
