@@ -104,6 +104,16 @@
         POLITICA DE TRATAMIENTO DE DATOS PERSONALES
     </div>
     <div class="card-body">
+        <form action="">            
+            <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>
+            <div style="padding: 5px; font-size:14px">
+                <input type="checkbox" name="accept_data_treatment" id="accept_data_treatment"
+                {{$client!=null&&$client->acept_data_processing_policies?'checked':''}}>
+                <label for="accept_data_treatment">
+                    Acepto la politica de tratamiento de datos personales
+                </label>
+            </div>
+        </form>
     </div>
 </div>
 <div class="card mb-4" id="cardInfoPersonal"style="display:none; width:85%;margin:0 auto;">
