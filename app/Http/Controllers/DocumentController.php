@@ -16,16 +16,21 @@ class DocumentController extends Controller
         $document=Document::find($id);
         return response()->download(public_path('img/'.$document->name));
     }
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index(ShowRequest $request)
     {
         $documents=Document::where('client_id',$request->client_id)
-                           ->where('document_type_id',$request->document_type_id)   
+                           ->where('document_type_id',$request->document_type_id)
                            ->get();
-        return view('Document.index',['documents'=>$documents]);
+        $client=Client::find($request->client_id);
+        session(['client' => $client]);
+        $data=['client'=>$client,
+        'documents'=>$documents];
+
+        return view('Document.index',$data);
     }
     /**
      * Show the form for creating a new resource.
@@ -58,7 +63,7 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)    
+    public function show($id)
     {
         $document=Document::find($id);
         return response()->json($document);
@@ -87,7 +92,11 @@ class DocumentController extends Controller
     public function destroy($id)
     {
         $document=Document::find($id);
+        $document_path=public_path('img/'.$document->name);
         $document->delete();
+        if (file_exists($document_path)) {
+            unlink($document_path);
+        }
         return back()->with(['message'=>'Documento eliminado correctamente']);
         //
     }

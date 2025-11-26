@@ -75,9 +75,9 @@
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
-                        <div class="nav"> 
+                        <div class="nav">
                             @if(auth()->check())
-                            <div class="sb-sidenav-menu-heading">Core</div>                           
+                            <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="{{url('/authorizationPolicies')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Politicas y autorizaciones
@@ -89,7 +89,7 @@
                             <a class="nav-link" href="{{url('/eps')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 EPS
-                            </a>                
+                            </a>
                             <a class="nav-link" href="{{url('/DocumentType')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-file"></i></div>
                                 Tipo de documentos
@@ -99,7 +99,7 @@
                                 Clientes
                             </a>
                             @else
-                                               
+
                             <div class="sb-sidenav-menu-heading">Formatos</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -212,7 +212,7 @@
         </div>
         <div title="Tipo de documento" id="dialogDocumentType">
             <form id ="frmDocumentType" action="{{url('/DocumentType')}}" method="POST" autocomplete="off">
-                @csrf     
+                @csrf
                 <div class="mb-3">
                     <label class="form-label" for=""> Nombre*</label>
                     <input type="text" name="name" class="form-control" style="width:80%" id="name">
@@ -229,11 +229,11 @@
             <form id="frmAttach" autocomplete="off" enctype="multipart/form-data" method="POST" action=" {{url('/documents')}}">
                 @csrf
                 <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client" id="client" >
-                <input type="text" name="document_type" id="document_type">
-              
-                <div class="mb-3">                    
+                <input type="hidden" name="document_type" id="document_type">
+
+                <div class="mb-3">
                     <input type="file"accept="image/*" name="file"  class="form-control"  id="file">
-                </div>               
+                </div>
             </form>
         </div>
         <div title="Autorizaciones y politicas" id="dialogPolicy">
@@ -365,9 +365,9 @@
                     if(user==''){
                     $("#cardInfoPersonal").fadeIn();
 
-                   }                   
-                  
-      
+                   }
+
+
                     break;
                 }
                 case "contact":
@@ -539,7 +539,7 @@
             {
                 $("#frmAttach #document_type").val(documentTypeId);
                 dialogAttach.dialog("open");
-                
+
             }
             function editarEps(id)
             {
@@ -647,7 +647,7 @@
             });
             $("#btnInfoPersonal").click(function(){
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
-              
+
                 $(".card").fadeOut();
                 if(user!=''){
                     $("#btnInfoPersonal")
@@ -655,17 +655,17 @@
                 .addClass('btn-info');
                     $("#cardInfoPersonal").fadeIn();
 
-                   }                   
+                   }
                    else
                    {
                        Swal.fire({
                         title: "Advertencia",
                         icon: "warning",
-                        html:"La informacion ya se encuentra registrada, si desea actualizarla por favor contacte al administrador",                  
+                        html:"La informacion ya se encuentra registrada, si desea actualizarla por favor contacte al administrador",
                         draggable: true
                         });
                     }
- 
+
 
             });
             $("#btnInfoLaboral").click(function(){
@@ -703,7 +703,7 @@
                 $("#cardInfoCrediticia").fadeIn();
 
             });
-          
+
             $("#btnContact").click(function()
             {
                 dialogContact.dialog("open");
@@ -727,14 +727,14 @@
                     click: function () {
                         dialogDocumentType.dialog("close");
                     }
-                }], 
+                }],
                 close: function ()
                 {
                     $("#frmDocumentType")[0].reset();
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 
-                }             
+                }
             });
             var dialogAttach= $("#dialogAttach").dialog({
                 autoOpen: false,
@@ -755,14 +755,14 @@
                     click: function () {
                         dialogAttach.dialog("close");
                     }
-                }], 
+                }],
                 close: function ()
                 {
                     $("#frmAttach")[0].reset();
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 
-                }             
+                }
             });
             var dialogPolicy= $("#dialogPolicy").dialog({
                 autoOpen: false,

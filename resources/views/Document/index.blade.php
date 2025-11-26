@@ -11,38 +11,35 @@
         <div style="padding: 5px">
             <a  title="Crear documento" id="btnDocument" class="btn btn-primary" ><i class="fa-solid fa-file-arrow-up"></i></a>
         </div>
-        <div class="row">
-        @foreach($documents as $item)
-        <div class="col-4">
-            <div class="card shadow mb-4">                
-                <div class="card-header py-3">                    
-                    <h6 class="m-0 font-weight-bold text-primary" style="text-align:center;">{{$item->document_type->name }}</h6>
-                </div>   
-                <div class="card-body" style="align-content: center">
-                    <img class="img-fluid" src="{{url('img')}}/{{$item->name}}" width="100px" height="100px" alt="{{$item->description}}">
-                </div>
-                <div class="card-footer" style="text-align:center;">
-                    <div  class="small text-gray-500">                        
-                        {{date("d/m/Y", strtotime($item->created_at))}}                    
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <form method="POST" action="{{url('/Document')}}/{{$item->id}}"  style="display:inline">
-                                @csrf
-                                {{method_field('DELETE')}}
-                                <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
-                            </form>
-                        </div>
-                        <div class="col-6">
-                            <a title="Editar" onclick="editarDocument({{$item->id}})" class="btn btn-warning btn-sm"><i class="fa-solid fa-pencil"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>              
-        @endforeach
-        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($documents as $item)
+                <tr>
+                    <th scope="row">{{ $item->id }}</th>
+                    <td>{{ $item->name }}</td>
+                    <td>
+                        <a href="{{ url('documents/download/'.$item->id) }}" title="Descargar documento" class="btn btn-success"><i class="fa-solid fa-download"></i></a>
+                        <form action="{{ url('documents/'.$item->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" title="Eliminar documento" class="btn btn-danger" onclick="validar(this,'Eliminar documento?')"><i class="fa-solid fa-trash"></i></button>
+                        </form>
 
-     
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+
+
+
     </div>
 @endsection
