@@ -25,12 +25,12 @@ class DocumentController extends Controller
         $documents=Document::where('client_id',$request->client_id)
                            ->where('document_type_id',$request->document_type_id)
                            ->get();
-        $client=Client::find($request->client_id);
-        session(['client' => $client]);
-        $data=['client'=>$client,
+      //  $client=Client::find($request->client_id);
+      //  session(['client' => $client]);
+        $data=[
         'documents'=>$documents];
-
-        return view('Document.index',$data);
+        return response()->json($data);
+    
     }
     /**
      * Show the form for creating a new resource.

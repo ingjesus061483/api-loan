@@ -225,6 +225,21 @@
                 @endif
             </form>
         </div>
+        <div title="Ver documentos" id="dialogViewDocuments">
+            <table class="table table-hover table-bordered" id="tblDocuments" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Documento</th>
+                        <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        
+
+        </div>
         <div title="Adjuntar documentos" id ="dialogAttach">
             <form id="frmAttach" autocomplete="off" enctype="multipart/form-data" method="POST" action=" {{url('/documents')}}">
                 @csrf
@@ -250,8 +265,6 @@
 
             </form>
         </div>
-
-
         <div title="EPS" id="dialogEps">
             <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
                 @csrf
@@ -427,6 +440,54 @@
 
 
             }
+            function viewDocuments(client,document_type)
+            {                
+                var url=urlBase+"documents";
+                var data ={
+                    client_id:client,
+                    document_type_id:document_type
+                };
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data:data,
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result);
+                        var documents= result.documents;
+                        $("#tblDocuments tbody").empty();
+                        $.each(documents, function(index, doc)
+                        {
+                            let row= '<tr>'+
+                                        '<td>'+doc.id+'</td>'+
+                                        '<td>'+doc.name+'</td>'+
+                                        '<td>'+
+                                            '<a href="'+urlBase+'documents/download/'+doc.id+'" title="Descargar documento" class="btn btn-success btn-sm"><i class="fa-solid fa-download"></i></a> '+
+                                            '<form action="'+urlBase+'documents/'+doc.id+'" method="POST" style="display: inline;">'+
+                                                '<input type="hidden" name="_token" value="'+$('meta[name="csrf-token"]').attr('content')+'">'+
+                                                '<input type="hidden" name="_method" value="DELETE">'+
+                                                '<button type="button" title="Eliminar documento" class="btn btn-danger btn-sm" onclick="validar(this,\'Eliminar documento?\')"><i class="fa-solid fa-trash"></i></button>'+
+                                            '</form>'+
+                                        '</td>'+
+                                    '</tr>';
+                            $("#tblDocuments tbody").append(row);
+                        });
+                        dialogViewDocuments.dialog("open");
+                    },                    
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+            
+            }      
             function validar(obj, mensaje)
             {
                 console.log(obj.parentElement);
@@ -468,7 +529,13 @@
                     },
                     error: function (ajaxContext)
                     {
-                        alert(ajaxContext.responseText)
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
                     }
                 });
             }
@@ -491,7 +558,13 @@
                     },
                     error: function (ajaxContext)
                     {
-                        alert(ajaxContext.responseText)
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
                     }
                 });
             }
@@ -514,7 +587,13 @@
                     },
                     error: function (ajaxContext)
                     {
-                        alert(ajaxContext.responseText)
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
                     }
                 });
             }
@@ -560,7 +639,13 @@
                     },
                     error: function (ajaxContext)
                     {
-                        alert(ajaxContext.responseText)
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
                     }
                 });
             }
@@ -605,7 +690,13 @@
                     },
                     error: function (ajaxContext)
                     {
-                        alert(ajaxContext.responseText)
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
                     }
                 });
             })
@@ -708,6 +799,27 @@
             {
                 dialogContact.dialog("open");
             });
+            var dialogViewDocuments= $("#dialogViewDocuments").dialog({
+                autoOpen: false,
+                height: 400,
+                width: 700,
+                modal: true,
+                buttons:
+                [{
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogViewDocuments.dialog("close");
+                    }
+                }],
+                close: function ()
+                {
+                    $("#tblDocuments tbody").empty();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                }
+            });
             var dialogDocumentType= $("#dialogDocumentType").dialog({
                 autoOpen: false,
                 height: 250,
@@ -805,12 +917,9 @@
                         dialogArl.dialog("close");
                     }
                 }],
-            close: function (){
-                $("#frmArl")[0].reset();
-                //form[0].reset();
-                //allFields.removeClass("ui-state-error");
-
-            }
+                close: function (){
+                    $("#frmArl")[0].reset();              
+                }
             });
             dialogEps= $("#dialogEps").dialog({
                 autoOpen: false,

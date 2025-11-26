@@ -397,10 +397,7 @@
                             &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
                             &nbsp;{{$item->policy?->description}}
                             @break
-
-
                     @endswitch
-
                 </p>
             </div>
         @endforeach
@@ -416,8 +413,6 @@
            <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
            <p>Para continuar con el proceso de su solicitud de crédito, es necesario que nos envíe los siguientes documentos adjuntos:</p>
         </div>
-
-
         <table class="table table-bordered" style="width: 100%" >
             <thead style ="font-size: 14px" >
                 <tr>
@@ -437,31 +432,12 @@
                                 <i class="fa-solid fa-paperclip"></i>
                             </a>
                             @else
-                            <form method="GET" action="{{url('/documents')}}"  style="display:inline">
-                                @csrf
-                                <input type="hidden" name="client_id" value="{{$client->id}}">
-                                <input type="hidden" name="document_type_id" value="{{$item->id}}">
-                                <button type="submit" title="Ver documentos" class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                            </form>
-                            @endif
+                            <a title="Ver documentos" onclick="viewDocuments({{$client->id}},{{$item->id}})" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i></a>                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
-        </table>
-        <!--<a title="adjuntar documentos" class="btn btn-primary" id="btnAttach" ><i class="fa-solid fa-paperclip"></i></a>
-         <ul>
-            @foreach ($client->documents as $item )
-                <li style="list-style: none; margin-top:10px;">
-                    <a href="{{url('/documents')}}/{{$item->id}}" target="_blank">
-                        <i class="fa-solid fa-file-pdf"></i>&nbsp;{{$item->name}}
-                    </a>
-                </li>
-            @endforeach
-
-        </ul> -->
+        </table>      
     </div>
 </div>
 @endsection

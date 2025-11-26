@@ -249,7 +249,7 @@ class ClientController extends Controller
     {
         session(['client' => $client]);
 $documenttypes=$this->documenttypes->selectRaw("(SELECT
-                                              GROUP_CONCAT(doc.name SEPARATOR ' - ')
+                                              GROUP_CONCAT(doc.name SEPARATOR ', ')
                                               FROM
                                               documents	AS doc
                                               WHERE doc.client_id={$client->id} AND `document_type_id`=document_types.id ) as documentos");
