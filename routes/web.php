@@ -34,6 +34,7 @@ Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
 Route::resource('authorizationPolicies',AuthorizationPolicyController::class);
+Route::patch('clients/UpdateDataProccess/{id}',[ClientController::class,'UpdateDataProccess']);
 Route::patch('clients/UpdateLawInformation/{id}',[ClientController::class,'UpdateLawInformation']);
 Route::patch('clients/UpdatePatrimonialInformation/{id}',[ClientController::class,'UpdatePatrimonialInformation']);
 Route::get('cities/GetCitiesByState/{stateId}',[CityController::class,'GetCitiesByState']);

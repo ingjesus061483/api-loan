@@ -18,6 +18,7 @@
     <body class="sb-nav-fixed">
         <input type="hidden" id="base_url" value="{{url('/')}}/">
         <input type="hidden" id="info" value="{{isset($info)?$info:''}}">
+        <input type="hidden" id="client" value="{{isset($client)?$client->id:''}}">
         <input type="hidden" id="user" value="{{auth()->check()? auth()->user()->id :''}}">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -336,6 +337,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
             var user=$("#user").val();
+            var client=$("#client").val();
             var app=$("#info").val();
             var urlBase=$("#base_url").val();
             if( $("#errors").length>0 )
@@ -372,15 +374,40 @@
                     $("#age").val(age +" años");
                 }
             }
+            function abrirInfopersonal(us ,cli)
+            {
+                if(us!='')                    
+                    {
+                        return true;
+                        //$("#cardInfoPersonal").fadeIn(); 
+                                        
+                    }
+                    else if(cli!='')
+                    {
+                        return false;
+                        //$("#cardInfoPersonal").fadeOut();                   
+                    }
+                    else
+                    {
+                        return true;
+                        // $("#cardInfoPersonal").fadeIn(); 
+
+                    }
+            }
 
             switch(app)
             {
                 case "client":
-                {
-                    if(user==''){
-                    $("#cardInfoPersonal").fadeIn();
+                {                    
+                    if(abrirInfopersonal(user ,client))
+                    {
+                        $("#cardInfoPersonal").fadeIn(); 
+                    }                   
+                    else
+                    {
+                        $("#cardInfoPersonal").fadeOut(); 
+                    }
 
-                   }
 
 
                     break;
@@ -414,6 +441,9 @@
                 {
                     $("#cardPolAutorizaciones").fadeIn();
                     break;
+                }
+                case 'PersonData':{
+                   $("#cardPoltrataDatosPers").fadeIn() 
                 }
             }
             if($(".table"))
@@ -742,7 +772,7 @@
                 $(".btn").removeClass('btn-info').addClass('btn-primary');
 
                 $(".card").fadeOut();
-                if(user!=''){
+                if(abrirInfopersonal(user ,client)){
                     $("#btnInfoPersonal")
                 .removeClass('btn-primary')
                 .addClass('btn-info');

@@ -116,6 +116,20 @@ class ClientController extends Controller
                                 ->leftjoin("loans","clients.id","=","loans.client_id" )
                                 ->leftjoin("warranties as w","w.id","=","loans.warranty_id");
     }
+    public function UpdateDataProccess(Request $request ,$id){
+        $accept_data_treatment=$request->accept_data_treatment==null?0:(bool)$request->accept_data_treatment;
+        $client=Client::find($id);
+        if($client==null)
+        {
+            return redirect()->to(url('/clients/create'))
+                             ->withErrors('No se ha encontrado el cliente');
+        }
+        $client ->acept_data_processing_policies=$accept_data_treatment;
+        $client ->update();
+        session(["info"=>"PersonData"]);
+        session(['client' => $client]);
+        return back() ->with(['message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos ':'No has aceptado las politicas de datos']);
+    }
     public function UpdateLawInformation(Request $request ,$id)
     {
         $seizure=$request->seizure==null?0:(bool)$request->seizure;

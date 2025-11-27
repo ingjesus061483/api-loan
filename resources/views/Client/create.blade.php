@@ -104,7 +104,9 @@
         POLITICA DE TRATAMIENTO DE DATOS PERSONALES
     </div>
     <div class="card-body">
-        <form action="">            
+        <form action="{{url('/clients/UpdateDataProccess')}}/{{$client?->id}}"method="post" autocomplete="off">            
+            @method('patch')
+            @csrf
             <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>
             <div style="padding: 5px; font-size:14px">
                 <input type="checkbox" name="accept_data_treatment" id="accept_data_treatment"
@@ -113,6 +115,7 @@
                     Acepto la politica de tratamiento de datos personales
                 </label>
             </div>
+            <button type="submit" class="btn btn-success">Actualizar</button>
         </form>
     </div>
 </div>
@@ -190,8 +193,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

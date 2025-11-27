@@ -377,8 +377,11 @@
             mediante comunicación escrita dirigida a nuestro correo electrónico:
         </p>
         <div  style="font-size:14px; text-align: justify; padding:5px">
-            {{$client->acept_data_processing_policies==1?'He leído y acepto la política de tratamiento de datos personales.':'No he aceptado la política de tratamiento de datos personales.'}}
-
+            @if($client->acept_data_processing_policies)
+            <i class="fa-solid fa-circle-check"></i>&nbsp; He leído y acepto la política de tratamiento de datos personales.
+            @else
+            <i class="fa-solid fa-circle-xmark"></i>&nbsp;No he aceptado la política de tratamiento de datos personales.'
+            @endif
         </div>
     </div>
 </div>
