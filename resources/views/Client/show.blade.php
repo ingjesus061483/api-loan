@@ -370,6 +370,16 @@
         POLITICA DE TRATAMIENTO DE DATOS PERSONALES
     </div>
     <div class="card-body">
+        <p style="font-size:14px; text-align: justify; padding:5px">
+            En cumplimiento de la Ley 1581 de 2012 y sus decretos reglamentarios, le informamos que los datos personales que nos ha suministrado serán incorporados en una base de datos de
+            titularidad de Cerik Soluciones SAS, con el fin de dar cumplimiento a las obligaciones derivadas de la relación comercial que hemos establecido, así como para enviarle información
+            relacionada con nuestros productos y servicios. Usted podrá ejercer sus derechos de acceso, rectificación, cancelación y oposición (ARCO) frente al tratamiento de sus datos personales,
+            mediante comunicación escrita dirigida a nuestro correo electrónico:
+        </p>
+        <div  style="font-size:14px; text-align: justify; padding:5px">
+            {{$client->acept_data_processing_policies==1?'He leído y acepto la política de tratamiento de datos personales.':'No he aceptado la política de tratamiento de datos personales.'}}
+
+        </div>
     </div>
 </div>
 <div class="card mb-4" id="cardPolAutorizaciones"style="width:85%;margin:0 auto; ">
@@ -409,21 +419,23 @@
         DOCUMENTOS ADJUNTOS
     </div>
     <div class="card-body">
-        <div style="padding: 5px">
+        <div style="padding: 5px ;font-size:14px; text-align: justify;">
            <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
-           <p>Para continuar con el proceso de su solicitud de crédito, es necesario que nos envíe los siguientes documentos adjuntos:</p>
+           <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
         </div>
         <table class="table table-bordered" style="width: 100%" >
             <thead style ="font-size: 14px" >
                 <tr>
+                    <th>#</th>
                     <th style="text-align:center">TIPO DE DOCUMENTO </th>
                     <th style="text-align:center">DOCUMENTOS ADJUNTOS</th>
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style ="font-size: 12px">
                 @foreach ($documenttypes as $item )
                     <tr>
+                        <th scope="row">{{$item->id}}.</th>
                         <td>{{$item->name}}</td>
                         <td>{{$item->documentos}}</td>
                         <td>
@@ -437,7 +449,7 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>      
+        </table>
     </div>
 </div>
 @endsection

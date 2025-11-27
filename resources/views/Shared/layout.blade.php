@@ -157,11 +157,13 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
                         @if(auth()->check())
-                        {{auth()->user()->name}}
+                        <div class="small">
+                            Logged in as:&nbsp;{{auth()->user()->name}}
+                        </div>
                         @endif
                     </div>
+
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -214,30 +216,30 @@
             <form id ="frmDocumentType" action="{{url('/DocumentType')}}" method="POST" autocomplete="off">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label" for=""> Nombre*</label>
-                    <input type="text" name="name" class="form-control" style="width:80%" id="name">
+                    <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%;font-size:12px" id="name">
                 </div>
                 @if (auth()->check())
                 <div class="mb-3">
-                    <label class="form-label" for=""> Descripcion</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                    <label class="form-label" for="" style="font-size: 14px"> Descripcion</label>
+                    <textarea name="description" id="description" style="font-size: 12px" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 @endif
             </form>
         </div>
         <div title="Ver documentos" id="dialogViewDocuments">
             <table class="table table-hover table-bordered" id="tblDocuments" style="width:100%">
-                <thead>
+                <thead style ="font-size: 14px">
                     <tr>
                         <th>id</th>
                         <th>Documento</th>
                         <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style ="font-size: 12px">
                 </tbody>
             </table>
-        
+
 
         </div>
         <div title="Adjuntar documentos" id ="dialogAttach">
@@ -247,7 +249,7 @@
                 <input type="hidden" name="document_type" id="document_type">
 
                 <div class="mb-3">
-                    <input type="file"accept="image/*" name="file"  class="form-control"  id="file">
+                    <input type="file"accept="image/*"  name="file"  class="form-control form-control-sm"  id="file">
                 </div>
             </form>
         </div>
@@ -255,12 +257,12 @@
             <form id ="frmPolicy" action="{{url('/authorizationPolicies')}}" method="POST" autocomplete="off">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label" for=""> Titulo*</label>
-                    <input type="text" name="title" class="form-control" style="width:80%" id="title">
+                    <label class="form-label" for="" style="font-size:14px"> Titulo*</label>
+                    <input type="text" name="title" class="form-control" style="width:80%:font-size:12px" id="title">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for=""> Contenido*</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                    <textarea name="description" id="description" class="form-control" style="font-size: 12px" cols="30" rows="10"></textarea>
                 </div>
 
             </form>
@@ -268,15 +270,15 @@
         <div title="EPS" id="dialogEps">
             <form id ="frmEps" action="{{url('/eps')}}" method="POST" autocomplete="off">
                 @csrf
-                <p style="color: red">Si su EPS no se encuentra en el listado, por favor registrela</p>
+                <p style="color: red;font-size:12">Si su EPS no se encuentra en el listado, por favor registrela</p>
                 <div class="mb-3">
-                    <label class="form-label" for=""> Nombre*</label>
-                    <input type="text" name="name" class="form-control" style="width:80%" id="name">
+                    <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%;font-size12px " id="name">
                 </div>
                 @if (auth()->check())
                 <div class="mb-3">
                     <label class="form-label" for=""> Descripcion</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                    <textarea name="description" id="description" class="form-control" style="font-size:12px;" cols="30" rows="10"></textarea>
                 </div>
                 @endif
             </form>
@@ -284,15 +286,15 @@
         <div title="ARL" id="dialogArl">
             <form id ="frmArl" action="{{url('/arls')}}" method="POST" autocomplete="off">
                 @csrf
-                <p style="color: red">Si su ARL no se encuentra en el listado, por favor registrela</p>
+                <p style="color: red;font-size:12px">Si su ARL no se encuentra en el listado, por favor registrela</p>
                 <div class="mb-3">
-                    <label class="form-label" for=""> Nombre*</label>
-                    <input type="text" name="name" class="form-control" style="width:80%" id="name">
+                    <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%;font-size:12px; " id="name">
                 </div>
                 @if (auth()->check())
                 <div class="mb-3">
                     <label class="form-label" for=""> Descripcion</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                    <textarea name="description" id="description" style="font-sive:12px" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 @endif
             </form>
@@ -307,8 +309,8 @@
                             @csrf
                             <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
                             <div class="mb-3">
-                                <label class="form-label" for=""> Tipo de contacto</label>
-                                <select class="form-select" name="phone_type" style="width:80%" id="phone_type">
+                                <label class="form-label" for="" style="font-size: 14px;"> Tipo de contacto</label>
+                                <select class="form-select" name="phone_type" style="width:80;font-size:12px " id="phone_type">
                                     <option value="">Seleccione una opcion</option>
                                     @if(isset($phonetypes))
                                     @foreach($phonetypes as $item)
@@ -318,10 +320,10 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="">
+                                <label class="form-label" for="" style="font-size:14px" >
                                     Numero de telefono
                                 </label>
-                                <input type="tel" name="phone" class="form-control"style="width:80%" id="phone">
+                                <input type="tel" name="phone" class="form-control"style="width:80%; font-size:12px;" id="phone">
                             </div>
                         </form>
                 </div>
@@ -441,7 +443,7 @@
 
             }
             function viewDocuments(client,document_type)
-            {                
+            {
                 var url=urlBase+"documents";
                 var data ={
                     client_id:client,
@@ -474,7 +476,7 @@
                             $("#tblDocuments tbody").append(row);
                         });
                         dialogViewDocuments.dialog("open");
-                    },                    
+                    },
                     error: function (ajaxContext)
                     {
                         Swal.fire({
@@ -486,8 +488,8 @@
                         //alert(ajaxContext.responseText)
                     }
                 });
-            
-            }      
+
+            }
             function validar(obj, mensaje)
             {
                 console.log(obj.parentElement);
@@ -918,7 +920,7 @@
                     }
                 }],
                 close: function (){
-                    $("#frmArl")[0].reset();              
+                    $("#frmArl")[0].reset();
                 }
             });
             dialogEps= $("#dialogEps").dialog({
