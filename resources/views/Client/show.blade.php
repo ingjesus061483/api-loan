@@ -426,33 +426,37 @@
            <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
            <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
         </div>
-        <table class="table table-bordered" style="width: 100%" >
-            <thead style ="font-size: 14px" >
-                <tr>
-                    <th>#</th>
-                    <th style="text-align:center">TIPO DE DOCUMENTO </th>
-                    <th style="text-align:center">DOCUMENTOS ADJUNTOS</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody style ="font-size: 12px">
-                @foreach ($documenttypes as $item )
+        <div style="width:70%; margin:0 auto">
+            <table class="table table-bordered" style="  table-layout: fixed; width:100%" >
+                <thead style ="font-size: 14px" >
                     <tr>
-                        <th scope="row">{{$item->id}}.</th>
-                        <td>{{$item->name}}</td>
-                        <td>{{$item->documentos}}</td>
-                        <td>
-                            @if(!auth()->check())
-                            <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
-                                <i class="fa-solid fa-paperclip"></i>
-                            </a>
-                            @else
-                            <a title="Ver documentos" onclick="viewDocuments({{$client->id}},{{$item->id}})" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i></a>                            @endif
-                        </td>
+                        <th style="width:20px">#</th>
+                        <th style="text-align:center;width:100%;">TIPO DE DOCUMENTO </th>
+                        <th style="text-align:center;width:20px;" >CANTIDAD</th>
+                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody style ="font-size: 12px">
+                    @foreach ($documenttypes as $item )
+                        <tr>
+                            <th scope="row" style="text-align: center;width:20px  ">{{$item->id}}.</th>
+                            <td style="width:100%;">{{$item->name}}</td>
+                            <td style="text-align:center;width:20px;">{{$item->amount}} </td>
+                            <td style="text-align:center;">
+
+                                <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
+                                    <i class="fa-solid fa-paperclip"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Ver documentos" onclick="viewDocuments({{$client->id}},{{$item->id}})" class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

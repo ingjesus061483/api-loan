@@ -263,10 +263,12 @@ class ClientController extends Controller
     {
         session(['client' => $client]);
 $documenttypes=$this->documenttypes->selectRaw("(SELECT
-                                              GROUP_CONCAT(doc.name SEPARATOR ', ')
-                                              FROM
-                                              documents	AS doc
-                                              WHERE doc.client_id={$client->id} AND `document_type_id`=document_types.id ) as documentos");
+                                                COUNT(id)
+                                                FROM
+                                                documents
+                                                WHERE
+                                                client_id={$client->id} and
+                                                document_type_id=`document_types`.id) amount ");
         $policies=AuthorizationPolicy::count();
         $policiesclients=ClientPolicy::where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);

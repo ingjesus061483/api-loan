@@ -229,18 +229,19 @@
             </form>
         </div>
         <div title="Ver documentos" id="dialogViewDocuments">
-            <table class="table table-hover table-bordered" id="tblDocuments" style="width:100%">
-                <thead style ="font-size: 14px">
-                    <tr>
-                        <th>id</th>
-                        <th>Documento</th>
-                        <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody style ="font-size: 12px">
-                </tbody>
-            </table>
-
+            <div style="width:60%; margin:0 auto">
+                <table class="table table-hover table-bordered" id="tblDocuments" style="width:100%">
+                    <thead style ="font-size: 14px">
+                        <tr>
+                            <th>#</th>
+                            <th>DOCUMENTO</th>
+                            <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody style ="font-size: 12px">
+                    </tbody>
+                </table>
+            </div>
 
         </div>
         <div title="Adjuntar documentos" id ="dialogAttach">
@@ -376,21 +377,21 @@
             }
             function abrirInfopersonal(us ,cli)
             {
-                if(us!='')                    
+                if(us!='')
                     {
                         return true;
-                        //$("#cardInfoPersonal").fadeIn(); 
-                                        
+                        //$("#cardInfoPersonal").fadeIn();
+
                     }
                     else if(cli!='')
                     {
                         return false;
-                        //$("#cardInfoPersonal").fadeOut();                   
+                        //$("#cardInfoPersonal").fadeOut();
                     }
                     else
                     {
                         return true;
-                        // $("#cardInfoPersonal").fadeIn(); 
+                        // $("#cardInfoPersonal").fadeIn();
 
                     }
             }
@@ -398,14 +399,14 @@
             switch(app)
             {
                 case "client":
-                {                    
+                {
                     if(abrirInfopersonal(user ,client))
                     {
-                        $("#cardInfoPersonal").fadeIn(); 
-                    }                   
+                        $("#cardInfoPersonal").fadeIn();
+                    }
                     else
                     {
-                        $("#cardInfoPersonal").fadeOut(); 
+                        $("#cardInfoPersonal").fadeOut();
                     }
 
 
@@ -443,7 +444,7 @@
                     break;
                 }
                 case 'PersonData':{
-                   $("#cardPoltrataDatosPers").fadeIn() 
+                   $("#cardPoltrataDatosPers").fadeIn()
                 }
             }
             if($(".table"))
@@ -491,11 +492,14 @@
                         $("#tblDocuments tbody").empty();
                         $.each(documents, function(index, doc)
                         {
+                            i=doc.name.indexOf('.')
+                            name=doc.name.substring(0,i)
+
                             let row= '<tr>'+
-                                        '<td>'+doc.id+'</td>'+
-                                        '<td>'+doc.name+'</td>'+
-                                        '<td>'+
-                                            '<a href="'+urlBase+'documents/download/'+doc.id+'" title="Descargar documento" class="btn btn-success btn-sm"><i class="fa-solid fa-download"></i></a> '+
+                                        "<td style='text-align:center'>"+doc.id+'</td>'+
+                                        '<td>'+name+'</td>'+
+                                         "<td style='text-align:center'>"+
+                                            '<a href="'+urlBase+'documents/download/'+doc.id+'" title="Descargar documento" class="btn btn-success btn-sm"><i class="fa-solid fa-download"></i></a>&nbsp; '+
                                             '<form action="'+urlBase+'documents/'+doc.id+'" method="POST" style="display: inline;">'+
                                                 '<input type="hidden" name="_token" value="'+$('meta[name="csrf-token"]').attr('content')+'">'+
                                                 '<input type="hidden" name="_method" value="DELETE">'+
