@@ -11,6 +11,7 @@
         <div style="padding: 5px">
             <a  title="Crear politica o autorizacion" class="btnPolicy btn btn-primary" ><i class="fa-solid fa-circle-plus"></i></a>
         </div>
+        <div style="height:300px;overflow: auto;">
         @foreach($policies as $item)
         <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
            <p style="text-align: justify;padding:5px; font-size:12px;"> <strong>{{$item->title}}</strong> &nbsp;| &nbsp;
@@ -27,6 +28,7 @@
             </div>
         </div>
         @endforeach
+        </div>
     </div>
 </div>
 @endsection

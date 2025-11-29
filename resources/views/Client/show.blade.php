@@ -390,7 +390,7 @@
         <i class="fa-solid fa-building-shield"></i>
         POLITICAS Y AUTORIZACIONES
     </div>
-    <div class="card-body">
+    <div class="card-body"style="height:300px;overflow: auto;">
         @foreach ($client->client_policies as $item )
             <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                 <p style="font-size:14px; text-align: justify; padding:5px">
