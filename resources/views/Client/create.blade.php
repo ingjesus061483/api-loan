@@ -4,7 +4,7 @@
 @section('content')
 <div style="padding: 5px; font-size:14px; " >
     <div class="row">
-        
+
         <div class="col-3">
             <a id="btnInfoPersonal" style="width:100%" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}">Información personal</a>
         </div>
@@ -32,7 +32,7 @@
         <div class="col-3">
             <a id="btnPolAutorizaciones"style="width:100%" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas y autorizaciones    </a>
         </div>
-    </div> 
+    </div>
 </div>
 <div class="card mb-4" id="cardPolAutorizaciones"style="width:60%;margin:0 auto; display:none;">
     <div class="card-header">
@@ -47,22 +47,22 @@
                         @case(1)
                             <i class="fa-solid fa-circle-check"></i>&nbsp;
                             <strong>{{$item->policy?->title}}</strong>&nbsp;|
-                            &nbsp;{{$item->policy?->description}}                            
+                            &nbsp;{{$item->policy?->description}}
                             @break
                         @case(2)
                             <i class="fa-solid fa-circle-xmark"></i>&nbsp;
                             <strong> {{$item->policy?->title}}</strong>&nbsp;|
-                            &nbsp;{{$item->policy?->description}}                                
+                            &nbsp;{{$item->policy?->description}}
                             @break
                         @case(3)
                             <i class="fa-solid fa-circle-question"></i>
                             &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
-                            &nbsp;{{$item->policy?->description}}                                 
+                            &nbsp;{{$item->policy?->description}}
                             @break
-                        
-                            
+
+
                     @endswitch
- 
+
                 </p>
 
             </div>
@@ -81,13 +81,13 @@
                         </p>
                         <div style="padding: 5px">
                             <button type="button" onclick="submitPolicy(1)" class="btn btn-success">
-                                <i class="fa-solid fa-circle-check"></i>&nbsp;Acepto
+                                <i class="fa-solid fa-circle-check"></i>&nbsp;Si, Acepto
                             </button>
                             <button type="button" class="btn btn-danger" onclick="submitPolicy(2)">
                                   <i class="fa-solid fa-circle-xmark"></i>&nbsp;No acepto
                             </button>
                             <button type="button" class="btn btn-warning" onclick="submitPolicy(3)">
-                                 <i class="fa-solid fa-circle-question"></i>&nbsp;No entiendo                                
+                                 <i class="fa-solid fa-circle-question"></i>&nbsp;No entiendo
                             </button>
                         </div>
                     </form>
@@ -104,7 +104,7 @@
         POLITICA DE TRATAMIENTO DE DATOS PERSONALES
     </div>
     <div class="card-body">
-        <form action="{{url('/clients/UpdateDataProccess')}}/{{$client?->id}}"method="post" autocomplete="off">            
+        <form action="{{url('/clients/UpdateDataProccess')}}/{{$client?->id}}"method="post" autocomplete="off">
             @method('patch')
             @csrf
             <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>

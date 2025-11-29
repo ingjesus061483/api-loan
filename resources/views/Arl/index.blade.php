@@ -1,17 +1,16 @@
 @extends('shared/layout')
-@section('title','Listado de arl')
+@section('title','Listado de ARL')
 @section('content')
 
-<div class="card mb-4">
-    <div class="card-header">
+<div class="card mb-4" style="width: 70% ;margin:0 auto">
+    <div class="card-header" >
         <i class="fas fa-table me-1"></i>
-        Listado de Arl
+        Listado de ARL
     </div>
     <div class="card-body">
         <div style="padding: 5px">
             <a  title="Crear Arl" class="btnArl btn btn-primary" ><i class="fa-solid fa-user-nurse"></i></a>
         </div>
-
         <table  class="table table-hover table-bordered" style="width:100%" >
             <thead style ="font-size: 14px" >
                 <tr>
@@ -24,14 +23,18 @@
             <tbody style ="font-size: 12px" >
                 @foreach ($arls as $item)
                 <tr>
-                    <td>
+                    <td style="text-align: center">
                         <form method="POST" action="{{url('/arls')}}/{{$item->id}}"  style="display:inline">
                             @csrf
                             {{method_field('DELETE')}}
                             <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
-                    <td><a title="Editar" onclick="editarArl({{$item->id}})" class="btn btn-warning btn-sm"><i class="fa-solid fa-pencil"></i></a></td>
+                    <td style="text-align: center" >
+                        <a title="Editar" onclick="editarArl({{$item->id}})" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    </td>
                     <td>{{$item->name}}    </td>
                     <td>{{$item->description}}  </td>
                 </tr>
