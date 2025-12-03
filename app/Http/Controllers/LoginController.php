@@ -6,7 +6,6 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rules\Password;
 class LoginController extends Controller
 {
     public function show()
@@ -14,7 +13,7 @@ class LoginController extends Controller
         if(Auth::check()){
             return redirect()->to('/');
         }
-        return view('Auth.login');
+        return view('Auth.Login');
     }
     public function store(LoginRequest $request)
     {

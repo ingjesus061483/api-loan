@@ -1,4 +1,4 @@
-@extends('shared/layout')
+@extends('Shared/layout')
 @section('img',url('img/CerikSoluciones.png'))
 @section('title','Listado de documentos')
 @section('content')
