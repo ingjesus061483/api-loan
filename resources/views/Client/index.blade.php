@@ -1,4 +1,4 @@
-@extends('shared/layout')
+@extends('Shared/layout')
 @section('title','Listado de clientes')
 @section('content')
 

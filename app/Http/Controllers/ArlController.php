@@ -19,7 +19,7 @@ class ArlController extends Controller
         $data=[
             'arls'=>ArlAffiliate::all()
         ];  
-        return view('arl.index',$data);
+        return view('Arl.index',$data);
         //
     }
     public function store(StoreRequest $request)

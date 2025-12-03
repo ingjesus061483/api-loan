@@ -1,4 +1,4 @@
-@extends('shared/login')
+@extends('Shared/login')
 @section('title','Formulario de solicitud de credito')
 @section('content')
 <div class="row justify-content-center">

@@ -1,37 +1,37 @@
-@extends('shared/layout')
+@extends('Shared/layout')
 @section('img',url('img/CerikSoluciones.png'))
 @section('title','Formulario de solicitud de credito')
 @section('content')
-<div style="padding: 5px; font-size:14px; " >
-    <div class="row">
-
-        <div class="col-3">
-            <a id="btnInfoPersonal" style="width:100%" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}">Información personal</a>
+<div style="padding:5px;" >
+    <div class="row" style="margin-top:5px">
+        <div class="col-4">
+            <a id="btnInfoPersonal" style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}" >Información personal</a>
         </div>
-        <div class="col-3">
-            <a id="btnDatosContacto"style="width:100%" class="{{$info=='contact'?'btn btn-info':'btn btn-primary'}}">Información de contacto</a>
+        <div class="col-4">
+            <a id="btnDatosContacto"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='contact'?'btn btn-info':'btn btn-primary'}}">Datos de contacto</a>
         </div>
-        <div class="col-3">
-            <a id="btnInfoLaboral"style="width:100%" class="{{$info=='employment'?'btn btn-info':'btn btn-primary'}}">Información laboral</a>
-        </div>
-        <div class="col-3">
-            <a id="btnInfoPatrimonial"style="width:100%" class="{{$info=='patrimonial'?'btn btn-info':'btn btn-primary'}}">Información patrimonial</a>
+        <div class="col-4">
+            <a id="btnInfoLaboral"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='employment'?'btn btn-info':'btn btn-primary'}}">Información laboral</a>
         </div>
     </div>
-    <div class="row" style="margin-top: 5px">
-
-        <div class="col-3">
-            <a id="btnInfoLegal"style="width:100%" class="{{$info=='law'?'btn btn-info':'btn btn-primary'}}">Información Legal </a>
+    <div class ="row" style="margin-top:5px">
+        <div class="col-4">
+            <a id="btnInfoPatrimonial"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='patrimonial'?'btn btn-info':'btn btn-primary'}}">Información patrimonial</a>
+        </div>        
+        <div class="col-4">
+            <a id="btnInfoLegal"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='law'?'btn btn-info':'btn btn-primary'}}">Información Legal </a>
         </div>
-        <div class="col-3">
-            <a id="btnInfoCredito"style="width:100%" class="{{$info=='loan'?'btn btn-info':'btn btn-primary'}}">Acerca del crédito   </a>
+        <div class="col-4">
+            <a id="btnInfoCredito"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='loan'?'btn btn-info':'btn btn-primary'}}">Acerca del crédito   </a>
         </div>
-        <div class="col-3">
-            <a id="btnPoltrataDatosPers"style="width:100%" class="{{$info=='PersonData'?'btn btn-info':'btn btn-primary'}}">Tratamiento de datos </a>
+    </div>
+    <div class="row" style="margin-top:5px">
+        <div class="col-4">
+            <a id="btnPoltrataDatosPers"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='PersonData'?'btn btn-info':'btn btn-primary'}}">Tratamiento de datos </a>
         </div>
-        <div class="col-3">
-            <a id="btnPolAutorizaciones"style="width:100%" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas y autorizaciones    </a>
-        </div>
+        <div class="col-4">
+            <a id="btnPolAutorizaciones"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas Autorizaciones</a>
+        </div>        
     </div>
 </div>
 <div class="card mb-4" id="cardPolAutorizaciones"style="width:60%;margin:0 auto; display:none;">
@@ -39,8 +39,16 @@
         <i class="fa-solid fa-building-shield"></i>
         POLITICAS Y AUTORIZACIONES
     </div>
-    <div class="card-body"style="height:300px;overflow: auto;">
-        @foreach ($policyclients as $item )
+    <div class="card-body">
+        <div>
+            <ul style="font-size:10px">
+                <li style="list-style:none;font-weight:bold; color: green"><i class="fa-solid fa-circle-check"></i> Si acepto </li>
+                <li style="list-style:none;font-weight:bold; color: red"><i class="fa-solid fa-circle-xmark"></i>  No acepto</li>
+                <li style="list-style:none;font-weight:bold; color:orange"><i class="fa-solid fa-circle-question"></i> No entiendo</li>
+            </ul>
+        </div>
+        <div style="height:300px;overflow: auto;">
+            @foreach ($policyclients as $item )
             <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                 <p style="font-size:14px; text-align: justify; padding:5px">
                     @switch($item->state_policy_id)
@@ -66,35 +74,38 @@
                 </p>
 
             </div>
-
-        @endforeach
-
-           @foreach($policies as $item)
-                <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
-                    <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
-                        @csrf
-                        <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
-                        <input type="hidden" name="state_policy_id" id="state_policy_id">
-                        <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
-                        <p style="font-size:14px; text-align: justify; padding:5px">
+            @endforeach
+            @foreach($policies as $item)
+            <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
+                    @csrf
+                    <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
+                    <input type="hidden" name="state_policy_id" id="state_policy_id">
+                    <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
+                    <p style="font-size:14px; text-align: justify; padding:5px">
                        <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
-                        </p>
-                        <div style="padding: 5px">
-                            <button type="button" onclick="submitPolicy(1)" class="btn btn-success">
-                                <i class="fa-solid fa-circle-check"></i>&nbsp;Si, Acepto
-                            </button>
-                            <button type="button" class="btn btn-danger" onclick="submitPolicy(2)">
-                                  <i class="fa-solid fa-circle-xmark"></i>&nbsp;No acepto
-                            </button>
-                            <button type="button" class="btn btn-warning" onclick="submitPolicy(3)">
-                                 <i class="fa-solid fa-circle-question"></i>&nbsp;No entiendo
+                    </p>
+                    <div class="row" style="padding:5px">
+                        <div class="col-4">
+                            <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
+                                <i class="fa-solid fa-circle-check"></i>
                             </button>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-4">
+                            <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
+                                <i class="fa-solid fa-circle-question"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             @endforeach
-
-
+        </div>
     </div>
 </div>
 
@@ -138,14 +149,14 @@
                     <div class="row">
                         <div  class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for=""> REFERENCIA </label>
+                                <label class="form-label"style="font-size:12px" for=""> REFERENCIA </label>
                                 <input style="font-size: 12px" type="text" class="form-control"value="{{$client!=null?$client->reference: old('reference')}}"
                                     name="reference" id="reference">
                             </div>
                         </div>
                         <div  class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for=""> CALIDAD DEL TITULAR </label>
+                                <label class="form-label"style="font-size:12px" for=""> CALIDAD DEL TITULAR </label>
                                 <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
                                 <option value="">Seleccione una opción </option>
                                     @foreach($QualityHolder as $item)
@@ -156,7 +167,7 @@
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for="">TITULO VALOR </label>
+                                <label class="form-label"style="font-size:12px" for="">TITULO VALOR </label>
                                 <input type="text" style="font-size: 12px" class="form-control" name ="value_Title" value="{{$client!=null?$client->value_Title:old('value_Title')}}" id="value_Title"/>
                             </div>
                         </div>
@@ -165,29 +176,29 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for="">NOMBRES Y APELLIDOS* </label>
+                                <label class="form-label" for="" style="font-size:12px">NOMBRES Y APELLIDOS* </label>
                                 <input type="text" style="font-size: 12px" class="form-control" name ="name_last_name" value="{{$client!=null?$client->name_last_name:old('name_last_name')}}" id="name_last_name"/>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for=""># DOCUMENTO*</label>
+                                <label class="form-label" for="" style="font-size: 12px">#  DOCUMENTO*</label>
                                 <input type="text" style="font-size: 12px" name="identification" id="identification" class="form-control" value="{{$client!=null?$client->identification:old('identification')}}">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3" >
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-7">
                                         <div class="mb-3" >
-                                            <label class="form-label" for="">FECHA DE NACIMIENTO*</label>
+                                            <label class="form-label" for=""style="font-size: 12px" >FECHA DE NACIMIENTO*</label>
                                             <input type="date" style="font-size: 12px" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"
                                             id="birth_date">
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-5">
                                         <div class="mb-3" >
-                                            <label class="form-label" for="">EDAD</label>
+                                            <label class="form-label" for="" style="font-size: 12px">EDAD</label>
                                             <input type="text" style="font-size: 12px" readonly class="form-control" id="age"
                                             value="{{$client!=null? \Carbon\Carbon::parse($client->date_birth)->age:''}}">
                                         </div>
@@ -199,22 +210,21 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="mb-3" >
-                                <label class="form-label" for="">FECHA DE EXPEDICION*</label>
+                                <label class="form-label" for=""style="font-size: 12px">FECHA DE EXPEDICION*</label>
                                 <input type="date" style="font-size: 12px" name="expedition_date" class="form-control" value="{{$client!=null?
-                                                                                                        $client->expedition_date
-                                                                                                        :old('expedition_date')}}"
-                                                                                                        id="expedition_date">
+                                $client->expedition_date:old('expedition_date')}}"
+                                id="expedition_date">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3" >
-                                <label class="form-label" for="">DIRECCION RESIDENCIA*</label>
+                                <label class="form-label" for=""style="font-size: 12px">DIRECCION RESIDENCIA*</label>
                                 <input type="text" style="font-size: 12px" class="form-control" value="{{$client!=null?$client->address:old('address')}}" name="address" id="address">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for="">BARRIO* </label>
+                                <label class="form-label" for=""style="font-size: 12px">BARRIO* </label>
                                 <input type="text" style="font-size: 12px" name="neighborhood" value="{{$client!=null?$client->neighborhood:old('neighborhood')}}" class="form-control" id="neighborhood">
                             </div>
                         </div>
@@ -222,7 +232,7 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="mb-3" >
-                            <label class="form-label" for=""> ESTADO CIVIL*</label>
+                            <label class="form-label" for=""style="font-size: 12px"> ESTADO CIVIL*</label>
                             <select name="marital_status" class="form-select" style="font-size: 12px" id="marital_status">
                             <option value="">Seleccione una opción </option>
                                     @foreach ($maritalstatus as $item)
@@ -233,13 +243,13 @@
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
-                                <label class="form-label" for=""> EMAIL*</label>
+                                <label class="form-label" for=""style="font-size: 12px"> EMAIL*</label>
                                 <input type="email" value="{{$client!=null?$client->email:old('email')}}" style="font-size: 12px" class="form-control" name="email" id="email">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3" >
-                                <label class="form-label" for=""> NIVEL DE ESTUDIOS*</label>
+                                <label class="form-label" for=""style="font-size: 12px"> NIVEL DE ESTUDIOS*</label>
                                 <select name="study_level" class="form-select" style="font-size: 12px" id="study_level">
                                 <option value="">Seleccione una opción </option>
                                     @foreach($studylevels as $item)

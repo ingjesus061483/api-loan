@@ -19,7 +19,7 @@ class EpsController extends Controller
         $data=[
             'eps'=>EpsAffiliate::all()
         ];  
-        return view('eps.index',$data);
+        return view('EPS.index',$data);
         //
     }
     public function store(StoreRequest $request)
