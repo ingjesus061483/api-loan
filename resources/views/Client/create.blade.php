@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-<div class="card mb-4" id="cardPolAutorizaciones"style="width:60%;margin:0 auto; display:none;">
+<div class="card mb-4" id="cardPolAutorizaciones"style="width:100%;margin:0 auto; display:none;">
     <div class="card-header">
         <i class="fa-solid fa-building-shield"></i>
         POLITICAS Y AUTORIZACIONES
@@ -130,7 +130,7 @@
         </form>
     </div>
 </div>
-<div class="card mb-4" id="cardInfoPersonal"style="display:none; width:85%;margin:0 auto;">
+<div class="card mb-4" id="cardInfoPersonal"style="display:none; width:100%;margin:0 auto;">
     <div class="card-header">
         <i class="fa-solid fa-id-card"></i>
         INFORMACION PERSONAL
@@ -260,7 +260,7 @@
 
     </div>
 </div>
-    <div class="card mb-4" id="cardDatosContacto" style="width:85%;margin:0 auto; display: none;">
+    <div class="card mb-4" id="cardDatosContacto" style="width:100%;margin:0 auto; display: none;">
         <div class="card-header">
             <i class="fa-solid fa-address-book"></i>
             INFORMACION DE CONTACTO
@@ -295,7 +295,7 @@
 
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoLaboral" style="display:none ; width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoLaboral" style="display:none ; width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-user-tie"></i>
             INFORMACION LABORAL
@@ -419,7 +419,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="">FRECUENCIA DE PAGOS*</label>
+                                    <label class="form-label" for="">FRECUENCIA PAGOS*</label>
                                     <select class="form-select" name="payment_frequency" id="payment_frequency"style="font-size: 12px">
                                     <option value="">Seleccione una opción </option>
                                         @foreach($PaymentFrecuencies as $item)
@@ -501,7 +501,7 @@
 
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoCrediticia" style="display:none; width:85%;margin:0 auto;">
+    <div class="card mb-4" id="cardInfoCrediticia" style="display:none; width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-credit-card"></i>
             ACERCA EL CREDITO
@@ -584,7 +584,7 @@
 
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoLegal" style="width:85%;margin:0 auto;display: none;">
+    <div class="card mb-4" id="cardInfoLegal" style="width:100%;margin:0 auto;display: none;">
         <div class="card-header">
             <i class="fa-solid fa-scale-balanced"></i>
             INFORMACION LEGAL
@@ -619,5 +619,4 @@
 
         </div>
     </div>
-
 @endsection
