@@ -697,7 +697,7 @@
 
             $("#birth_date").change(function(){
                 let age=CalculateAge(this.value);
-                   $("#age").val(age +" años");
+                   $("#age").html("Edad: "+age +" años");
             });
             $(".currency").focus(function(){
                 this.value= "";
