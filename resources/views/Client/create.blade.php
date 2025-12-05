@@ -2,6 +2,19 @@
 @section('img',url('img/CerikSoluciones.png'))
 @section('title','Formulario de solicitud de credito')
 @section('content')
+<div style="padding:5px">
+    @if($client==null)
+    <form action="{{url('/clients/0')}}" method="GET" autocapitalize="off" class=" d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input name="identification" class="form-control" type="text" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    @else
+    <a href="{{url('/clients')}}/{{$client->id}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
+        <i class="fa-solid fa-user-tie"></i>&nbsp;{{$client->name_last_name}}</a>
+    @endif
+</div>
 <div style="padding:5px;" >
     <div class="row" style="margin-top:5px">
         <div class="col-4">
