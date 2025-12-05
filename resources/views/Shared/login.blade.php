@@ -8,6 +8,7 @@
         <meta name="author" content="" />
         <title>@yield('title')</title>
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{url('/')}}/login.ico" />      
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
