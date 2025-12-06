@@ -44,12 +44,14 @@ class ClientController extends Controller
     protected $States;
     protected $cities;
     protected $policies;
+    protected $autorization;
     protected $documenttypes;
     function __construct()
     {
         $this->documenttypes=DocumentType::select('id','name');
         $this->cities=City::orderby('name','asc');
-        $this->policies=AuthorizationPolicy::select('*');
+        $this->policies=AuthorizationPolicy::where('title','like','p%')-> select('*');
+        $this->autorization=AuthorizationPolicy::where('title','like','A%')-> select('*');
         $this-> QualityHolder=QualityHolder::orderby('name','asc');
         $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
         $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
@@ -192,7 +194,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $arr=[];
+        $arrp=[];
+        $arra=[];
         $client=session()->has('client')?session('client'):null;
         $policiesclients=ClientPolicy::where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
@@ -201,10 +204,19 @@ class ClientController extends Controller
         $info=session()->has("info")?session('info'):'client';
         foreach($policiesclients->get() as $pc)
         {
-            $arr[]=$pc->policy_id;
+            if($pc->policy->where('name','like','p%')->first()!=null)
+            {
+            $arrp[]=$pc->policy_id;
+            }
+            else if($pc->policy->where('name','like','a%')->first()!=null)
+            {
+                $arra[]=$pc->policy_id;
+            }
+
         }
         $data=[
-            'policies'=>$this->policies->whereNotIn ('id',$arr)->get(),
+            'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
+            'autorizations'=>$this->autorization->whereNotIn ('id',$arrp)->get(),
             'policyclients'=>$policiesclients->get(),
             'client'=>$client,
             'contactInfos'=>$contactInfos->get(),
