@@ -44,14 +44,14 @@ class ClientController extends Controller
     protected $States;
     protected $cities;
     protected $policies;
-    protected $autorization;
+    protected $autorizations;
     protected $documenttypes;
     function __construct()
     {
         $this->documenttypes=DocumentType::select('id','name');
         $this->cities=City::orderby('name','asc');
         $this->policies=AuthorizationPolicy::where('title','like','p%')-> select('*');
-        $this->autorization=AuthorizationPolicy::where('title','like','A%')-> select('*');
+        $this->autorizations=AuthorizationPolicy::where('title','like','A%')-> select('*');
         $this-> QualityHolder=QualityHolder::orderby('name','asc');
         $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
         $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
@@ -216,7 +216,7 @@ class ClientController extends Controller
         }
         $data=[
             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
-            'autorizations'=>$this->autorization->whereNotIn ('id',$arrp)->get(),
+            'autorizations'=>$this->autorizations->whereNotIn ('id',$arrp)->get(),
             'policyclients'=>$policiesclients->get(),
             'client'=>$client,
             'contactInfos'=>$contactInfos->get(),
@@ -274,13 +274,13 @@ class ClientController extends Controller
     public function redirectToClient($client)
     {
         session(['client' => $client]);
-$documenttypes=$this->documenttypes->selectRaw("(SELECT
-                                                COUNT(id)
-                                                FROM
-                                                documents
-                                                WHERE
-                                                client_id={$client->id} and
-                                                document_type_id=`document_types`.id) amount ");
+        $documenttypes=$this->documenttypes->selectRaw("(SELECT
+                                                        COUNT(id)
+                                                        FROM
+                                                        documents
+                                                        WHERE
+                                                        client_id={$client->id} and
+                                                        document_type_id=`document_types`.id) amount ");
         $policies=AuthorizationPolicy::count();
         $policiesclients=ClientPolicy::where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);

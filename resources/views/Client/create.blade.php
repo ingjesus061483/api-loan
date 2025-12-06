@@ -81,85 +81,91 @@
                             &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
                             &nbsp;{{$item->policy?->description}}
                             @break
-
-
                     @endswitch
-
                 </p>
-
             </div>
             @endforeach
         </div>
         @endif
-        <div style="text-align: center;font-weight:bold">
-            Politicas
-        </div>
-        <div style="height:300px;overflow: auto;">
-         @foreach($policies as $item)
-            <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
-                <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
-                    @csrf
-                    <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
-                    <input type="hidden" name="state_policy_id" id="state_policy_id">
-                    <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
-                    <p style="font-size:14px; text-align: justify; padding:5px">
-                       <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
-                    </p>
-                    <div class="row" style="padding:5px">
-                        <div class="col-4">
-                            <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
-                                <i class="fa-solid fa-circle-question"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
+            <div class="card-header">              
+                POLITICAS 
             </div>
-         @endforeach
-        </div>
-       <div style="text-align: center;font-weight:bold">
-            Autorizaciones
-        </div>
-          <div style="height:300px;overflow: auto;">
-            @foreach($autorizations as $item)
-             <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
-                <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
-                    @csrf
-                    <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
-                    <input type="hidden" name="state_policy_id" id="state_policy_id">
-                    <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
-                    <p style="font-size:14px; text-align: justify; padding:5px">
-                       <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
-                    </p>
-                    <div class="row" style="padding:5px">
-                        <div class="col-4">
-                            <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
-                                <i class="fa-solid fa-circle-question"></i>
-                            </button>
-                        </div>
+            <div class="card-body">
+                <div style="height:300px;overflow: auto;">
+                @foreach($policies as $item)
+                    <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                        <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
+                            @csrf
+                            <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
+                            <input type="hidden" name="state_policy_id" id="state_policy_id">
+                            <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
+                            <p style="font-size:14px; text-align: justify; padding:5px">
+                            <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
+                            </p>
+                            <div class="row" style="padding:5px">
+                                <div class="col-4">
+                                    <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
+                                        <i class="fa-solid fa-circle-question"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                @endforeach
+                </div>
             </div>
-            @endforeach
+        </div>
+        <div  style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
+            <div class="card-header">                
+                AUTORIZACIONES
+            </div>
+            <div class="card-body">
+                <div style="height:300px;overflow: auto;">
+                @foreach($autorizations as $item)
+                <div style="width:100%; margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                    <form id="frmClientPolicy" action="{{url('/clientPolicies')}}" method="post">
+                        @csrf
+                        <input type="hidden"name="client_id" value="{{$client?->id}}" id="client_id">
+                        <input type="hidden" name="state_policy_id" id="state_policy_id">
+                        <input type="hidden"name="policy_id" value="{{$item->id}}" id="policy_id">
+                        <p style="font-size:14px; text-align: justify; padding:5px">
+                        <strong> {{$item->title}}</strong>&nbsp;|&nbsp;{{$item->description}}
+                        </p>
+                        <div class="row" style="padding:5px">
+                            <div class="col-4">
+                                <button type="button" title="Si Acepto" onclick="submitPolicy(1)" style="width:100%; " class="btn btn-success">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" title="No acepto" class="btn btn-danger"style="width:100%;" onclick="submitPolicy(2)">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button type="button"title ="No entiendo" class="btn btn-warning"style="width:100%; " onclick="submitPolicy(3)">
+                                    <i class="fa-solid fa-circle-question"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @endforeach
+                </div>
+          </div>
+        </div>
+        
     </div>
 </div>
 
