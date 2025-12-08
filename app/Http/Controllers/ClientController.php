@@ -204,11 +204,11 @@ class ClientController extends Controller
         $info=session()->has("info")?session('info'):'client';
         foreach($policiesclients->get() as $pc)
         {
-            if($pc->policy->where('name','like','p%')->first()!=null)
+            if($pc->policy->where('title','like','p%')->first()!=null)
             {
             $arrp[]=$pc->policy_id;
             }
-            else if($pc->policy->where('name','like','a%')->first()!=null)
+            else if($pc->policy->where('title','like','a%')->first()!=null)
             {
                 $arra[]=$pc->policy_id;
             }

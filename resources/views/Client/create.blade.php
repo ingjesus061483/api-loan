@@ -87,6 +87,7 @@
             @endforeach
         </div>
         @endif
+        @if(count($policies)>0)
         <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
             <div class="card-header">              
                 POLITICAS 
@@ -126,6 +127,8 @@
                 </div>
             </div>
         </div>
+        @endif
+        @if(count($autorizations)>0)
         <div  style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
             <div class="card-header">                
                 AUTORIZACIONES
@@ -165,7 +168,7 @@
                 </div>
           </div>
         </div>
-        
+        @endif
     </div>
 </div>
 
