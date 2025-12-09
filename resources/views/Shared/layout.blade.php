@@ -213,6 +213,13 @@
                 </footer>
             </div>
         </div>
+        <div title="Usuarios" id="dialogUser">
+            <form action="{{url('/users')}}" id="frmUser">
+                @csrf
+
+            </form>
+
+        </div>
         <div title="Tipo de documento" id="dialogDocumentType">
             <form id ="frmDocumentType" action="{{url('/DocumentType')}}" method="POST" autocomplete="off">
                 @csrf
@@ -685,6 +692,10 @@
                     }
                 });
             }
+            $("#btnUser").click(function(){
+
+
+            });
             $(".btnPolicy").click(function(){
                 dialogPolicy.dialog("open");
             });
@@ -884,6 +895,34 @@
 
                 }
             });
+            var dialogUser=$("#dialogUser").dialog({
+                autoOpen: false,
+                height: 250,
+                width: 500,
+                modal: true,
+                buttons:
+                [{
+                    text: "Adjuntar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                       $("#frmUser")[0].submit();
+                    }
+                },
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogAttach.dialog("close");
+                    }
+                }],
+                close: function ()
+                {
+                    $("#frmUser")[0].reset();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                }
+            })
             var dialogAttach= $("#dialogAttach").dialog({
                 autoOpen: false,
                 height: 250,

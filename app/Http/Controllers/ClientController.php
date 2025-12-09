@@ -206,7 +206,7 @@ class ClientController extends Controller
         {
             if($pc->policy->where('title','like','p%')->first()!=null)
             {
-            $arrp[]=$pc->policy_id;
+                $arrp[]=$pc->policy_id;
             }
             else if($pc->policy->where('title','like','a%')->first()!=null)
             {

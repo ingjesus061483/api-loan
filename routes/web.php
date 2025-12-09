@@ -14,7 +14,7 @@ use App\Http\Controllers\AuthorizationPolicyController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\DocumentController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +33,7 @@ Route::get('/',[HomeController::class,'index']);/* function () {
 Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
+Route::resource('users', UserController::class);
 Route::resource('authorizationPolicies',AuthorizationPolicyController::class);
 Route::patch('clients/UpdateDataProccess/{id}',[ClientController::class,'UpdateDataProccess']);
 Route::patch('clients/UpdateLawInformation/{id}',[ClientController::class,'UpdateLawInformation']);
