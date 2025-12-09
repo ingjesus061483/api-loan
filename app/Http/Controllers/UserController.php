@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AutorizeRequest;
+use App\Http\Requests\Users\StoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,9 @@ class UserController extends Controller
         $data=['users'=>User::all()];
         return view('Auth.index',$data);
     }
-    public function store(){
+    public function store(StoreRequest $request)
+    {
+
 
     }
     //

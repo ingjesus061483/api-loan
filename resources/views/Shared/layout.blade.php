@@ -912,7 +912,7 @@ dialogUser.dialog("open");
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
-                        dialogAttach.dialog("close");
+                        dialogUser.dialog("close");
                     }
                 }],
                 close: function ()
