@@ -693,7 +693,7 @@
                 });
             }
             $("#btnUser").click(function(){
-
+dialogUser.dialog("open");
 
             });
             $(".btnPolicy").click(function(){
