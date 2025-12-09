@@ -60,33 +60,6 @@
                 <li style="list-style:none;font-weight:bold; color:orange"><i class="fa-solid fa-circle-question"></i> No entiendo</li>
             </ul>
         </div>
-        @if(count($policyclients)>0)
-        <div style="height:300px;overflow: auto;">
-            @foreach ($policyclients as $item )
-            <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
-                <p style="font-size:14px; text-align: justify; padding:5px">
-                    @switch($item->state_policy_id)
-                        @case(1)
-                            <i class="fa-solid fa-circle-check"></i>&nbsp;
-                            <strong>{{$item->policy?->title}}</strong>&nbsp;|
-                            &nbsp;{{$item->policy?->description}}
-                            @break
-                        @case(2)
-                            <i class="fa-solid fa-circle-xmark"></i>&nbsp;
-                            <strong> {{$item->policy?->title}}</strong>&nbsp;|
-                            &nbsp;{{$item->policy?->description}}
-                            @break
-                        @case(3)
-                            <i class="fa-solid fa-circle-question"></i>
-                            &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
-                            &nbsp;{{$item->policy?->description}}
-                            @break
-                    @endswitch
-                </p>
-            </div>
-            @endforeach
-        </div>
-        @endif
         @if(count($policies)>0)
         <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
             <div class="card-header">              
@@ -167,6 +140,40 @@
                 @endforeach
                 </div>
           </div>
+        </div>
+        @endif
+        @if(count($policyclients)>0)
+        <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
+            <div class="card-header">              
+                &nbsp;
+            </div>
+            <div class="card-body">
+                <div style="height:300px; overflow: auto;">
+                    @foreach ($policyclients as $item )
+                    <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                        <p style="font-size:14px; text-align: justify; padding:5px">
+                            @switch($item->state_policy_id)
+                                @case(1)
+                                    <i class="fa-solid fa-circle-check"></i>&nbsp;
+                                    <strong>{{$item->policy?->title}}</strong>&nbsp;|
+                                    &nbsp;{{$item->policy?->description}}
+                                    @break
+                                @case(2)
+                                    <i class="fa-solid fa-circle-xmark"></i>&nbsp;
+                                    <strong> {{$item->policy?->title}}</strong>&nbsp;|
+                                    &nbsp;{{$item->policy?->description}}
+                                    @break
+                                @case(3)
+                                    <i class="fa-solid fa-circle-question"></i>
+                                    &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
+                                    &nbsp;{{$item->policy?->description}}
+                                    @break
+                            @endswitch
+                        </p>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
         @endif
     </div>
