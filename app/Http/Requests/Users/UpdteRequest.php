@@ -3,16 +3,15 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
-class StoreRequest extends FormRequest
+
+class UpdteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return false;
     }
 
     /**
@@ -23,11 +22,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'name'=>'required|unique:users|max:50',
-            'email'=>'required|email|max:255|unique:users',
+            'name'=>'required|max:50|unique:clients,identification,'.$this->id,
+            'email'=>'required|max:50|unique:clients,identification,'.$this->id,
             'phone'=>'required|max:10',
             'password'=>['required','confirmed',Password::default()],
-
             //
         ];
     }

@@ -21,14 +21,22 @@
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th>Nombre</th>
                     <th>Email</th>
-                    <th>Telefono</th>        
+                    <th>Telefono</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($users as $item)
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td>
+   <button type="button" title="Actualizar" class="btn btn-warning btn-sm" onclick="editarUser({{$item->id}})"><i class="fa-solid fa-pencil"></i></button>
+                    </td>
+                    <td>
+                         <form method="POST" action="{{url('/users')}}/{{$item->id}}"  style="display:inline">
+                            @csrf
+                            {{method_field('DELETE')}}
+                            <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </td>
                     <td>{{$item->name}}</td>
                     <td>{{$item->email}}</td>
                     <td>{{$item->phone}}</td>
