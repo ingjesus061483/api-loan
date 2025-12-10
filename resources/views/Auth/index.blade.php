@@ -19,9 +19,9 @@
                 <tr>
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
+                    <th>NOMBRE</th>
+                    <th>EMAIL</th>
+                    <th>TELEFONO</th>
                 </tr>
             </thead>
             <tbody>

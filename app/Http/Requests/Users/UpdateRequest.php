@@ -3,17 +3,24 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
-
-class UpdteRequest extends FormRequest
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Http\Exceptions\HttpResponseException;
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::chack();
     }
-
+    protected function failedAuthorization()
+    {
+        
+        throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
+            ->with(['error' => 'Esta accion no esta autorizada!']));
+    }
     /**
      * Get the validation rules that apply to the request.
      *

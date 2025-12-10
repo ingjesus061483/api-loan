@@ -79,6 +79,11 @@
                         <div class="nav">
                             @if(auth()->check())
                             <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{{url('/NewnessType')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Tipos de novedades
+                
+                            </a>
                             <a class="nav-link" href="{{url('/authorizationPolicies')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Politicas y autorizaciones
@@ -337,6 +342,21 @@
                 @endif
             </form>
         </div>
+        <div title="Tipos de novedades" id="dialogNewnessType">
+            <form id ="frmNewnessType" action="{{url('/NewnessType')}}" method="POST" autocomplete="off">
+                @csrf                
+                <div class="mb-3">
+                    <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
+                    <input type="text" name="name" class="form-control" style="width:80%;font-size:12px; " id="name">
+                </div>
+                @if (auth()->check())
+                <div class="mb-3">
+                    <label class="form-label" for=""> Descripcion</label>
+                    <textarea name="description" id="description" style="font-sive:12px" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+                @endif
+            </form>
+        </div>
         <div title="Información de contacto" id="dialogContact">
             <div class="row">
                 <div class="col-3">
@@ -582,6 +602,36 @@
                     });
 
             }
+            function editarNewnessType(id)
+            {
+                url=urlBase+"NewnessType/"+id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result);
+                        dialogNewnessType.dialog("open");
+                        $("#frmNewnessType #name").val(result.name);
+                        $("#frmNewnessType #description").val(result.description);
+                        $("#frmNewnessType").attr('action',urlBase+"NewnessType/"+id);// "{{url('/arls')}}/"+id);
+                        let metodo= '<input type="hidden" name="_method" value="PUT">';
+                        $("#frmNewnessType").append(metodo);
+                    },
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+
+            }
             function editarUser(id)
             {
                       url=urlBase+"users/"+id;//"{{url('/DocumentType')}}/"+id;
@@ -752,6 +802,10 @@
                     }
                 });
             }
+            $("#btnNewnessType").click(function(){
+                dialogNewnessType.dialog("open");
+
+            });
             $("#btnUser").click(function(){
 dialogUser.dialog("open");
 
@@ -906,6 +960,34 @@ dialogUser.dialog("open");
             {
                 dialogContact.dialog("open");
             });
+            var dialogNewnessType=$("#dialogNewnessType").dialog({
+                autoOpen: false,
+                height: 250,
+                width: 500,
+                modal: true,
+                buttons:
+                [{
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmNewnessType")[0].submit();
+                    }
+                },
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogNewnessType.dialog("close");
+                    }
+                }],
+                close: function ()
+                {
+                    $("#frmNewnessType")[0].reset();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                } 
+            })
             var dialogViewDocuments= $("#dialogViewDocuments").dialog({
                 autoOpen: false,
                 height: 400,
