@@ -8,11 +8,11 @@ use App\Http\Controllers\EmploymentInformationController;
 use App\Http\Controllers\EpsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoanController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientPolicyController;
 use App\Http\Controllers\AuthorizationPolicyController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\NewnessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewnessTypeController;
@@ -33,6 +33,7 @@ Route::get('/',[HomeController::class,'index']);/* function () {
 Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
+Route::resource('Newness',NewnessController::class);
 Route::resource('NewnessType',NewnessTypeController::class);
 Route::resource('users', UserController::class);
 Route::resource('authorizationPolicies',AuthorizationPolicyController::class);
@@ -44,9 +45,10 @@ Route::resource('contactinfo',ContactInfoController::class);
 Route::resource('clients',ClientController::class);
 Route::resource('employmentInformations', EmploymentInformationController::class);
 Route::resource('loans', LoanController::class);
-Route::post('login',[LoginController::class,'store']);
-Route::delete('login/{id}',[LoginController::class,'destroy']);
-Route::get('login/show',[LoginController::class,'show']);
+Route::get('users/login/{id}',[UserController::class,'login']);
+Route::post('users/sigin',[UserController::class,'storelogin']);
+Route::post('users/logout',[UserController::class,'logout']);
+
 Route::resource('arls',ArlController::class);
 Route::resource('eps',EpsController::class);
 Route ::resource('clientPolicies', ClientPolicyController::class);

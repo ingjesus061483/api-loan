@@ -47,10 +47,9 @@
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
-                            <form class="d-none d-md-inline-block form-inline" action="{{url('/login')}}/{{auth()->user()->id }}"
+                            <form class="d-none d-md-inline-block form-inline" action="{{url('users/logout')}}"
                              method="post">
-                            @csrf
-                            @method('delete')
+                            @csrf                          
                             <button title="Cerrar sesion" type="button" onclick="validar(this,'Desea cerrar la sesion?')" class="btn">
                               Cerrar sesion  <i class="fa-solid fa-right-from-bracket"></i>
                             </button>
@@ -63,7 +62,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user-check"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{url('login/show')}}">Login</a></li>
+                        <li><a class="dropdown-item" href="{{url('users/login/0')}}">Login</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                     </ul>
                 </li>
@@ -79,6 +78,11 @@
                         <div class="nav">
                             @if(auth()->check())
                             <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{{url('/Newness')}}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-newspaper"></i></div>
+                                Novedades
+                
+                            </a>
                             <a class="nav-link" href="{{url('/NewnessType')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Tipos de novedades
@@ -342,6 +346,41 @@
                 @endif
             </form>
         </div>
+        <div title="Novedades" id="dialogNewness">
+            <form action="{{url('/Newness')}}" method="POST" autocomplete="off" id="frmNewness">
+                <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
+                <div class="mb-3">
+                    <label for=""style="font-size:14px" >Fecha*</label>
+                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">                
+                </div>
+                <div class="mb-3">
+                    <label for=""style="font-size:14px" >Cliente*</label>
+                    <input list="clients" id="client_id" class="form-control" name="client_id" style="width:80%;font-size:12px; " />
+                    <datalist id="clients" style="width:80%;font-size:12px; ">
+                        @if (isset($clients))                        
+                            @foreach($clients as $item)
+                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>                        
+                            @endforeach
+                        @endif                        
+                    </datalist>
+                </div>
+                <div class="mb-3">
+                    <label for="" style="font-size:14px">Tipo de novedad*</label>
+                    <select name="newness_type_id" class="form-select" style="width:80%;font-size:12px; " id="newness_type_id">
+                        <option value="">Seleccione una opcion</option>
+                        @if(isset($newnesstypes))                            
+                            @foreach ($newnesstypes as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>                
+                </div>
+                <div class="mb-3">
+                    <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
+                    <textarea name="remark" id="remark" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+            </form>
+        </div>
         <div title="Tipos de novedades" id="dialogNewnessType">
             <form id ="frmNewnessType" action="{{url('/NewnessType')}}" method="POST" autocomplete="off">
                 @csrf                
@@ -351,7 +390,7 @@
                 </div>
                 @if (auth()->check())
                 <div class="mb-3">
-                    <label class="form-label" for=""> Descripcion</label>
+                    <label class="form-label" for=""tyle="font-size:14px" > Descripcion</label>
                     <textarea name="description" id="description" style="font-sive:12px" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 @endif
@@ -802,6 +841,10 @@
                     }
                 });
             }
+            $("#btnNewness").click(function(){
+                dialogNewness.dialog("open");
+
+            });
             $("#btnNewnessType").click(function(){
                 dialogNewnessType.dialog("open");
 
@@ -959,6 +1002,34 @@ dialogUser.dialog("open");
             $("#btnContact").click(function()
             {
                 dialogContact.dialog("open");
+            });
+            var dialogNewness=$("#dialogNewness").dialog({
+                autoOpen: false,
+                height: 500,
+                width: 500,
+                modal: true,
+                buttons:
+                [{
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmNewness")[0].submit();
+                    }
+                },
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogNewness.dialog("close");
+                    }
+                }],
+                close: function ()
+                {
+                    $("#frmNewness")[0].reset();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                } 
             });
             var dialogNewnessType=$("#dialogNewnessType").dialog({
                 autoOpen: false,

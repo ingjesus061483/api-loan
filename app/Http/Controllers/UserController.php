@@ -6,7 +6,10 @@ use App\Http\Requests\AutorizeRequest;
 use App\Http\Requests\Users\StoreRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
@@ -47,6 +50,34 @@ class UserController extends Controller
         $user=User::find($id);
         $user->delete($id);
         return back()->with(['message'=>'Usuario eliminado correctamente']);
+    }
+    public function login($id)
+    {
+        if(Auth::check()){
+            return redirect()->to('/');
+        }
+        return view('Auth.Login');   
+
+    }
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();           
+        return redirect()->to('/');  
+    }
+  public function storelogin(LoginRequest $request)
+    {
+        if(Auth::validate(['email'=>$request->email,
+        'password'=>$request->password]))
+        {
+            $user =Auth::getProvider()->retrieveByCredentials([
+                'email'=>$request->email,
+                'password'=>$request->password]);                
+            Auth::login($user);
+            return redirect()->to('/');
+        }
+        return redirect()->to('login')->withErrors('Usuario o contraseña inválido');
+
     }
     //
 }

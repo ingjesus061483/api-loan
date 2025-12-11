@@ -10,7 +10,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <form action="{{url('/login')}}" autocomplete="off" method="POST">
+                <form action="{{url('users/sigin')}}" autocomplete="off" method="POST">
                     @csrf
                     <div class="form-floating mb-3">
                         <input class="form-control" name="email" id="inputEmail" type="email" placeholder="name@example.com" />
