@@ -78,6 +78,10 @@
                         <div class="nav">
                             @if(auth()->check())
                             <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{{url('/homework')}}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                                Tareas
+                            </a>
                             <a class="nav-link" href="{{url('/Newness')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-newspaper"></i></div>
                                 Novedades
@@ -225,6 +229,30 @@
                     </div>
                 </footer>
             </div>
+        </div>
+        <div id="dialogHomework" title="Tareas" > 
+            <form id="frmHomework" action="{{url('homework')}}" method="POST" autocomplete="off">
+                <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
+                <div class="mb-3">
+                    <label for=""style="font-size:14px" >Fecha*</label>
+                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">                
+                </div>
+                <div class="mb-3">
+                    <label for=""style="font-size:14px" >Cliente*</label>
+                    <input list="clients" id="client_id" class="form-control" name="client_id" style="width:80%;font-size:12px; " />
+                    <datalist id="clients" style="width:80%;font-size:12px; ">
+                        @if (isset($clients))                        
+                            @foreach($clients as $item)
+                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>                        
+                            @endforeach
+                        @endif                        
+                    </datalist>
+                </div>                
+                <div class="mb-3">
+                    <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
+                    <textarea name="remark" id="remark" class="form-control" cols="30" rows="10"></textarea>
+                </div> 
+            </form>
         </div>
         <div title="Usuarios" id="dialogUser">
             <form action="{{url('/users')}}" method="POST"autocommplete="off" id="frmUser">
@@ -841,6 +869,10 @@
                     }
                 });
             }
+            $("#btnHomework").click(function(){
+                dialogHomework.dialog("open");
+
+            });
             $("#btnNewness").click(function(){
                 dialogNewness.dialog("open");
 
@@ -1003,6 +1035,34 @@ dialogUser.dialog("open");
             {
                 dialogContact.dialog("open");
             });
+            var  dialogHomework= $("#dialogHomework").dialog({
+                autoOpen: false,
+                height: 500,
+                width: 500,
+                modal: true,
+                buttons:
+                [{
+                    text: "Guardar",
+                    "class": 'btn btn-success',
+                    click: function () {
+                        $("#frmHomework")[0].submit();
+                    }
+                },
+                {
+                    text: "Salir",
+                    "class": 'btn btn-danger',
+                    click: function () {
+                        dialogHomework.dialog("close");
+                    }
+                }],
+                close: function ()
+                {
+                    $("#frmHomework")[0].reset();
+                   //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+
+                } 
+            });
             var dialogNewness=$("#dialogNewness").dialog({
                 autoOpen: false,
                 height: 500,
@@ -1058,7 +1118,7 @@ dialogUser.dialog("open");
                     //allFields.removeClass("ui-state-error");
 
                 } 
-            })
+            });
             var dialogViewDocuments= $("#dialogViewDocuments").dialog({
                 autoOpen: false,
                 height: 400,

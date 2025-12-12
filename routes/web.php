@@ -16,6 +16,7 @@ use App\Http\Controllers\NewnessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewnessTypeController;
+use App\Http\Controllers\HomeworkController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,7 @@ use App\Http\Controllers\NewnessTypeController;
 Route::get('/',[HomeController::class,'index']);/* function () {
     return view('welcome');
 });*/
+Route::resource('homework',HomeworkController::class);
 Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
