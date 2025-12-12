@@ -49,7 +49,7 @@
                         <li>
                             <form class="d-none d-md-inline-block form-inline" action="{{url('users/logout')}}"
                              method="post">
-                            @csrf                          
+                            @csrf
                             <button title="Cerrar sesion" type="button" onclick="validar(this,'Desea cerrar la sesion?')" class="btn">
                               Cerrar sesion  <i class="fa-solid fa-right-from-bracket"></i>
                             </button>
@@ -78,6 +78,20 @@
                         <div class="nav">
                             @if(auth()->check())
                             <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-gears"></i></div>
+                                Configuración
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{url('/NewnessType')}}">Tipos de novedades</a>
+                                    <a class="nav-link" href="{{url('/DocumentType')}}">Tipo de documentos</a>
+                                    <a class="nav-link" href="{{url('/arls')}}"> ARL</a>
+                                    <a class="nav-link" href="{{url('/eps')}}">EPS</a>
+                                    <a class="nav-link" href="{{url('/authorizationPolicies')}}"> Politicas y autorizaciones</a>
+                                </nav>
+                            </div>
                             <a class="nav-link" href="{{url('/homework')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                                 Tareas
@@ -85,42 +99,20 @@
                             <a class="nav-link" href="{{url('/Newness')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-newspaper"></i></div>
                                 Novedades
-                
-                            </a>
-                            <a class="nav-link" href="{{url('/NewnessType')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Tipos de novedades
-                
-                            </a>
-                            <a class="nav-link" href="{{url('/authorizationPolicies')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Politicas y autorizaciones
-                            </a>
-                            <a class="nav-link" href="{{url('/arls')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                ARL
-                            </a>
-                            <a class="nav-link" href="{{url('/eps')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                EPS
-                            </a>
-                            <a class="nav-link" href="{{url('/DocumentType')}}">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-file"></i></div>
-                                Tipo de documentos
+
                             </a>
                             <a class="nav-link" href="{{url('/clients')}}">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-tie"></i></div>
                                 Clientes
                             </a>
                             <a class="nav-link" href="{{url('/users')}}">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                                 Usuarios
                             </a>
                             @else
-
                             <div class="sb-sidenav-menu-heading">Formatos</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-credit-card"></i></div>
                                 Crediticios
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -161,7 +153,6 @@
                                     </div>
                                 </nav>
                             </div>
-
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -174,14 +165,14 @@
                             @endif
                         </div>
                     </div>
+                    @if(auth()->check())
                     <div class="sb-sidenav-footer">
-                        @if(auth()->check())
+
                         <div class="small">
                             Logged in as:&nbsp;{{auth()->user()->name}}
                         </div>
-                        @endif
                     </div>
-
+                    @endif
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -230,28 +221,28 @@
                 </footer>
             </div>
         </div>
-        <div id="dialogHomework" title="Tareas" > 
+        <div id="dialogHomework" title="Tareas" >
             <form id="frmHomework" action="{{url('homework')}}" method="POST" autocomplete="off">
                 <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Fecha*</label>
-                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">                
+                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">
                 </div>
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Cliente*</label>
                     <input list="clients" id="client_id" class="form-control" name="client_id" style="width:80%;font-size:12px; " />
                     <datalist id="clients" style="width:80%;font-size:12px; ">
-                        @if (isset($clients))                        
+                        @if (isset($clients))
                             @foreach($clients as $item)
-                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>                        
+                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>
                             @endforeach
-                        @endif                        
+                        @endif
                     </datalist>
-                </div>                
+                </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
                     <textarea name="remark" id="remark" class="form-control" cols="30" rows="10"></textarea>
-                </div> 
+                </div>
             </form>
         </div>
         <div title="Usuarios" id="dialogUser">
@@ -379,29 +370,29 @@
                 <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Fecha*</label>
-                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">                
+                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">
                 </div>
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Cliente*</label>
                     <input list="clients" id="client_id" class="form-control" name="client_id" style="width:80%;font-size:12px; " />
                     <datalist id="clients" style="width:80%;font-size:12px; ">
-                        @if (isset($clients))                        
+                        @if (isset($clients))
                             @foreach($clients as $item)
-                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>                        
+                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>
                             @endforeach
-                        @endif                        
+                        @endif
                     </datalist>
                 </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px">Tipo de novedad*</label>
                     <select name="newness_type_id" class="form-select" style="width:80%;font-size:12px; " id="newness_type_id">
                         <option value="">Seleccione una opcion</option>
-                        @if(isset($newnesstypes))                            
+                        @if(isset($newnesstypes))
                             @foreach ($newnesstypes as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         @endif
-                    </select>                
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
@@ -411,7 +402,7 @@
         </div>
         <div title="Tipos de novedades" id="dialogNewnessType">
             <form id ="frmNewnessType" action="{{url('/NewnessType')}}" method="POST" autocomplete="off">
-                @csrf                
+                @csrf
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-size:14px"> Nombre*</label>
                     <input type="text" name="name" class="form-control" style="width:80%;font-size:12px; " id="name">
@@ -1061,7 +1052,7 @@ dialogUser.dialog("open");
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 
-                } 
+                }
             });
             var dialogNewness=$("#dialogNewness").dialog({
                 autoOpen: false,
@@ -1089,7 +1080,7 @@ dialogUser.dialog("open");
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 
-                } 
+                }
             });
             var dialogNewnessType=$("#dialogNewnessType").dialog({
                 autoOpen: false,
@@ -1117,7 +1108,7 @@ dialogUser.dialog("open");
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 
-                } 
+                }
             });
             var dialogViewDocuments= $("#dialogViewDocuments").dialog({
                 autoOpen: false,
