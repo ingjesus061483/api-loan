@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Users\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
@@ -56,14 +56,14 @@ class UserController extends Controller
         if(Auth::check()){
             return redirect()->to('/');
         }
-        return view('Auth.Login');   
+        return view('Auth.Login');
 
     }
     public function logout()
     {
         Session::flush();
-        Auth::logout();           
-        return redirect()->to('/');  
+        Auth::logout();
+        return redirect()->to('/');
     }
   public function storelogin(LoginRequest $request)
     {
@@ -72,7 +72,7 @@ class UserController extends Controller
         {
             $user =Auth::getProvider()->retrieveByCredentials([
                 'email'=>$request->email,
-                'password'=>$request->password]);                
+                'password'=>$request->password]);
             Auth::login($user);
             return redirect()->to('/');
         }

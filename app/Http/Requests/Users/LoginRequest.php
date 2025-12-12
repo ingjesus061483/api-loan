@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
@@ -30,18 +30,18 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'El :attribute es obligatorio.',               
+            'email.required' => 'El :attribute es obligatorio.',
             'email.email' => 'El :attribute debe ser una dirección de correo válida.',
             'password.required' => 'La :attribute es obligatoria.',
-            
-        ];    
+
+        ];
     }
     public function attributes()
     {
         return [
             'email' => 'Email del usuario',
             'password' => 'Contraseña',
- 
+
         ];
     }
 }
