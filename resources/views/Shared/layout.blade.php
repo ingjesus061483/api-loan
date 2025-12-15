@@ -54,7 +54,6 @@
                               Cerrar sesion  <i class="fa-solid fa-right-from-bracket"></i>
                             </button>
                         </form>
-
                         </li>
                     </ul>
                 </li>
@@ -67,8 +66,6 @@
                     </ul>
                 </li>
                 @endif
-
-
             </ul>
         </nav>
         <div id="layoutSidenav">
@@ -223,6 +220,7 @@
         </div>
         <div id="dialogHomework" title="Tareas" >
             <form id="frmHomework" action="{{url('homework')}}" method="POST" autocomplete="off">
+                @csrf
                 <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Fecha*</label>
@@ -367,6 +365,7 @@
         </div>
         <div title="Novedades" id="dialogNewness">
             <form action="{{url('/Newness')}}" method="POST" autocomplete="off" id="frmNewness">
+                @csrf
                 <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Fecha*</label>
