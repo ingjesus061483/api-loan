@@ -39,8 +39,8 @@ class HomeworkController extends Controller
             'user_id'=>$request->user_id,
             'date'=>$request->date,
             'client_id'=>$request->client_id,
-            'remark'=>$request->description,
-            'status_homework_id'=>1
+            'remark'=>$request->remark,
+            'state_homework_id'=>1
         ]);
         return back()->with(['message'=>'Tarea creada correctamente']);
         //
@@ -73,8 +73,8 @@ class HomeworkController extends Controller
             'user_id'=>$request->user_id,
             'date'=>$request->date,
             'client_id'=>$request->client_id,
-            'remark'=>$request->description,
-            'status_homework_id'=>$request->status_homework_id
+            'remark'=>$request->remark,
+            'state_homework_id'=>$request->state_homework_id
         ]);
         return back()->with(['message'=>'Tarea actualizada correctamente']);
 

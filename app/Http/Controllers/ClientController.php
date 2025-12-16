@@ -118,6 +118,13 @@ class ClientController extends Controller
                                 ->leftjoin("loans","clients.id","=","loans.client_id" )
                                 ->leftjoin("warranties as w","w.id","=","loans.warranty_id");
     }
+    public function SearchByName(Request $request)
+    {
+        $clients=Client::where('clients.name_last_name','like','%'.$request->name.'%')
+                      ->selectRaw( "concat(identification,' - ', name_last_name) as label ")
+                      ->get();
+        return response()->json($clients);
+    }
     public function UpdateDataProccess(Request $request ,$id){
         $accept_data_treatment=$request->accept_data_treatment==null?0:(bool)$request->accept_data_treatment;
         $client=Client::find($id);

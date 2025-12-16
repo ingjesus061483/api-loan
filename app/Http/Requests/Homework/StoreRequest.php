@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'date' => 'required|date',
             'client_id' => 'required|integer|exists:clients,id',
             'remark' => 'required|string|max:255',
-            'state_homework_id' => 'required|integer|exists:state_homework,id',
+
 
             //
         ];
@@ -45,10 +45,8 @@ class StoreRequest extends FormRequest
             'remark.required' => 'La :attribute es obligatoria.',
             'remark.string' => 'La :attribute debe ser una cadena de texto.',
             'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
-            'state_homework_id.required' => 'El :attribute es obligatorio.',
-            'state_homework_id.integer' => 'El :attribute debe ser un número entero.',
-            'state_homework_id.exists' => 'El :attribute no existe.',
-        ];       
+
+        ];
 
     }
     public function attributes(){
@@ -57,12 +55,12 @@ class StoreRequest extends FormRequest
             'date' => 'fecha',
             'client_id' => 'cliente',
             'remark' => 'observación',
-            'state_homework_id' => 'estado de la tarea',
+
         ];
     }
     protected function failedAuthorization()
     {
-        
+
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
     }

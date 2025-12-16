@@ -228,14 +228,14 @@
                 </div>
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Cliente*</label>
-                    <input list="clients" id="client_id" class="form-control" name="client_id" style="width:80%;font-size:12px; " />
-                    <datalist id="clients" style="width:80%;font-size:12px; ">
+                    <input type="text"  class="client form-control" name="client_id" style="width:80%;font-size:12px; " />
+                   <!-- <datalist id="clients" style="width:80%;font-size:12px; ">
                         @if (isset($clients))
                             @foreach($clients as $item)
                             <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>
                             @endforeach
                         @endif
-                    </datalist>
+                    </datalist>-->
                 </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
@@ -373,14 +373,14 @@
                 </div>
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Cliente*</label>
-                    <input list="clients" id="client_id" class="form-control" name="client_id" style="width:80%;font-size:12px; " />
-                    <datalist id="clients" style="width:80%;font-size:12px; ">
+                    <input type="text" class="client form-control" name="client_id" style="width:80%;font-size:12px; " />
+                   <!-- <datalist id="clients" style="width:80%;font-size:12px; ">
                         @if (isset($clients))
                             @foreach($clients as $item)
                             <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>
                             @endforeach
                         @endif
-                    </datalist>
+                    </datalist>-->
                 </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px">Tipo de novedad*</label>
@@ -454,6 +454,30 @@
             var client=$("#client").val();
             var app=$("#info").val();
             var urlBase=$("#base_url").val();
+            if( $("client"))
+            {
+                $(".client").autocomplete({
+                    source: function( request, response )
+                    {
+                        $.ajax( {
+                            url: urlBase+"clients/SearchByName",
+                            type: "GET",
+                            dataType: "json",
+                            data:
+                            {
+                                name: request.term
+                            },
+                            success: function( data )
+                            {
+                                response( data );
+                            }
+                        } );
+                    },
+                    minLength: 2,
+                } );
+
+
+            }
             if( $("#errors").length>0 )
             {
                 Swal.fire({

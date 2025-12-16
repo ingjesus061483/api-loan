@@ -2,7 +2,7 @@
 @section('title','Listado de novedades')
 @section('content')
 
-<div class="card mb-4" style="width: 70% ; margin:0 auto">
+<div class="card mb-4" style="width: 100% ; margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Listado de novedades
@@ -40,23 +40,24 @@
                         <i class="fa-solid fa-pencil"></i>
                     </a>
                 </td>
-                <td>{{$item->id}}</td>
-                <td> {{$item->user->name}}</td>
-                <td>{{$item->date}}</td>
-                <td>{{$item->client->identification}}</td>
-                <td>{{$item->newness_type->name}}</td>
-                <td>{{$item->remark}}</td>
-                <td>@switch($item->state_newness->id)
+                <td style="text-align: center;">{{$item->id}}</td>
+                <td style="text-align: center;"> {{$item->user->name}}</td>
+                <td style="text-align: center;">{{date("d/m/Y", strtotime($item->date))}}</td>
+                <td style="text-align: center;">{{$item->client->identification}}</td>
+                <td style="text-align: center;">{{$item->newness_type->name}}</td>
+                <td style="text-align: center;">{{$item->remark}}</td>
+                <td style="text-align: center;">
+                    @switch($item->state_newness->id)
                     @case(1)
-                        <span class="badge bg-success"><i class="fa-solid fa-circle-question"></i></span>
+                        <span class="badge bg-warning"><i class="fa-solid fa-circle-question"></i></span>
 
                         @break
 
                     @case(2)
-                        <span class="badge bg-warning"><i class="fa-solid fa-circle-check"></i></span>
+                        <span class="badge bg-success"><i class="fa-solid fa-circle-check"></i></span>
                         @break
-
-                @endswitch </td>
+                    @endswitch
+                </td>
             </tr>
             @endforeach
             </tbody>

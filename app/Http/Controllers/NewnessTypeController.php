@@ -8,6 +8,11 @@ use App\Http\Requests\NewnessType\UpdateRequest;
 use App\Http\Requests\AutorizeRequest;
 class NewnessTypeController extends Controller
 {
+    public function SearchByName(Request $request)
+    {
+        $newnesstypes=NewnessType::where('name','like','%'.$request->name.'%')->selectRaw("concat(id,'-', name)  as label")-> get();
+        return response()->json($newnesstypes);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +23,7 @@ class NewnessTypeController extends Controller
         //
     }
 
-   
+
 
     /**
      * Store a newly created resource in storage.
@@ -30,7 +35,7 @@ class NewnessTypeController extends Controller
             "description"=>$request->description
         ]);
         return back()->with(['message'=>'Tipo de novedad creada correctamente']);
-        
+
         //
     }
 
@@ -39,11 +44,12 @@ class NewnessTypeController extends Controller
      */
     public function show($id)
     {
+
         return response()->json(NewnessType::find($id));
         //
     }
 
-   
+
     /**
      * Update the specified resource in storage.
      */
@@ -65,7 +71,7 @@ class NewnessTypeController extends Controller
     public function destroy($id)
     {
         $newnessType=NewnessType::find($id);
-        $newnessType->delete();        
+        $newnessType->delete();
         return back()->with(['message'=>'Tipo de novedad actualizada correctamente']);
 
         //

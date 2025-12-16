@@ -37,9 +37,11 @@ Route::get('UnAutorize', function () {
 });
 Route::resource('Newness',NewnessController::class);
 Route::resource('NewnessType',NewnessTypeController::class);
+Route::get('NewnessType/SearchByName',[NewnessTypeController::class,'SearchByName']);
 Route::resource('users', UserController::class);
 Route::resource('authorizationPolicies',AuthorizationPolicyController::class);
 Route::patch('clients/UpdateDataProccess/{id}',[ClientController::class,'UpdateDataProccess']);
+Route::get('clients/SearchByName',[ClientController::class,'SearchByName']);
 Route::patch('clients/UpdateLawInformation/{id}',[ClientController::class,'UpdateLawInformation']);
 Route::patch('clients/UpdatePatrimonialInformation/{id}',[ClientController::class,'UpdatePatrimonialInformation']);
 Route::get('cities/GetCitiesByState/{stateId}',[CityController::class,'GetCitiesByState']);
