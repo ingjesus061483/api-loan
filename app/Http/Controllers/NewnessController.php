@@ -43,7 +43,7 @@ class NewnessController extends Controller
         Newness::create([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>$request->client_id,
+            'client_id'=>Client::where('identification', $request->client_id)->first()->id,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
             'state_newness_id'=>1

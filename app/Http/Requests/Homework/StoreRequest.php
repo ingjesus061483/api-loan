@@ -14,7 +14,15 @@ class StoreRequest extends FormRequest
     {
         return Auth::check();
     }
+public function prepareForValidation()
+    {
+            $client = explode('-', $this->client_id);
 
+        $this->merge([
+
+            'client_id' => trim($client[0]),
+        ]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +33,7 @@ class StoreRequest extends FormRequest
         return [
             'user_id' => 'required|integer|exists:users,id',
             'date' => 'required|date',
-            'client_id' => 'required|integer|exists:clients,id',
+            'client_id' => 'required|integer|exists:clients,identification',
             'remark' => 'required|string|max:255',
 
 

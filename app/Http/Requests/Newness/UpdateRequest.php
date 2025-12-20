@@ -34,7 +34,7 @@ class UpdateRequest extends FormRequest
         return [
             'user_id'=>'required|exists:users,id',
             'date'=>'required|date',
-            'client_id'=>'required|exists:clients,id',
+            'client_id'=>'required|exists:clients,identification',
             'newness_type_id'=>'required|exists:newness_types,id',
             'remark'=>'required|string|max:255',
             //

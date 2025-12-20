@@ -38,7 +38,7 @@ class HomeworkController extends Controller
         Homework::create([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>$request->client_id,
+            'client_id'=> Client::where('identification', $request->client_id)->first()->id,
             'remark'=>$request->remark,
             'state_homework_id'=>1
         ]);
