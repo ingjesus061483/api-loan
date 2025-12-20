@@ -42,17 +42,17 @@
                 <td style="text-align: center;">{{$item->id}}</td>
                 <td style="text-align: center;"> {{$item->user->name}}</td>
                 <td style="text-align: center;">{{date("d/m/Y", strtotime($item->date))}}</td>
-                <td style="text-align: center;">{{$item->client->identification}}</td>
+                <td style="text-align: center;">{{$item->client->identification.' '.$item->client->name_last_name}}</td>
                 <td style="text-align: center;">{{$item->remark}}</td>
                 <td style="text-align: center;">
                 @switch($item->statehomework->id)
                     @case(1)
-                        <span class="badge bg-warning"><i class="fa-solid fa-circle-question"></i></span>
+                        <span title="{{$item->statehomework->name}}" class="badge bg-warning"><i class="fa-solid fa-circle-question"></i></span>
 
                         @break
 
                     @case(2)
-                        <span class="badge bg-success"><i class="fa-solid fa-circle-check"></i></span>
+                        <span title="{{$item->statehomework->name}}" class="badge bg-success"><i class="fa-solid fa-circle-check"></i></span>
                         @break
                 @endswitch
                 </td>
