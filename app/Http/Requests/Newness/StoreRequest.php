@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Auth;
 
 class StoreRequest extends FormRequest
 {
+    public function prepareForValidation()
+    {
+        $newnessType = explode('-', $this->newness_type_id);
+        $client = explode('-', $this->client_id);
+        $this->merge([
+            'newness_type_id' => trim($newnessType[0]),
+            'client_id' => trim($client[0]),
+        ]);
+    }
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -45,7 +54,7 @@ class StoreRequest extends FormRequest
             'remark.required' => 'La :attribute es obligatoria.',
             'remark.string' => 'La :attribute debe ser una cadena de texto.',
             'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
-        ];    
+        ];
     }
     public function attributes()
     {
