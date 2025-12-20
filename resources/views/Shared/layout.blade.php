@@ -384,14 +384,15 @@
                 </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px">Tipo de novedad*</label>
-                    <select name="newness_type_id" class="form-select" style="width:80%;font-size:12px; " id="newness_type_id">
+                    <input type="text" class="form-control" name="newness_type_id" id="newness_type_id" style="width:80%;font-size:12px; ">
+                   <!-- <select name="newness_type_id" class="form-select" style="width:80%;font-size:12px; " id="newness_type_id">
                         <option value="">Seleccione una opcion</option>
                         @if(isset($newnesstypes))
                             @foreach ($newnesstypes as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         @endif
-                    </select>
+                    </select>-->
                 </div>
                 <div class="mb-3">
                     <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
@@ -454,6 +455,28 @@
             var client=$("#client").val();
             var app=$("#info").val();
             var urlBase=$("#base_url").val();
+            if($("#newness_type_id"))
+            {
+                $("#newness_type_id").autocomplete({
+                    source: function( request, response )
+                    {
+                        $.ajax( {
+                            url: urlBase+"NewnessType/SearchByName/0",
+                            type: "GET",
+                            dataType: "json",
+                            data:
+                            {
+                                name: request.term
+                            },
+                            success: function( data )
+                            {
+                                response( data );
+                            }
+                        } );
+                    },
+                    minLength: 2,
+                } );
+            }
             if( $("client"))
             {
                 $(".client").autocomplete({

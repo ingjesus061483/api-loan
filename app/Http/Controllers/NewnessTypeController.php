@@ -6,9 +6,10 @@ use App\Models\NewnessType;
 use App\Http\Requests\NewnessType\StoreRequest;
 use App\Http\Requests\NewnessType\UpdateRequest;
 use App\Http\Requests\AutorizeRequest;
+use Illuminate\Http\Request;
 class NewnessTypeController extends Controller
 {
-    public function SearchByName(Request $request)
+    public function SearchByName(Request $request,$id)
     {
         $newnesstypes=NewnessType::where('name','like','%'.$request->name.'%')->selectRaw("concat(id,'-', name)  as label")-> get();
         return response()->json($newnesstypes);
