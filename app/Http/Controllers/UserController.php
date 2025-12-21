@@ -65,7 +65,7 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->to('/');
     }
-  public function storelogin(LoginRequest $request)
+    public function storelogin(LoginRequest $request)
     {
         if(Auth::validate(['email'=>$request->email,
         'password'=>$request->password]))

@@ -30,7 +30,7 @@ class DocumentController extends Controller
         $data=[
         'documents'=>$documents];
         return response()->json($data);
-    
+
     }
     /**
      * Show the form for creating a new resource.
@@ -50,7 +50,7 @@ class DocumentController extends Controller
         $document=document::where('client_id',$request->client)->where('document_type_id',$request->document_type)->orderby('id','desc')->first();
         $id=$document? $document->id +1 :1;
         $name= $this->getImage($request,$document_type->name.$client->identification.$id);
-         Document::create([
+        Document::create([
             'client_id'=>$request->client,
             'document_type_id'=>$request->document_type,
             'name'=>$name,

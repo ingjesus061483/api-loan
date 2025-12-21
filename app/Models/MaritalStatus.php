@@ -11,9 +11,7 @@ class MaritalStatus extends Model
     protected $table = 'marital_status';
     public function clients()
     {
-        
-            return $this->hasMany(Client::class,'marital_status_id');
-              
+        return $this->hasMany(Client::class,'marital_status_id');
     }
 
 }

@@ -16,8 +16,8 @@ class AuthorizationPolicyController extends Controller
     {
        $data=[
         "policies"=> AuthorizationPolicy::all(),
-         ];
-        return view("AuthorizationPolicies.index",$data);
+       ];
+       return view("AuthorizationPolicies.index",$data);
         //
     }
 
@@ -46,7 +46,7 @@ class AuthorizationPolicyController extends Controller
      * Display the specified resource.
      */
     public function show(AutorizeRequest $request,int $id)
-    { 
+    {
         return response()->json(AuthorizationPolicy::find($id));
         //
     }

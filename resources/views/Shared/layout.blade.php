@@ -264,16 +264,11 @@
                     <label class="form-label" for="" style="font-size:14px"> Telefono*</label>
                     <input type="text" name="phone" class="form-control" style="width:80%;font-size:12px" id="phone">
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label" for="" style="font-size:14px"> Email*</label>
                     <input type="email" name="email" class="form-control" style="width:80%;font-size:12px" id="email">
                 </div>
-
-
-
             </form>
-
         </div>
         <div title="Tipo de documento" id="dialogDocumentType">
             <form id ="frmDocumentType" action="{{url('/DocumentType')}}" method="POST" autocomplete="off">
@@ -304,7 +299,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
         <div title="Adjuntar documentos" id ="dialogAttach">
             <form id="frmAttach" autocomplete="off" enctype="multipart/form-data" method="POST" action=" {{url('/documents')}}">

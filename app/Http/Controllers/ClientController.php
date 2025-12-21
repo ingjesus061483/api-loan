@@ -286,7 +286,7 @@ class ClientController extends Controller
                                                         FROM
                                                         documents
                                                         WHERE
-                                                        client_id={$client->id} and
+                                                        client_id={$client?->id} and
                                                         document_type_id=`document_types`.id) amount ");
         $policies=AuthorizationPolicy::count();
         $policiesclients=ClientPolicy::where('client_id',$client?->id);
@@ -296,7 +296,7 @@ class ClientController extends Controller
         if($contactInfos->count()==0)
         {
             session(["info"=>"contact"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client?->id]);
         }
         if($EmploymentInformation==null)
         {
@@ -329,13 +329,13 @@ class ClientController extends Controller
     {
         if(request()-> has('identification'))
         {
-           $client=Client::where('identification','=',request()->identification)->first();
-           if($client==null)
-           {
-             return redirect()->to(url('/clients/create'))->withErrors('No se ha encontrado un cliente
+            $client=Client::where('identification','=',request()->identification)->first();
+            if($client==null)
+            {
+                return redirect()->to(url('/clients/create'))->withErrors('No se ha encontrado un cliente
                                                                         con la identificación ingresada');
-           }
-          return $this-> redirectToClient($client);
+            }
+            return $this-> redirectToClient($client);
         }
         $client=session()->has('client')?session('client'):null;
         if($client!=null)
@@ -385,7 +385,7 @@ class ClientController extends Controller
             'Warranties'=>$this->Warranties->get(),
             'States'=>$this->States->get(),
         ];
-        return view ('Client.edit',$data);
+        return view('Client.edit',$data);
         //
     }
 

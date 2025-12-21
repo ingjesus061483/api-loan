@@ -45,7 +45,6 @@ class NewnessTypeController extends Controller
      */
     public function show($id)
     {
-
         return response()->json(NewnessType::find($id));
         //
     }
@@ -62,7 +61,6 @@ class NewnessTypeController extends Controller
             "description"=>$request->description
         ]);
         return back()->with(['message'=>'Tipo de novedad actualizada correctamente']);
-
         //
     }
 
@@ -73,8 +71,7 @@ class NewnessTypeController extends Controller
     {
         $newnessType=NewnessType::find($id);
         $newnessType->delete();
-        return back()->with(['message'=>'Tipo de novedad actualizada correctamente']);
-
+        return back()->with(['message'=>'Tipo de novedad eliminada correctamente']);
         //
     }
 }
