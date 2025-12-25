@@ -24,12 +24,24 @@
                             },
                             success: function( data )
                             {
-                                response( data );
+                                 response(
+                                    $.map( data, function( item )
+                                    {
+                                        return{
+                                            label: item.name,
+                                            value: item.id
+                                        }
+                                 }));
+                             //   response( data );
                             }
                         });
                     },
-                    minLength: 2,
+                    minLength: 0,
                 });
+            }
+            function focus(e)
+            {
+                e.value='a ';
             }
             if( $("client"))
             {

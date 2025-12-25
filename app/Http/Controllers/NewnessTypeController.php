@@ -11,7 +11,7 @@ class NewnessTypeController extends Controller
 {
     public function SearchByName(Request $request,$id)
     {
-        $newnesstypes=NewnessType::where('name','like','%'.$request->name.'%')->selectRaw("concat(id,'-', name)  as label")-> get();
+        $newnesstypes=NewnessType::where('name','like','%'.$request->name.'%')->select("id", "name")-> get();
         return response()->json($newnesstypes);
     }
     /**

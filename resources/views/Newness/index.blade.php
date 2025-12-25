@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
         <div style="padding: 5px">
-            <a  title="Crear Novedad" id="btnNewness" class="btn btn-primary" ><i class="fa-solid fa-newspaper"></i></a>
+            <a  title="Crear Novedad" href="{{url('/Newness/create')}}" class="btn btn-primary" ><i class="fa-solid fa-newspaper"></i></a>
         </div>
         <table  class="table table-hover table-bordered" style="width: 100%" >
             <thead style ="font-size: 14px" >

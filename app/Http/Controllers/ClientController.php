@@ -121,7 +121,8 @@ class ClientController extends Controller
     public function SearchByName(Request $request)
     {
         $clients=Client::where('clients.name_last_name','like','%'.$request->name.'%')
-                      ->selectRaw( "concat(identification,' - ', name_last_name) as label ")
+                      ->select( "id")
+                      ->selectRaw("name_last_name as name")
                       ->get();
         return response()->json($clients);
     }
