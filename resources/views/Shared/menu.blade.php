@@ -18,7 +18,7 @@
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                                 Tareas
                             </a>
-                            <a class="nav-link" href="{{url('/Newness')}}">
+                            <a class="nav-link" href="{{url('/Newness/create')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-newspaper"></i></div>
                                 Novedades
 

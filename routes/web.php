@@ -52,6 +52,7 @@ Route::resource('loans', LoanController::class);
 Route::get('users/login/{id}',[UserController::class,'login']);
 Route::post('users/sigin',[UserController::class,'storelogin']);
 Route::post('users/logout',[UserController::class,'logout']);
+Route::patch('news/changeStateNewness/{id}',[NewnessController::class,'changeStateNewness']);
 
 Route::resource('arls',ArlController::class);
 Route::resource('eps',EpsController::class);

@@ -8,7 +8,7 @@ use App\Http\Requests\Newness\StoreRequest;
 use App\Http\Requests\Newness\UpdateRequest;
 use App\Models\Client;
 use App\Models\NewnessType;
-
+use App\Models\StateNewness;
 class NewnessController extends Controller
 {
     /**
@@ -21,10 +21,17 @@ class NewnessController extends Controller
             'newnesses'=>Newness::all(),
             'clients'=>Client::all(),
             'newnesstypes'=>NewnessType::all(),
+            'state_newnesses'=>StateNewness::all()
         ];
         return view ('Newness.index',$data);
 
         //
+    }
+    public function changeStateNewness( request $request, $id)
+    {
+        $newness=Newness::find($id);
+        $newness->update(['state_newness_id'=>$request->state_newness_id]);
+        return response()->json(['message'=>'Estado de novedad actualizado correctamente']);
     }
 
     /**
@@ -49,7 +56,7 @@ class NewnessController extends Controller
             'remark'=>$request->remark,
             'state_newness_id'=>1
         ]);
-        return back()->with(['message'=>'Novedad creada correctamente']);
+        return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
         //
     }
 

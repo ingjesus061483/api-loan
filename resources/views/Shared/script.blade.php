@@ -29,7 +29,7 @@
                                     {
                                         return{
                                             label: item.name,
-                                            value: item.id
+                                            value: item.id+" - "+item.name
                                         }
                                  }));
                              //   response( data );
@@ -43,7 +43,7 @@
             {
                 e.value='a ';
             }
-            if( $("client"))
+            if( $(".client"))
             {
                 $(".client").autocomplete({
                     source: function( request, response )
@@ -58,7 +58,14 @@
                             },
                             success: function( data )
                             {
-                                response( data );
+                               response(
+                                    $.map( data, function( item )
+                                    {
+                                        return{
+                                            label: item.name,
+                                            value: item.id+" - "+item.name
+                                        }
+                                 }));
                             }
                         } );
                     },
@@ -168,6 +175,45 @@
                     [{
                         className: "dt-head-center", targets: [ 0 ]
                     }],      */
+                });
+            }
+            function cambiarEstadoNewness(id,this){
+                var state_newness_id=this.value;
+                var url=urlBase+"Newness/ChangeStateNewness/"+id;//"{{url('/Newness/ChangeStateNewness/')}}/"+id;
+                var data={
+                    state_newness_id:state_newness_id,
+                    _token: "{{ csrf_token() }}"
+                    method: "patch"
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data:data,
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result);
+                        Swal.fire({
+                            title: "Información",
+                            icon: "info",
+                            html:result.message,
+                            draggable: true
+                        }).then((result)=>
+                        {
+                            location.reload();
+                        });
+
+                    },
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
                 });
             }
             function abrirInfopersonal(us ,cli)

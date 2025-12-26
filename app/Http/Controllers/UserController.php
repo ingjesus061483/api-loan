@@ -76,7 +76,7 @@ class UserController extends Controller
             Auth::login($user);
             return redirect()->to('/');
         }
-        return redirect()->to('login')->withErrors('Usuario o contraseña inválido');
+        return back()->withErrors('Usuario o contraseña inválido');
 
     }
     //

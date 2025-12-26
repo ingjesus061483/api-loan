@@ -13,11 +13,11 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::chack();
+        return Auth::check();
     }
     protected function failedAuthorization()
     {
-        
+
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
     }
