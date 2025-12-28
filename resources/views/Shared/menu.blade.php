@@ -14,7 +14,7 @@
                                     <a class="nav-link" href="{{url('/authorizationPolicies')}}"> Politicas y autorizaciones</a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="{{url('/homework')}}">
+                            <a class="nav-link" href="{{url('/homework/create')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                                 Tareas
                             </a>

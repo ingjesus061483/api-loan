@@ -18,33 +18,45 @@ class ArlController extends Controller
     {
         $data=[
             'arls'=>ArlAffiliate::all()
-        ];  
+        ];
         return view('Arl.index',$data);
         //
     }
     public function store(StoreRequest $request)
     {
-        $ArlAffiliate=new ArlAffiliate();
-        $ArlAffiliate->name=$request->name;
-        $ArlAffiliate->description=$request->description;
-        $ArlAffiliate->save();                
-        return back()->with(['message'=>'ARL afiliada creada correctamente']);
+        try{
+            $ArlAffiliate=new ArlAffiliate();
+            $ArlAffiliate->name=$request->name;
+            $ArlAffiliate->description=$request->description;
+            $ArlAffiliate->save();
+            return back()->with(['message'=>'ARL afiliada creada correctamente']);
+        }catch(\Exception $e){
+            return back()->with(['error'=>$e->getMessage()]);
+        }
     }
     public function destroy($id)
-    {        
-        $ArlAffiliate=ArlAffiliate::find($id);                                    
-        $ArlAffiliate->delete();                
+    {
+        try{
+        $ArlAffiliate=ArlAffiliate::find($id);
+        $ArlAffiliate->delete();
         return back()->with(['message'=>'ARL afiliada eliminada correctamente']);
+        }catch(\Exception $e){
+            return back()->with(['error'=>$e->getMessage()]);
+        }
     }
     public function update(UpdateRequest $request ,$id)
-    {       
+    {
+        try{
         $ArlAffiliate=ArlAffiliate::find($id);
         $arrArl=[
             'name'=>$request->name,
             'description'=>$request->description
         ];
-        $ArlAffiliate->update($arrArl);        
+        $ArlAffiliate->update($arrArl);
         return back()->with(['message'=>'ARL afiliada actualizada correctamente']);
-    }
+        }catch(\Exception $e){
+            return back()->with(['error'=>$e->getMessage()]);
+        }
     //
+    }
 }

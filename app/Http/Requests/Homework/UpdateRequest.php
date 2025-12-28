@@ -14,6 +14,15 @@ class UpdateRequest extends FormRequest
     {
         return Auth::check();
     }
+    public function prepareForValidation()
+    {
+            $client = explode('-', $this->client_id);
+
+        $this->merge([
+
+            'client_id' => trim($client[0]),
+        ]);
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -27,7 +36,7 @@ class UpdateRequest extends FormRequest
             'date' => 'required|date',
             'client_id' => 'required|integer|exists:clients,id',
             'remark' => 'required|string|max:255',
-            'state_homework_id' => 'required|integer|exists:state_homework,id',
+
 
             //
         ];
@@ -48,7 +57,7 @@ class UpdateRequest extends FormRequest
             'state_homework_id.required' => 'El :attribute es obligatorio.',
             'state_homework_id.integer' => 'El :attribute debe ser un número entero.',
             'state_homework_id.exists' => 'El :attribute no existe.',
-        ];       
+        ];
     }
     public function attributes(){
         return [
@@ -61,7 +70,7 @@ class UpdateRequest extends FormRequest
     }
     protected function failedAuthorization()
     {
-        
+
         throw new HttpResponseException(response()->redirectTo(url('/UnAutorize'))
             ->with(['error' => 'Esta accion no esta autorizada!']));
     }

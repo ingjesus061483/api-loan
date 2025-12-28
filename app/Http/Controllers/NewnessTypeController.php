@@ -9,9 +9,14 @@ use App\Http\Requests\AutorizeRequest;
 use Illuminate\Http\Request;
 class NewnessTypeController extends Controller
 {
+    protected $newnessTypes;
+    public function __construct()
+    {
+        $this->newnessTypes=NewnessType::orderby('name','asc');
+    }
     public function SearchByName(Request $request,$id)
     {
-        $newnesstypes=NewnessType::where('name','like','%'.$request->name.'%')->select("id", "name")-> get();
+        $newnesstypes=$this->newnessTypes->where('name','like','%'.$request->name.'%')->select("id", "name")-> get();
         return response()->json($newnesstypes);
     }
     /**
@@ -19,7 +24,7 @@ class NewnessTypeController extends Controller
      */
     public function index(AutorizeRequest $request)
     {
-        $data=['NewnessTypes'=>NewnessType::all()];
+        $data=['NewnessTypes'=>$this->newnessTypes->get()];
         return view('NewnessType.index',$data);
         //
     }

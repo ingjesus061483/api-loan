@@ -69,7 +69,7 @@
                             }
                         } );
                     },
-                    minLength: 2,
+                    minLength: 0,
                 } );
 
 
@@ -177,14 +177,12 @@
                     }],      */
                 });
             }
-            function cambiarEstadoNewness(id,this){
-                var state_newness_id=this.value;
-                var url=urlBase+"Newness/ChangeStateNewness/"+id;//"{{url('/Newness/ChangeStateNewness/')}}/"+id;
+            function cambiarEstadoHomework(id,combo){
+                var state_homework_id=combo.value;
+                var url=urlBase+"homework/changeStateHomework/"+id;//"{{url('/homework/ChangeStateHomework/')}}/"+id;
                 var data={
-                    state_newness_id:state_newness_id,
-                    _token: "{{ csrf_token() }}"
-                    method: "patch"
-                };
+                    state_homework_id:state_homework_id,
+                    _token: "{{ csrf_token() }}"                };
                 $.ajax({
                     url: url,
                     type: "POST",
@@ -192,17 +190,8 @@
                     dataType: "json",
                     success: function (result)
                     {
-                        console.log(result);
-                        Swal.fire({
-                            title: "Información",
-                            icon: "info",
-                            html:result.message,
-                            draggable: true
-                        }).then((result)=>
-                        {
-                            location.reload();
-                        });
-
+                        console.log(result.message);
+                        location.reload();
                     },
                     error: function (ajaxContext)
                     {
@@ -215,6 +204,40 @@
                         //alert(ajaxContext.responseText)
                     }
                 });
+            }
+            function cambiarEstadoNewness(id,combo){
+                var state_newness_id=combo.value;
+                var url=urlBase+"Newness/changeStateNewness/"+id;//"{{url('/Newness/ChangeStateNewness/')}}/"+id;
+                var data={
+                    state_newness_id:state_newness_id,
+                    _token: "{{ csrf_token() }}"
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data:data,
+                    dataType: "json",
+                    success: function (result)
+                    {
+                        console.log(result.message);
+                        location.reload();
+                    },
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+            }
+            function editarNovedad(id)
+            {
+                url=urlBase+"Newness/"+id+"/edit";//"{{url('/Newness')}}/"+id+"/edit";
+                window.location.href=url;
             }
             function abrirInfopersonal(us ,cli)
             {

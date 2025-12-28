@@ -22,7 +22,7 @@
                     <th style="text-align: center">NOVEDAD</th>
                     <th style="text-align: center">ESTADO</th>
                      <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+
                 </tr>
             </thead>
             <tbody style ="font-size: 12px" >
@@ -35,31 +35,24 @@
                 <td style="text-align: center;">{{$item->newness_type->name}}</td>
                 <td style="text-align: center;">{{$item->remark}}</td>
                 <td style="text-align: center;">
-                      @switch($item->state_newness->id)
-                    @case(1)
-                        <span title="{{$item->state_newness->name}}" class="badge bg-warning"><i class="fa-solid fa-circle-question"></i></span>
-
-                        @break
-
-                    @case(2)
-                        <span title="{{$item->state_newness->name}}" class="badge bg-success"><i class="fa-solid fa-circle-check"></i></span>
-                        @break
-                    @endswitch
-                    <select class="form-select" onchange="cambiarEstadoNewness({{$item->id}},this)" aria-label="Default select example" style="font-size:12px">
+                    <select class="form-select"  onchange="cambiarEstadoNewness({{$item->id}},this)" aria-label="Default select example" style="font-size:12px;
+                        {{$item->state_newness->id==1?'background-color:rgba(172,63,71,0.5);':''}} {{$item->state_newness->id==2?'background-color:rgba(75,181,67,0.5);':''}}
+                        text-align:center;color:black;font-weight:bold">
                         @foreach ($state_newnesses as $state)
-                            <option value="{{$state->id}}" {{$item->state_newness->id==$state->id?'selected':''}}>{{$state->name}}</option>
+                        <option value="{{$state->id}}"  {{$item->state_newness->id==$state->id?'selected':''}}
+                            @switch($state->id)
+                                @case(1)
+                                    style="background-color:rgba(172,63,71,0.5);color:black;font-weight:bold"
+                                    @break
+                                @case(2)
+                                    style="background-color:rgba(75,181,67,0.5);color:black;font-weight:bold"
+                                    @break
+                            @endswitch>{{$state->name}}</option>
                         @endforeach
                     </select>
                 </td>
-                <td style="text-align: center">
-                    <form method="POST" action="{{url('/eps')}}/{{$item->id}}"  style="display:inline">
-                        @csrf
-                        {{method_field('DELETE')}}
-                        <button type="button" title="Eliminar" class="btn btn-danger btn-sm" onclick="validar(this,'¿Desea eliminar el registro?')"><i class="fa-solid fa-trash"></i></button>
-                    </form>
-                </td >
                 <td style="text-align: center;">
-                    <a title="Editar" onclick="editarEps({{$item->id}})" class="btn btn-warning btn-sm">
+                    <a title="Editar" href="{{url('/Newness/'.$item->id.'/edit')}}" class="btn btn-warning btn-sm">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
                 </td>

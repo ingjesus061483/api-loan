@@ -34,11 +34,15 @@ class AuthorizationPolicyController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $authorizationPolicy=new AuthorizationPolicy();
-        $authorizationPolicy->title=$request->title;
-        $authorizationPolicy->description=$request->description;
-        $authorizationPolicy->save();
-        return back()->with(['message'=>'Política de autorización creada correctamente']);
+        try{
+            $authorizationPolicy=new AuthorizationPolicy();
+            $authorizationPolicy->title=$request->title;
+            $authorizationPolicy->description=$request->description;
+            $authorizationPolicy->save();
+            return back()->with(['message'=>'Política de autorización creada correctamente']);
+        }catch(\Exception $e){
+            return back()->with(['error'=>$e->getMessage()]);
+        }
         //
     }
 
@@ -64,6 +68,7 @@ class AuthorizationPolicyController extends Controller
      */
     public function update(UpdateRequest $request, int $id)
     {
+        try{
         $authorizationPolicy=AuthorizationPolicy::find($id);
         $arrAuthorizationPolicy=[
             'title'=>$request->title,
@@ -71,7 +76,9 @@ class AuthorizationPolicyController extends Controller
         ];
         $authorizationPolicy->update($arrAuthorizationPolicy);
         return back()->with(['message'=>'Política de autorización actualizada correctamente']);
-
+        }catch(\Exception $e){
+            return back()->with(['error'=>$e->getMessage()]);
+        }
         //
     }
 
@@ -80,9 +87,13 @@ class AuthorizationPolicyController extends Controller
      */
     public function destroy(int $id)
     {
+        try{
         $authorizationPolicy=AuthorizationPolicy::find($id);
         $authorizationPolicy->delete();
         return back()->with(['message'=>'Política de autorización eliminada correctamente']);
+        }catch(\Exception $e){
+            return back()->with(['error'=>$e->getMessage()]);
+        }
         //
     }
 }

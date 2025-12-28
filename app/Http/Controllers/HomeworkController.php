@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AutorizeRequest;
 use App\Models\Homework;
+use Illuminate\Http\Request;
 use App\Http\Requests\Homework\StoreRequest;
 use App\Http\Requests\Homework\UpdateRequest;
 use App\Models\Client;
 class HomeworkController extends Controller
 {
+    public function changeStateHomework( Request $request, $id)
+    {
+        $homework=Homework::find($id);
+        $homework->update(['state_homework_id'=>$request->state_homework_id]);
+        return response()->json(['message'=>'Estado de tarea actualizado correctamente']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -17,6 +24,7 @@ class HomeworkController extends Controller
         $data=[
             'homeworks'=>Homework::all(),
             'clients'=>Client::all(),
+            'state_homeworks'=>\App\Models\StateHomework::all()
         ];
         return view ('Homework.index',$data);
         //
@@ -27,6 +35,8 @@ class HomeworkController extends Controller
      */
     public function create()
     {
+        return view('Homework.create');
+
         //
     }
 
@@ -38,11 +48,12 @@ class HomeworkController extends Controller
         Homework::create([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=> Client::where('identification', $request->client_id)->first()->id,
+            'client_id'=>$request->client_id,
             'remark'=>$request->remark,
             'state_homework_id'=>1
         ]);
-        return back()->with(['message'=>'Tarea creada correctamente']);
+        return redirect()->to('/homework')->with(['message'=>'Tarea creada correctamente']);
+
         //
     }
 
@@ -58,8 +69,10 @@ class HomeworkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Homework $homework)
+    public function edit($id)
     {
+        $homework=Homework::find($id);
+        return view('Homework.edit',['homework'=>$homework]);
         //
     }
 
@@ -76,7 +89,8 @@ class HomeworkController extends Controller
             'remark'=>$request->remark,
             'state_homework_id'=>$request->state_homework_id
         ]);
-        return back()->with(['message'=>'Tarea actualizada correctamente']);
+        return redirect()->to('/homework')->with(['message'=>'Tarea actualizada correctamente']);
+
 
         //
     }

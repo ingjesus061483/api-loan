@@ -21,7 +21,7 @@ class Homework extends Model
     public function client(){
         return $this->belongsTo(Client::class,'client_id');
     }
-    public function statehomework(){
+    public function state_homework(){
         return $this->belongsTo(StateHomework::class,'state_homework_id');
     }
 }

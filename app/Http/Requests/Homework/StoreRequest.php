@@ -33,7 +33,7 @@ public function prepareForValidation()
         return [
             'user_id' => 'required|integer|exists:users,id',
             'date' => 'required|date',
-            'client_id' => 'required|integer|exists:clients,identification',
+            'client_id' => 'required|integer|exists:clients,id',
             'remark' => 'required|string|max:255',
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AutorizeRequest;
 use App\Models\Newness;
+use Illuminate\Http\Request;
 use App\Http\Requests\Newness\StoreRequest;
 use App\Http\Requests\Newness\UpdateRequest;
 use App\Models\Client;
@@ -27,7 +28,7 @@ class NewnessController extends Controller
 
         //
     }
-    public function changeStateNewness( request $request, $id)
+    public function changeStateNewness( Request $request, $id)
     {
         $newness=Newness::find($id);
         $newness->update(['state_newness_id'=>$request->state_newness_id]);
@@ -51,7 +52,7 @@ class NewnessController extends Controller
         Newness::create([
             'user_id'=>$request->user_id,
             'date'=>$request->date,
-            'client_id'=>Client::where('identification', $request->client_id)->first()->id,
+            'client_id'=>$request->client_id,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
             'state_newness_id'=>1
@@ -71,8 +72,15 @@ class NewnessController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Newness $newness)
+    public function edit( $id)
     {
+        $data=[
+            'newness'=>Newness::find($id),
+            'clients'=>Client::all(),
+            'newnesstypes'=>NewnessType::all(),
+            'state_newnesses'=>StateNewness::all()
+        ];
+        return view('Newness.edit',$data);
         //
     }
 
@@ -81,6 +89,7 @@ class NewnessController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
+
         $newness=Newness::find($id);
         $arrNewness=[
             'user_id'=>$request->user_id,
@@ -91,7 +100,7 @@ class NewnessController extends Controller
             'state_newness_id'=>$request->state_newness_id
         ];
         $newness->update($arrNewness);
-        return back()->with(['message'=>'Novedad actualizada correctamente']);
+       return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
 
         //
     }
