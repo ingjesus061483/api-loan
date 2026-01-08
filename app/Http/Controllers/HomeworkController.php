@@ -7,7 +7,9 @@ use App\Models\Homework;
 use Illuminate\Http\Request;
 use App\Http\Requests\Homework\StoreRequest;
 use App\Http\Requests\Homework\UpdateRequest;
+use \App\Models\StateHomework;
 use App\Models\Client;
+use App\Models\HomeworkType;
 class HomeworkController extends Controller
 {
     public function changeStateHomework( Request $request, $id)
@@ -24,7 +26,7 @@ class HomeworkController extends Controller
         $data=[
             'homeworks'=>Homework::all(),
             'clients'=>Client::all(),
-            'state_homeworks'=>\App\Models\StateHomework::all()
+            'state_homeworks'=>StateHomework::all()
         ];
         return view ('Homework.index',$data);
         //
@@ -33,9 +35,13 @@ class HomeworkController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(AutorizeRequest $request)
     {
-        return view('Homework.create');
+        $data=[
+            'state_homeworks'=>StateHomework::all(),
+            'homework_types'=>HomeworkType::all()
+        ];
+        return view('Homework.create',$data);
 
         //
     }
@@ -50,7 +56,8 @@ class HomeworkController extends Controller
             'date'=>$request->date,
             'client_id'=>$request->client_id,
             'remark'=>$request->remark,
-            'state_homework_id'=>1
+            'state_homework_id'=>1,
+            'homework_type_id'=>$request->homework_type_id
         ]);
         return redirect()->to('/homework')->with(['message'=>'Tarea creada correctamente']);
 
@@ -87,7 +94,8 @@ class HomeworkController extends Controller
             'date'=>$request->date,
             'client_id'=>$request->client_id,
             'remark'=>$request->remark,
-            'state_homework_id'=>$request->state_homework_id
+            'state_homework_id'=>$request->state_homework_id,
+            'homework_type_id'=>$request->homework_type_id
         ]);
         return redirect()->to('/homework')->with(['message'=>'Tarea actualizada correctamente']);
 

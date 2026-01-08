@@ -19,6 +19,7 @@
                     <th style="text-align: center">FECHA</th>
                     <th style="text-align: center" >CLIENTE	</th>
                     <th style="text-align: center">TAREA</th>
+                    <th style="text-align: center">TIPO DE TAREA</th>
                     <th style="text-align: center">ESTADO</th>
                      <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
@@ -32,6 +33,7 @@
                 <td style="text-align: center;">{{date("d/m/Y", strtotime($item->date))}}</td>
                 <td style="text-align: center;">{{$item->client->identification.' '.$item->client->name_last_name }}</td>
                 <td style="text-align: center;">{{$item->remark}}</td>
+                <td style="text-align: center;">{{$item->homework_type->name}}</td>
                 <td style="text-align: center;">
                     <select class="form-select"  onchange="cambiarEstadoHomework({{$item->id}},this)" aria-label="Default select example" style="font-size:12px;
                         {{$item->state_homework->id==1?'background-color:rgba(172,63,71,0.5);':''}} {{$item->state_homework->id==2?'background-color:rgba(75,181,67,0.5);':''}}

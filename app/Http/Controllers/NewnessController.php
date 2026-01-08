@@ -40,7 +40,8 @@ class NewnessController extends Controller
      */
     public function create()
     {
-        return view('Newness.create');
+         $data=['state_newnesses'=>StateNewness::all()];
+        return view('Newness.create',$data);
         //
     }
 
@@ -55,7 +56,7 @@ class NewnessController extends Controller
             'client_id'=>$request->client_id,
             'newness_type_id'=>$request->newness_type_id,
             'remark'=>$request->remark,
-            'state_newness_id'=>1
+            'state_newness_id'=>$request->state_newness_id
         ]);
         return redirect()->to('/Newness')->with(['message'=>'Novedad creada correctamente']);
         //

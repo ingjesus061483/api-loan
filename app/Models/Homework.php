@@ -13,7 +13,8 @@ class Homework extends Model
         'date',
         'client_id',
         'remark',
-        'state_homework_id'
+        'state_homework_id',
+        'homework_type_id'
     ];
     public function user(){
         return $this->belongsTo(User::class,'user_id');
@@ -23,5 +24,8 @@ class Homework extends Model
     }
     public function state_homework(){
         return $this->belongsTo(StateHomework::class,'state_homework_id');
+    }
+    public function homework_type(){
+        return $this->belongsTo(HomeworkType::class,'homework_type_id');
     }
 }

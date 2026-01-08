@@ -16,6 +16,7 @@
                     {
                         $.ajax({
                             url: urlBase+"NewnessType/SearchByName/0",
+
                             type: "GET",
                             dataType: "json",
                             data:
@@ -39,9 +40,10 @@
                     minLength: 0,
                 });
             }
-            function focus(e)
+            function focus(text)
             {
-                e.value='a ';
+                alert("focus");
+                text.value=' ';
             }
             if( $(".client"))
             {
@@ -176,6 +178,28 @@
                         className: "dt-head-center", targets: [ 0 ]
                     }],      */
                 });
+            }
+            function cambiarColor(combo)
+            {
+                var state_homework_id=combo.value;
+                switch(state_homework_id)
+                {
+                    case '1':
+                        combo.style.backgroundColor="rgba(217, 18, 18, 0.8)";
+                        combo.style.color="white";
+                       // combo.style.fontWeight="bold";
+                        break;
+                    case '2':
+                        combo.style.backgroundColor="rgba(0, 100, 0, 0.8)";
+                        combo.style.color="white";
+                       // combo.style.fontWeight="bold";
+                        break;
+                    default:
+                        combo.style.backgroundColor="";
+                        combo.style.color="black";
+                        combo.style.fontWeight="normal";
+                        break;
+                }
             }
             function cambiarEstadoHomework(id,combo){
                 var state_homework_id=combo.value;

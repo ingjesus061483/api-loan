@@ -57,6 +57,9 @@ class UpdateRequest extends FormRequest
             'state_homework_id.required' => 'El :attribute es obligatorio.',
             'state_homework_id.integer' => 'El :attribute debe ser un número entero.',
             'state_homework_id.exists' => 'El :attribute no existe.',
+            'homework_type_id.required' => 'El :attribute es obligatorio.',
+            'homework_type_id.integer' => 'El :attribute debe ser un número entero.',
+            'homework_type_id.exists' => 'El :attribute no existe.',
         ];
     }
     public function attributes(){
@@ -66,6 +69,7 @@ class UpdateRequest extends FormRequest
             'client_id' => 'cliente',
             'remark' => 'observación',
             'state_homework_id' => 'estado de la tarea',
+            'homework_type_id' => 'tipo de tarea',
         ];
     }
     protected function failedAuthorization()

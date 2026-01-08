@@ -37,6 +37,7 @@ class StoreRequest extends FormRequest
             'client_id'=>'required|exists:clients,id',
             'newness_type_id'=>'required|exists:newness_types,id',
             'remark'=>'required|string|max:255',
+            'state_newness_id'=>'required|exists:state_newness,id',
                   //
         ];
     }
@@ -54,6 +55,8 @@ class StoreRequest extends FormRequest
             'remark.required' => 'La :attribute es obligatoria.',
             'remark.string' => 'La :attribute debe ser una cadena de texto.',
             'remark.max' => 'La :attribute no debe ser mayor a 255 caracteres.',
+            'state_newness_id.required' => 'El :attribute es obligatorio.',
+            'state_newness_id.exists' => 'El :attribute no existe.',
         ];
     }
     public function attributes()
@@ -64,6 +67,7 @@ class StoreRequest extends FormRequest
             'client_id' => 'cliente',
             'newness_type_id' => 'tipo de novedad',
             'remark' => 'observacion',
+            'state_newness_id' => 'estado de novedad',
         ];
     }
 
