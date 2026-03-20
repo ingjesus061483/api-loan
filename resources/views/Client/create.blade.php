@@ -12,38 +12,39 @@
     </form>
     @else
     <a href="{{url('/clients')}}/{{$client->id}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
-        <i class="fa-solid fa-user-tie"></i>&nbsp;{{$client->name_last_name}}</a>
+        <i class="fa-solid fa-user-tie"></i>&nbsp;{{$client->name_last_name}}
+    </a>
     @endif
 </div>
 <div style="padding:5px;" >
     <div class="row" style="margin-top:5px">
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px" >
             <a id="btnInfoPersonal" style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='client'?'btn btn-info':'btn btn-primary'}}" >Información personal</a>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px">
             <a id="btnDatosContacto"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='contact'?'btn btn-info':'btn btn-primary'}}">Información de contacto</a>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px">
             <a id="btnInfoLaboral"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='employment'?'btn btn-info':'btn btn-primary'}}">Información laboral</a>
         </div>
     </div>
     <div class ="row" style="margin-top:5px">
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px">
             <a id="btnInfoPatrimonial"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='patrimonial'?'btn btn-info':'btn btn-primary'}}">Información patrimonial</a>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px">
             <a id="btnInfoLegal"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='law'?'btn btn-info':'btn btn-primary'}}">Información Legal </a>
         </div>
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px">
             <a id="btnInfoCredito"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='loan'?'btn btn-info':'btn btn-primary'}}">Acerca del crédito   </a>
         </div>
     </div>
     <div class="row" style="margin-top:5px">
-        <div class="col-4">
+        <div class="col-sm-4" style="margin-top: 5px">
             <a id="btnPoltrataDatosPers"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='PersonData'?'btn btn-info':'btn btn-primary'}}">Tratamiento de datos </a>
         </div>
-        <div class="col-4">
-            <a id="btnPolAutorizaciones"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas Autorizaciones</a>
+        <div class="col-sm-4" style="margin-top: 5px">
+            <a id="btnPolAutorizaciones"style="width:100%;height:50px;font-size:12px;font-weight:bold;padding:5px" class="{{$info=='AuthorizeProtocol'?'btn btn-info':'btn btn-primary'}}">Políticas y Autorizaciones</a>
         </div>
     </div>
 </div>
@@ -62,8 +63,8 @@
         </div>
         @if(count($policies)>0)
         <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
-            <div class="card-header">              
-                POLITICAS 
+            <div class="card-header">
+                POLITICAS
             </div>
             <div class="card-body">
                 <div style="height:300px;overflow: auto;">
@@ -103,7 +104,7 @@
         @endif
         @if(count($autorizations)>0)
         <div  style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
-            <div class="card-header">                
+            <div class="card-header">
                 AUTORIZACIONES
             </div>
             <div class="card-body">
@@ -142,9 +143,9 @@
           </div>
         </div>
         @endif
-        @if(count($policyclients)>0)
+        @if(count($policyclients)>0 && count($policies)==0 && count($autorizations)==0)
         <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
-            <div class="card-header">              
+            <div class="card-header">
                 &nbsp;
             </div>
             <div class="card-body">
@@ -217,7 +218,7 @@
                     @endif
                     @if(auth()->check())
                     <div class="row">
-                        <div  class="col-4">
+                        <div  class="col-sm-4">
                             <div class="mb-3">
                                 <label class="form-label"style="font-size:12px" for=""> REFERENCIA </label>
                                 <input style="font-size: 12px" type="text" class="form-control"value="{{$client!=null?$client->reference: old('reference')}}"
@@ -244,13 +245,13 @@
                     </div>
                     @endif
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for="" style="font-size:12px">NOMBRES Y APELLIDOS* </label>
                                 <input type="text" style="font-size: 12px" class="form-control" name ="name_last_name" value="{{$client!=null?$client->name_last_name:old('name_last_name')}}" id="name_last_name"/>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for="" style="font-size: 12px">#  DOCUMENTO*</label>
                                 <input type="text" style="font-size: 12px" name="identification" id="identification" class="form-control" value="{{$client!=null?$client->identification:old('identification')}}">
@@ -258,7 +259,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3" >
                                 <label class="form-label" for=""style="font-size: 12px" >FECHA DE NACIMIENTO*</label>
                                     <input type="date" style="font-size: 12px" name="birth_date" class="form-control" value="{{$client!=null?$client->date_birth:old('birth_date')}}"
@@ -269,7 +270,7 @@
                             </div>
 
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3" >
                                 <label class="form-label" for=""style="font-size: 12px">FECHA DE EXPEDICION*</label>
                                 <input type="date" style="font-size: 12px" name="expedition_date" class="form-control" value="{{$client!=null?
@@ -277,16 +278,15 @@
                                 id="expedition_date">
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3" >
                                 <label class="form-label" for=""style="font-size: 12px">DIRECCION RESIDENCIA*</label>
                                 <input type="text" style="font-size: 12px" class="form-control" value="{{$client!=null?$client->address:old('address')}}" name="address" id="address">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for=""style="font-size: 12px">BARRIO* </label>
                                 <input type="text" style="font-size: 12px" name="neighborhood" value="{{$client!=null?$client->neighborhood:old('neighborhood')}}" class="form-control" id="neighborhood">
@@ -294,7 +294,7 @@
                         </div>
                     </div>
                     <div class="row">
-                           <div class="col-6">
+                           <div class="col-sm-6">
                             <div class="mb-3" >
                             <label class="form-label" for=""style="font-size: 12px"> ESTADO CIVIL*</label>
                             <select name="marital_status" class="form-select" style="font-size: 12px" id="marital_status">
@@ -305,7 +305,7 @@
                             </select>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for=""style="font-size: 12px"> EMAIL*</label>
                                 <input type="email" value="{{$client!=null?$client->email:old('email')}}" style="font-size: 12px" class="form-control" name="email" id="email">
@@ -313,7 +313,7 @@
                         </div>
                     </div>
                     <div class="row" >
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <div class="mb-3" >
                                 <label class="form-label" for=""style="font-size: 12px"> NIVEL DE ESTUDIOS*</label>
                                 <select name="study_level" class="form-select" style="font-size: 12px" id="study_level">
@@ -336,9 +336,25 @@
             INFORMACION DE CONTACTO
         </div>
         <div class="card-body">
-
-                    <a class="btn btn-primary"title="Crear datos de contacto" id="btnContact"><i class="fa-solid fa-square-phone-flip"></i></a>
-                    <table class="table">
+            <a class="btn btn-primary"title="Crear datos de contacto" id="btnContact">
+                <i class="fa-solid fa-square-phone-flip"></i>
+            </a>
+            <ul style="padding:0; margin-top:10px">
+                @foreach($contactInfos as $item)
+                <li style="list-style:none; padding-bottom:5px; display:flex; justify-content:space-between; align-items:center">
+                    <strong>{{$item->phone_type->name}}: </strong>{{$item->phone_number}}
+                    <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button title="Eliminar" class="btn btn-danger" type="button"
+                            onclick="validar(this,'Desea eliminar este registro?')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </li>
+                @endforeach
+            </ul>
+                   <!-- <table class="table">
                         <thead>
                             <tr>
                                 <th>Dato de contacto </th>
@@ -350,10 +366,11 @@
                             <tr>
                                 <td>{{$item->phone_type->name.' '.$item->phone_number}}</td>
                                 <td>
-                                    <form onsubmit="return validar('Desea eliminar este registro?')" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
+                                    <form  action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
                                         @csrf
                                         @method('delete')
-                                        <button title="Eliminar" class="btn btn-danger" type="submit">
+                                        <button title="Eliminar" class="btn btn-danger" type="button"
+                                        onclick="validar(this,'Desea eliminar este registro?')">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </form>
@@ -361,7 +378,7 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                    </table>-->
 
         </div>
     </div>
@@ -381,7 +398,7 @@
                         @endif
                         <input type="hidden" name="client_id" value="{{$client!=null? $client->id:''}}" id="client_id" >
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         EMPRESA LABORA*
@@ -389,7 +406,7 @@
                                     <input type="text"value="{{$EmploymentInformation!=null?$EmploymentInformation->company_works:old('company_works')}}" class="form-control" name="company_works" id="company_works" style="font-size: 12px">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         NIT #*
@@ -399,7 +416,7 @@
                             </div>
                         </div>
                         <div class="row">
-                             <div class="col-6">
+                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         DIRECCION OF. PPAL*
@@ -407,7 +424,7 @@
                                     <input type="text" name="main_address" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->main_address:old('main_address')}}" id="main_address"style="font-size: 12px">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         DEPARTAMENTO*
@@ -422,7 +439,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         CIUDAD*
@@ -435,7 +452,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         EMPRESA EN MISION
@@ -445,7 +462,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         NIT EMPRESA MISION
@@ -453,7 +470,7 @@
                                     <input class="form-control" type="text" name="nit_company_on_mission" value="{{$EmploymentInformation!=null?$EmploymentInformation->nit:old('nit_company_on_mission')}}" id="nit_company_on_mission"style="font-size: 12px">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         DIRECCION SEDE
@@ -463,7 +480,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         FECHA DE INGRESO*
@@ -471,7 +488,7 @@
                                     <input type="date" name="entry_date" class="form-control" value="{{$EmploymentInformation!=null?$EmploymentInformation->entry_date:old('entry_date')}}" id="entry_date"style="font-size: 12px">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">SALARIO MENSUAL*</label>
                                     <input type="text" class="currency form-control" name="average_monthly_salary" value="${{$EmploymentInformation!=null?number_format($EmploymentInformation->average_monthly_salary):old('average_monthly_salary')}}" id="average_monthly_salary"style="font-size: 12px">
@@ -479,7 +496,7 @@
                             </div>
                         </div>
                         <div class="row" >
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         CARGO ACTUAL*
@@ -487,7 +504,7 @@
                                     <input type="text" class="form-control" name="current_position" value="{{$EmploymentInformation!=null?$EmploymentInformation->current_position:old('current_position')}}" id="current_position"style="font-size: 12px">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">FRECUENCIA PAGOS*</label>
                                     <select class="form-select" name="payment_frequency" id="payment_frequency"style="font-size: 12px">
@@ -500,7 +517,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         FECHA DE PAGO EMPRESA (FPE)*
@@ -513,7 +530,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         FECHA DE PAGO CLIENTE (FPC)*
@@ -539,7 +556,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">EPS AFILIADA*</label>
                                     <select class="form-select" name="eps_affiliate" id="eps_affiliate"style="font-size: 12px">
@@ -553,7 +570,7 @@
                             </div>
                         </div>
                         <div class="row">
-                                 <div class="col-6">
+                                 <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">ARL AFILIADA*</label>
                                     <select class="form-select" name="arl_affiliate" id="arl_affiliate"style="font-size: 12px">
@@ -588,7 +605,7 @@
                         @csrf
                         <input type="hidden" name="client_id"  value="{{$client!=null? $client->id:''}}" id="client_id" >
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         CREDITO SOLICITADO (COP)*
@@ -596,7 +613,7 @@
                                     <input class="currency form-control" type="text" name="ammount" value="${{$loan!=null?number_format($loan->ammount):old('ammount')}}" id="ammount" style="font-size:12px">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         PLAZO SOLICITADO (Meses)*
@@ -606,7 +623,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <div class="mb-3" >
                                     <label class="form-label" for="">
                                         TIPO DE GARANTIA*
@@ -625,7 +642,7 @@
 
         </div>
     </div>
-    <div class="card mb-4" id="cardInfoPatrimonial" style="width:40%;margin:0 auto;display: none;">
+    <div class="card mb-4" id="cardInfoPatrimonial" style="width:60%;margin:0 auto;display: none;">
         <div class="card-header">
             <i class="fa-solid fa-building-user"></i>
             INFORMACION PATRIMONIAL
@@ -635,17 +652,19 @@
                     <form autocomplete="off" action="{{url('/clients/UpdatePatrimonialInformation')}}/{{$client!=null?$client->id:0}}"method="post" style="font-size:14px">
                         @csrf
                         @method('PATCH')
-                        <div class="form-check form-check-inline">
+                        <div class="row">
+                        <div class="col-sm-6 ">
                             <label class="form-check-label">
                                 <input type="checkbox" {{$client?->vehicle==1?'checked':'' }} name="vehicle" id="vehicle">
                                 POSEE VEHICULO
                             </label>
                         </div>
-                        <div class="form-check form-check-inline" >
+                        <div class="col-sm-6 " >
                             <label class="form-check-label" for="">
                                 <input type="checkbox" name="estate" {{$client?->estate==1?'checked':'' }} id="estate">
                                 POSEE PROPIEDADES
                             </label>
+                        </div>
                         </div>
                         <div>
                             <button type="submit" id="btnGuardar" class="btn btn-success">Actualizar</button>
@@ -665,7 +684,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-sm-5">
                                 <div class="form-check form-check-inline" >
                                     <label class="form-check-label" for="">
                                         <input type="checkbox"  name="seizure" {{$client?->seizure==1?'checked':'' }} id="seizure">
@@ -673,7 +692,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-7" id="divCompanySeizure" style="display: none">
+                            <div class="col-sm-7" id="divCompanySeizure" style="display: none">
                                 <div class="mb-3">
                                     <label class="form-label" for="">
                                         EMPRESA QUE LO EMBARGA

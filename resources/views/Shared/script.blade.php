@@ -356,6 +356,7 @@
                             frm.submit();
                         }
 
+
                     });
 
             }
@@ -987,8 +988,8 @@
             });
             dialogContact= $("#dialogContact").dialog({
                 autoOpen: false,
-                height: 350,
-                width: 600,
+                height: 300,
+                width: 400,
                 modal: true,
                 buttons:
                 [

@@ -103,15 +103,15 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-1">
-                                <img src="{{url('img/cs.png')}}"width="100px"height="100px;" alt=""style="padding:5px">
+                           <div class="col-2">
+                                <img src="{{url('img/csSinFondo.png')}}"width="100px"height="100px;" alt=""style="padding: 5px">
                             </div>
                             <div class="col-10">
-                                <h1 class="mt-4" style="padding: 5px">@yield('title')</h1>
+                                <h1 class="mt-4" style="padding-left: 15px">@yield('title')</h1>
                             </div>
 
                         </div>
-                        <ol class="breadcrumb mb-4">
+                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{url('/')}}">Inicio</a></li>
                             <li class="breadcrumb-item active">@yield('title')</li>
                         </ol>

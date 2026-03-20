@@ -190,11 +190,7 @@
             </form>
         </div>
         <div title="Información de contacto" id="dialogContact">
-            <div class="row">
-                <div class="col-3">
-                    <img width="120px" height="120px" src="{{url('img/CerikSoluciones.png')}}" alt="">
-                </div>
-                <div class="col-9">
+
                     <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
                             @csrf
                             <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
@@ -216,5 +212,5 @@
                                 <input type="tel" name="phone" class="form-control"style="width:80%; font-size:12px;" id="phone">
                             </div>
                         </form>
-                </div>
+
         </div>

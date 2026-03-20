@@ -13,7 +13,16 @@ class UpdateRequest extends FormRequest
     {
         return true;
     }
+    public function prepareForValidation()
+    {
+         $cur= str_replace('$','',$this->ammount) ;
+       $ammount=str_replace(',','', str_replace('.00','',$cur));
+         $this->merge([
+              'ammount' => $ammount,
+         ]);
 
+
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,8 +32,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'client_id'=>'required',
-            'ammount'=>'required|max:20',            
-            'term'=>'required|numeric',            
+            'ammount'=>'required|max:20',
+            'term'=>'required|numeric',
             'warranty'=>'required'
             //
         ];
@@ -32,13 +41,13 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'client_id.required' => 'El :attribute es obligatorio.',  
+            'client_id.required' => 'El :attribute es obligatorio.',
             'ammount.required' => 'El :attribute es obligatorio.',
             'ammount.max' => 'El :attribute no debe ser mayor a 20 caracteres.',
             'term.required' => 'El :attribute es obligatorio.',
             'term.numeric' => 'El :attribute debe ser un número.',
-            'warranty.required' => 'El :attribute es obligatorio.',           
-        ];    
+            'warranty.required' => 'El :attribute es obligatorio.',
+        ];
     }
     public function attributes()
     {

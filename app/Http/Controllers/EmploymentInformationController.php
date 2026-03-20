@@ -9,9 +9,9 @@ use App\Models\EmploymentInformation;
 class EmploymentInformationController extends Controller
 {
     public function update(UpdateRequest $request ,$id)
-    {       
+    {
         $EmploymentInformation=EmploymentInformation::find($id);
-        $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
+      //  $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
         $arrEmployment=[
             'nit_company_work'=>$request->nit_company_works,
             'company_works'=>$request->company_works,
@@ -22,7 +22,7 @@ class EmploymentInformationController extends Controller
             'nit'=>$request->nit_company_on_mission,
             'branch_address'=>$request->address_company_on_mission,
             'entry_date'=>$request->entry_date,
-            'average_monthly_salary'=>$average_monthly_salary,
+            'average_monthly_salary'=>$request->average_monthly_salary,
             'current_position'=>$request->current_position,
             'client_id'=> $request->client_id,
             'payment_frequency_id'=>$request->payment_frequency,
@@ -30,7 +30,7 @@ class EmploymentInformationController extends Controller
             'customer_payment_date_id'=>$request->custemer_payment_date,
             'contract_type_id'=>$request->contract_type,
             'eps_affiliate_id'=>$request->eps_affiliate,
-            'arl_affiliate_id'=>$request->arl_affiliate 
+            'arl_affiliate_id'=>$request->arl_affiliate
         ];
         $EmploymentInformation->update($arrEmployment);
         session(["info"=>"employment"]);
@@ -41,9 +41,9 @@ class EmploymentInformationController extends Controller
         $client=session()->has('client')?session('client'):null;
         if($client==null)
         {
-            return redirect()->to(url('/clients/create'))  ->withErrors("la informacion personal no ha sido llena");                       
+            return redirect()->to(url('/clients/create'))  ->withErrors("la informacion personal no ha sido llena");
         }
-        $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
+     //   $average_monthly_salary=$this->convert_to_number($request->average_monthly_salary);
         $arrEmployment=[
             'nit_company_work'=>$request->nit_company_works,
             'company_works'=>$request->company_works,
@@ -54,7 +54,7 @@ class EmploymentInformationController extends Controller
             'nit'=>$request->nit_company_on_mission,
             'branch_address'=>$request->address_company_on_mission,
             'entry_date'=>$request->entry_date,
-            'average_monthly_salary'=>$average_monthly_salary,
+            'average_monthly_salary'=>$request->average_monthly_salary,
             'current_position'=>$request->current_position,
             'client_id'=> $request->client_id,
             'payment_frequency_id'=>$request->payment_frequency,
@@ -62,11 +62,11 @@ class EmploymentInformationController extends Controller
             'customer_payment_date_id'=>$request->custemer_payment_date,
             'contract_type_id'=>$request->contract_type,
             'eps_affiliate_id'=>$request->eps_affiliate,
-            'arl_affiliate_id'=>$request->arl_affiliate 
+            'arl_affiliate_id'=>$request->arl_affiliate
         ];
         $EmploymentInformation=EmploymentInformation::create($arrEmployment);
         session(["info"=>"employment"]);
-        return back()->with(['message'=>'Información de empleo guardada correctamente']);     
+        return back()->with(['message'=>'Información de empleo guardada correctamente']);
     }
     //
 }
