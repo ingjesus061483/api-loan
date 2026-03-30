@@ -508,12 +508,12 @@
         <form action="{{url('/clients/UpdateDataProccess')}}/{{$client?->id}}"method="post" autocomplete="off">
             @method('patch')
             @csrf
-            <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>
+          <!--  <iframe src="{{url('Politicas/Politicadedatos.pdf')}}" style="width:100%; height:500px;" frameborder="0"></iframe>-->
             <div style="padding: 5px; font-size:14px">
                 <input type="checkbox" name="accept_data_treatment" id="accept_data_treatment"
                 {{$client!=null&&$client->acept_data_processing_policies?'checked':''}}>
                 <label for="accept_data_treatment">
-                    Acepto la politica de tratamiento de datos personales
+                    Acepto los <a href="#"> terminos y condiciones</a>, he leido y comprendido la <a href="#"> politica de privacidad </a> y autorizo el tratamiento de mis datos personales para los fines relacionados con la gestion del credito solicitado, asi como para el envio de comunicaciones comerciales relacionadas con los productos y servicios ofrecidos por la entidad.
                 </label>
             </div>
             <button type="submit" class="btn btn-success">Actualizar</button>
@@ -521,7 +521,7 @@
     </div>
       <h3>
           <i class="fa-solid fa-building-shield"></i>
-          POLITICAS Y AUTORIZACIONES
+          POLITICAS
       </h3>
     <div>
         <div>
@@ -533,9 +533,6 @@
         </div>
         @if(count($policies)>0)
         <div class="card mb-4" style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
-            <div class="card-header">
-                POLITICAS
-            </div>
             <div class="card-body">
                 <div style="height:300px;overflow: auto;">
                 @foreach($policies as $item)
@@ -572,11 +569,55 @@
             </div>
         </div>
         @endif
+        @if(count($policyclients)>0 && count($policies)==0 )
+        <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
+            <div class="card-header">
+                &nbsp;
+            </div>
+            <div class="card-body">
+                <div style="height:300px; overflow: auto;">
+                    @foreach ($policyclients as $item )
+                    <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
+                        <p style="font-size:14px; text-align: justify; padding:5px">
+                            @switch($item->state_policy_id)
+                                @case(1)
+                                    <i class="fa-solid fa-circle-check"></i>&nbsp;
+                                    <strong>{{$item->policy?->title}}</strong>&nbsp;|
+                                    &nbsp;{{$item->policy?->description}}
+                                    @break
+                                @case(2)
+                                    <i class="fa-solid fa-circle-xmark"></i>&nbsp;
+                                    <strong> {{$item->policy?->title}}</strong>&nbsp;|
+                                    &nbsp;{{$item->policy?->description}}
+                                    @break
+                                @case(3)
+                                    <i class="fa-solid fa-circle-question"></i>
+                                    &nbsp;<strong> {{$item->policy?->title}}</strong>&nbsp;|
+                                    &nbsp;{{$item->policy?->description}}
+                                    @break
+                            @endswitch
+                        </p>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+    </div>
+    <h3>
+          <i class="fa-solid fa-file-pen"></i>
+          AUTORIZACIONES
+      </h3>
+    <div>
+        <div>
+            <ul style="font-size:10px">
+                <li style="list-style:none;font-weight:bold; color: green"><i class="fa-solid fa-circle-check"></i> Si acepto </li>
+                <li style="list-style:none;font-weight:bold; color: red"><i class="fa-solid fa-circle-xmark"></i>  No acepto</li>
+                <li style="list-style:none;font-weight:bold; color:orange"><i class="fa-solid fa-circle-question"></i> No entiendo</li>
+            </ul>
+        </div>
         @if(count($autorizations)>0)
         <div class="card mb-4" style="width:100%;margin:10px auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5); ">
-            <div class="card-header">
-                AUTORIZACIONES
-            </div>
             <div class="card-body">
                 <div style="height:300px;overflow: auto;">
                 @foreach($autorizations as $item)
@@ -613,14 +654,14 @@
           </div>
         </div>
         @endif
-        @if(count($policyclients)>0 && count($policies)==0 && count($autorizations)==0)
-        <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
+        @if(count($autorizationsclients)>0 && count($autorizations)==0 )
+         <div style="width:100%;margin:0 auto;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.5);">
             <div class="card-header">
                 &nbsp;
             </div>
             <div class="card-body">
                 <div style="height:300px; overflow: auto;">
-                    @foreach ($policyclients as $item )
+                    @foreach ($autorizationsclients as $item )
                     <div style="margin-top:10px;border-radius: 25px; border:2px solid rgba(180, 158, 169, 0.2);padding:5px; ">
                         <p style="font-size:14px; text-align: justify; padding:5px">
                             @switch($item->state_policy_id)

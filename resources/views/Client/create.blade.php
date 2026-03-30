@@ -36,6 +36,7 @@
     @if($client==null)
     <form action="{{url('/clients/0')}}" autocomplete="off" method="GET" autocapitalize="off" class=" d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
+            <input type="text" id="clien" class="form-control" name="name_last_name" placeholder="Digite su nombre completo" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
             <input name="identification" class="form-control" type="text" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
             <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
         </div>

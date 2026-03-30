@@ -139,7 +139,7 @@ class CitySeeder extends Seeder
             ["state_id"=>1,"code"=>890,"name"=>"YOLOMBO"],
             ["state_id"=>1,"code"=>893,"name"=>"YONDO"],
             ["state_id"=>1,"code"=>895,"name"=>"ZARAGOZA"],
-            ["state_id"=>2,"code"=>1,"name"=>"BARRANQUILLA (DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA)"],
+            ["state_id"=>2,"code"=>1,"name"=>"BARRANQUILLA"],
             ["state_id"=>2,"code"=>78,"name"=>"BARANOA"],
             ["state_id"=>2,"code"=>137,"name"=>"CAMPO DE LA CRUZ"],
             ["state_id"=>2,"code"=>141,"name"=>"CANDELARIA"],

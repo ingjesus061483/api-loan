@@ -764,8 +764,8 @@
             });
             var  dialogHomework= $("#dialogHomework").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -792,8 +792,8 @@
             });
             var dialogNewness=$("#dialogNewness").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -820,8 +820,8 @@
             });
             var dialogNewnessType=$("#dialogNewnessType").dialog({
                 autoOpen: false,
-                height:500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -848,8 +848,8 @@
             });
             var dialogViewDocuments= $("#dialogViewDocuments").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -869,8 +869,8 @@
             });
             var dialogDocumentType= $("#dialogDocumentType").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -897,8 +897,8 @@
             });
             var dialogUser=$("#dialogUser").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -925,8 +925,8 @@
             })
             var dialogAttach= $("#dialogAttach").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -953,8 +953,8 @@
             });
             var dialogPolicy= $("#dialogPolicy").dialog({
                 autoOpen: false,
-                height:500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -974,8 +974,8 @@
             });
             var dialogArl= $("#dialogArl").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -998,8 +998,8 @@
             });
             dialogEps= $("#dialogEps").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 600,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [{
@@ -1025,8 +1025,8 @@
             });
             dialogContact= $("#dialogContact").dialog({
                 autoOpen: false,
-                height: 500,
-                width: 500,
+                height: "auto",
+                width: 300,
                 modal: true,
                 buttons:
                 [

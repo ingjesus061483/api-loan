@@ -118,6 +118,11 @@ class ClientController extends Controller
                                 ->leftjoin("loans","clients.id","=","loans.client_id" )
                                 ->leftjoin("warranties as w","w.id","=","loans.warranty_id");
     }
+    public function GetClients($id)
+    {
+        $clients=Client::select('identification','name_last_name')->orderby('name_last_name','asc')->get();
+        return response()->json($clients);
+    }
     public function SearchByName(Request $request)
     {
         $clients=Client::where('clients.name_last_name','like','%'.$request->name.'%')
@@ -196,6 +201,15 @@ class ClientController extends Controller
         return view('Client.index',$data);
         //
     }
+    public function getArray( $policiesclients):array
+    {
+        $arr=[];
+        foreach($policiesclients as $pc)
+        {
+            $arr[]=$pc->policy_id;
+        }
+        return $arr;
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -205,27 +219,19 @@ class ClientController extends Controller
         $arrp=[];
         $arra=[];
         $client=session()->has('client')?session('client'):null;
-        $policiesclients=ClientPolicy::where('client_id',$client?->id);
+        $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
+        $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
         $info=session()->has("info")?session('info'):'client';
-        foreach($policiesclients->get() as $pc)
-        {
-            if($pc->policy->where('title','like','p%')->first()!=null)
-            {
-                $arrp[]=$pc->policy_id;
-            }
-            else if($pc->policy->where('title','like','a%')->first()!=null)
-            {
-                $arra[]=$pc->policy_id;
-            }
-
-        }
+        $arrp=$this->getArray($policiesclients->get());
+        $arra=$this->getArray($autorizationclients->get());
         $data=[
             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
-            'autorizations'=>$this->autorizations->whereNotIn ('id',$arrp)->get(),
+            'autorizations'=>$this->autorizations->whereNotIn ('id',$arra)->get(),
             'policyclients'=>$policiesclients->get(),
+            'autorizationsclients'=>$autorizationclients->get(),
             'client'=>$client,
             'contactInfos'=>$contactInfos->get(),
             'EmploymentInformation'=>$EmploymentInformation,
@@ -289,8 +295,12 @@ class ClientController extends Controller
                                                         WHERE
                                                         client_id={$client?->id} and
                                                         document_type_id=`document_types`.id) amount ");
-        $policies=AuthorizationPolicy::count();
-        $policiesclients=ClientPolicy::where('client_id',$client?->id);
+        $policies=AuthorizationPolicy::where('title', 'like', 'p%')->count();
+        $autorizations=AuthorizationPolicy::where('title', 'like', 'a%')->count();
+
+
+        $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
+        $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
@@ -309,6 +319,11 @@ class ClientController extends Controller
             session(["info"=>"loan"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
         }
+        if($autorizationclients->count()<$autorizations)
+        {
+            session(["info"=>"Authorize"]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
         if($policiesclients->count()<$policies)
         {
             session(["info"=>"AuthorizeProtocol"]);
@@ -316,7 +331,10 @@ class ClientController extends Controller
         }
         $data =
         [
+
             'documenttypes'=> $documenttypes->get(),
+            'policiesclients'=> $policiesclients->get(),
+            'autorizationclients'=> $autorizationclients->get(),
             'client'=> $client
         ];
         session(['client' => $client]);
@@ -355,21 +373,22 @@ class ClientController extends Controller
     {
         $client=Client::find($id);
         $arrp=[];
-        $policiesclients=ClientPolicy::where('client_id',$client?->id);
+        $arra=[];
+          $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
+        $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
+
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
         $info=session()->has("info")?session('info'):'client';
-        foreach($policiesclients->get() as $pc)
-        {
-            $arrp[]=$pc->policy_id;
-        }
+        $arrp=$this->getArray($policiesclients->get());
+        $arra=$this->getArray($autorizationclients->get());
         $data=[
             'client'=>$client,
              'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
-            'autorizations'=>$this->autorizations->whereNotIn ('id',$arrp)->get(),
-
-            'policyclients'=>$policiesclients->get(),
+            'autorizations'=>$this->autorizations->whereNotIn ('id',$arra)->get(),
+          'policyclients'=>$policiesclients->get(),
+            'autorizationsclients'=>$autorizationclients->get(),
             'contactInfos'=>$contactInfos->get(),
             'EmploymentInformation'=>$EmploymentInformation,
             'loan'=>$loan,
@@ -399,7 +418,7 @@ class ClientController extends Controller
     {
         if(!Auth::check())
         {
-            return back()->withErrors('No puedes actualizar el registro sino te has logueado. Comúnicate con el administrador del sistema para mas información' );
+            return back()->withErrors('No esta permitido actualizar el registro. Comúnicate con el administrador del sistema para mas información' );
         }
        $arrclient=[
             'identification'=>$request->identification,
