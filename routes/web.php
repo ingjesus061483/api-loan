@@ -37,7 +37,7 @@ Route::get('UnAutorize', function () {
 });
 Route::resource('Newness',NewnessController::class);
 Route::resource('NewnessType',NewnessTypeController::class);
-Route::get('clients/GetClients/{id}',[ClientController::class,'GetClients']);
+Route::get('clients/GetClients',[ClientController::class,'GetClients']);
 Route::get('NewnessType/SearchByName/{id}',[NewnessTypeController::class,'SearchByName']);
 Route::resource('users', UserController::class);
 Route::resource('authorizationPolicies',AuthorizationPolicyController::class);

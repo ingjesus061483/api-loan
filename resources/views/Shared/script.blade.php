@@ -13,6 +13,48 @@
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
+            var client_identification=$("#client_identification").autocomplete({
+                    select:function(event,ui){
+                        $("#client_identification").val( ui.item.label );
+                        $("#identification").val( ui.item.value );
+                        return false;
+                    },
+                    focus: function( event, ui ) {
+                        $( "#client_identification" ).val( ui.item.label );
+                        return false;
+                    },
+                    source: function( request, response )
+                    {
+                        $.ajax({
+                            url: urlBase+"clients/GetClients",
+                            type: "GET",
+                            dataType: "json",
+                            data:{
+                                name: request.term
+                            },
+                            success: function( data )
+                            {
+                                 response(
+                                    $.map( data, function( item )
+                                    {
+                                        return{
+                                            label: item.name,
+                                            value: item.identification,
+                                        }
+                                 }));
+                            }
+                        });
+                    },
+                    minLength: 0,
+                }).autocomplete( "instance" );
+                console.log(client_identification);
+                if(client_identification!=undefined)
+                {
+                    client_identification._renderItem = function( ul, item ) {
+                        return $( "<li>" ).append( "<div style='font-size:10px;padding:5px' ><strong>Idnetificacion:</strong>" + item.value + "<br/><strong>Nombre:</strong>" + item.label + "</div>" )
+                                        .appendTo( ul );
+                    };
+                }
             var newnesstype=$("#newness_type").autocomplete({
                     select:function(event,ui){
                         $("#newness_type").val( ui.item.label );

@@ -118,9 +118,11 @@ class ClientController extends Controller
                                 ->leftjoin("loans","clients.id","=","loans.client_id" )
                                 ->leftjoin("warranties as w","w.id","=","loans.warranty_id");
     }
-    public function GetClients($id)
+    public function GetClients(Request $request)
     {
-        $clients=Client::select('identification','name_last_name')->orderby('name_last_name','asc')->get();
+        $clients=Client::select('identification')->selectRaw("name_last_name as name")
+                        ->where ('clients.name_last_name','like','%'.$request->name.'%')
+                        ->orderby('name_last_name','asc')->get();
         return response()->json($clients);
     }
     public function SearchByName(Request $request)
