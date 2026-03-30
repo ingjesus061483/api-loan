@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('client_policies', function (Blueprint $table) {
-            $table->foreignId('state_policy_id')
-            ->constrained('state_policies')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-        $table->dropColumn('acept');
+             $table->after('policy_id',function($table){
+                $table->foreignId('state_policy_id')
+                      ->constrained('state_policies')
+                      ->onDelete('cascade')
+                      ->onUpdate('cascade');
+             });
+             $table->dropColumn('acept');
             //
         });
     }
