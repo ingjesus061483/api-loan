@@ -19,7 +19,7 @@ class LoanController extends Controller
             'warranty_id'=>$request->warranty
         ];
         $loan->update($arrloan);
-        session(["info"=>"loan"]);
+        session(["info"=>"5"]);
         return back()->with(['message'=>'Información del prestamo actualizada correctamente']);
     }
     public function store(StoreRequest $request)
@@ -39,7 +39,7 @@ class LoanController extends Controller
             'warranty_id'=>$request->warranty
         ];
         $loan=Loan::create($arrloan);
-        session(["info"=>"loan"]);
+        session(["info"=>"6"]);
         return redirect()->to(url('/clients/create'))
                          ->with(['message'=>'Se ha generado una Solicitud de credito
                                              con referencia '.$loan->reference.' en

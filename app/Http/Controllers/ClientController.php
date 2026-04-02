@@ -138,12 +138,13 @@ class ClientController extends Controller
         $client=Client::find($id);
         if($client==null)
         {
+            session(["info"=>"0"]);
             return redirect()->to(url('/clients/create'))
                              ->withErrors('No se ha encontrado el cliente');
         }
         $client ->acept_data_processing_policies=$accept_data_treatment;
         $client ->update();
-        session(["info"=>"PersonData"]);
+        session(["info"=>"6"]);
         session(['client' => $client]);
         return back() ->with(['message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos ':'No has aceptado las politicas de datos']);
     }
@@ -158,13 +159,14 @@ class ClientController extends Controller
         $client=Client::find($id);
         if($client==null)
         {
+             session(["info"=>"0"]);
             return redirect()->to(url('/clients/create'))
                              ->withErrors('No se ha encontrado el cliente');
         }
         $client->seizure=$seizure;
         $client->company_seizure=$request->company_seizure;
         $client->update();
-        session(["info"=>"law"]);
+        session(["info"=>"4"]);
         session(['client' => $client]);
         return back() ->with(['message'=>'Se ha actualizado la información legal']);
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
@@ -174,6 +176,7 @@ class ClientController extends Controller
         $client=Client::find($id);
         if($client==null)
         {
+            session(["info"=>"0"]);
             return redirect()->to(url('/clients/create'))
                              ->withInput(["client_id"=>$id])
                              ->withErrors('No se ha encontrado el cliente');
@@ -181,7 +184,7 @@ class ClientController extends Controller
         $client->vehicle=$request->vehicle==null?0:(bool)$request->vehicle;
         $client->estate=$request->estate==null?0:(bool)$request->estate;
         $client->update();
-        session(["info"=>"patrimonial"]);
+        session(["info"=>"3"]);
         session(['client' => $client]);
       //  return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
         return back() ->with(['message'=>'Se ha actualizado la información patrimonial']);
@@ -226,7 +229,7 @@ class ClientController extends Controller
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
-        $info=session()->has("info")?session('info'):'client';
+        $info=session()->has("info")?session('info'):'0';
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
@@ -282,7 +285,7 @@ class ClientController extends Controller
         ];
         $client = Client::create($arrclient);
         session(['client' => $client]);
-        session(["info"=>"client"]);
+        session(["info"=>"1"]);
         return redirect()->to(url('/clients/create'))->with(['message'=>'Se ha creado un cliente']);
 
         //
@@ -308,27 +311,27 @@ class ClientController extends Controller
         $loan=Loan::where('client_id',$client?->id)->first();
         if($contactInfos->count()==0)
         {
-            session(["info"=>"contact"]);
+            session(["info"=>"1"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client?->id]);
         }
         if($EmploymentInformation==null)
         {
-            session(["info"=>"employment"]);
+            session(["info"=>"2"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
         }
         if($loan==null)
         {
-            session(["info"=>"loan"]);
-            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
-        }
-        if($autorizationclients->count()<$autorizations)
-        {
-            session(["info"=>"Authorize"]);
+            session(["info"=>"5"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
         }
         if($policiesclients->count()<$policies)
         {
-            session(["info"=>"AuthorizeProtocol"]);
+            session(["info"=>"7"]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
+        if($autorizationclients->count()<$autorizations)
+        {
+            session(["info"=>"8"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
         }
         $data =
@@ -353,6 +356,7 @@ class ClientController extends Controller
             $client=Client::where('identification','=',request()->identification)->first();
             if($client==null)
             {
+                session(["info"=>"0"]);
                 return redirect()->to(url('/clients/create'))->withErrors('No se ha encontrado un cliente
                                                                         con la identificación ingresada');
             }
@@ -443,7 +447,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $client->update($arrclient);
         session(['client' => $client]);
-        session(["info"=>"client"]);
+        session(["info"=>"0"]);
         return back()->with(['message'=>'Se ha actualizado la información del cliente']);
         //
     }

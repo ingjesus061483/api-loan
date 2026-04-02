@@ -17,7 +17,14 @@ class ClientPolicyController extends Controller
         $policy=$Clientpolicy->policy()->where('title','like','p%')->first();
         $autorization=$Clientpolicy->policy()->where('title','like','a%')->first();
         $parr=$policy!=null?'política '.$policy->title:($autorization!=null?'autorización '.$autorization->title:'');
-        session(["info"=>"AuthorizeProtocol"]);
+        if($policy!=null)
+        {
+            session(["info"=>"7"]);
+        }
+        else if($autorization!=null)
+        {
+             session(["info"=>"8"]);
+        }
         switch($Clientpolicy->state_policy_id)
         {
             case 1:{

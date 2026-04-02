@@ -7,7 +7,7 @@
         <script type="text/javascript">
             var user=$("#user").val();
             var client=$("#client").val();
-            var app=$("#info").val();
+            var app=parseInt($("#info").val());
             var urlBase=$("#base_url").val();
             $(".custom-file-input").on("change", function() {
                 var fileName = $(this).val().split("\\").pop();
@@ -255,7 +255,8 @@
             }
             $( "#accordion" ).accordion({
                 collapsible: true,
-                 heightStyle: "content"
+                heightStyle: "content",
+                active: app               
             });
             function cambiarColor(combo)
             {

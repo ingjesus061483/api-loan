@@ -33,7 +33,7 @@ class EmploymentInformationController extends Controller
             'arl_affiliate_id'=>$request->arl_affiliate
         ];
         $EmploymentInformation->update($arrEmployment);
-        session(["info"=>"employment"]);
+        session(["info"=>"2"]);
         return back()->with(['message'=>'Información de empleo actualizada correctamente']);
     }
     public function store(StoreRequest $request)
@@ -65,7 +65,7 @@ class EmploymentInformationController extends Controller
             'arl_affiliate_id'=>$request->arl_affiliate
         ];
         $EmploymentInformation=EmploymentInformation::create($arrEmployment);
-        session(["info"=>"employment"]);
+        session(["info"=>"3"]);
         return back()->with(['message'=>'Información de empleo guardada correctamente']);
     }
     //
