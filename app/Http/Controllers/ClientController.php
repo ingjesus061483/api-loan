@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Exports\ClientExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\AutorizeRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use App\Models\EmploymentInformation;
 use App\Models\EpsAffiliate;
 use App\Models\LevelStudy;
 use App\Models\Loan;
+use App\Models\Document;
 use App\Models\MaritalStatus;
 use App\Models\PaymentFrecuency;
 use App\Models\PhoneType;
@@ -50,8 +52,8 @@ class ClientController extends Controller
     {
         $this->documenttypes=DocumentType::select('id','name');
         $this->cities=City::orderby('name','asc');
-        $this->policies=AuthorizationPolicy::where('title','like','p%')-> select('*');
-        $this->autorizations=AuthorizationPolicy::where('title','like','A%')-> select('*');
+        $this->policies=AuthorizationPolicy::where('title','like','p%')->select('*');
+        $this->autorizations=AuthorizationPolicy::where('title','like','A%')->select('*');
         $this-> QualityHolder=QualityHolder::orderby('name','asc');
         $this-> ArlAffiliates=ArlAffiliate::orderby('name','asc');
         $this->EpsAffiliates=EpsAffiliate::orderby('name','asc');
@@ -60,10 +62,10 @@ class ClientController extends Controller
         $this->PaymentFrecuencies=PaymentFrecuency::select('*');
         $this->ContractTypes=ContractType ::orderby('name','asc');
         $this->studylevels=LevelStudy::select('*');
-        $this->maritalstatus =MaritalStatus::orderby('name','asc');
+        $this->maritalstatus=MaritalStatus::orderby('name','asc');
         $this->phonetypes=PhoneType::orderby('name','asc');
         $this->Warranties=Warranty::orderby('name','asc');
-        $this->States =State::orderby('name','asc');
+        $this->States=State::orderby('name','asc');
         $this->clients=Client::select('clients.id',
                                    'clients.reference',
                                    'q.name as quality_holder',
@@ -105,6 +107,99 @@ class ClientController extends Controller
                                               FROM
                                               contact_informations ci	JOIN `phone_types` pt ON pt.id=ci.phone_type_id
                                               where ci.client_id=clients.id)as contact_informations")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P1')as P1")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P2')as P2")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P3')as P3")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P4')as P4")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P5')as P5")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P6')as P6")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P7')as P7")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P8')as P8")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P9')as P9")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P10')as P10")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P11')as P11")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P12')as P12")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P13')as P13")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P14')as P14")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P15')as P15")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='P16')as P16")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A1')as A1")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A2')as A2")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A3')as A3")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A4')as A4")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A5')as A5")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A6')as A6")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A7')as A7")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A8')as A8")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A9')as A9")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A10')as A10")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A11')as A11")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A12')as A12")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A13')as A13")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A14')as A14")
+                                ->selectRaw("(SELECT state_policy_id FROM `client_policies` AS cp JOIN
+                                             `authorization_policies` ap ON ap.id=cp.policy_id WHERE
+                                             cp.client_id=clients.id AND ap.title='A15')as A15")
                                 ->leftjoin("quality_holders as q","q.id","=","quality_holder_id")
                                 ->join("marital_status as ms","ms.id","=","marital_status_id")
                                 ->join("level_studies as ls","ls.id","=","clients.level_study_id")
@@ -224,6 +319,14 @@ class ClientController extends Controller
         $arrp=[];
         $arra=[];
         $client=session()->has('client')?session('client'):null;
+        $client_id=$client==null?0: $client->id;
+        $documenttypes=$this->documenttypes->selectRaw("(SELECT
+                                                        COUNT(id)
+                                                        FROM
+                                                        documents
+                                                        WHERE
+                                                        client_id={$client_id} and
+                                                        document_type_id=`document_types`.id) amount ");
         $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
         $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
@@ -255,6 +358,7 @@ class ClientController extends Controller
             'studylevels'=>$this-> studylevels->get(),
             'Warranties'=>$this->Warranties->get(),
             'States'=>$this->States->get(),
+            'documenttypes'=> $documenttypes->get(),
         ];
         return view("Client.create",$data );
         //
@@ -287,7 +391,6 @@ class ClientController extends Controller
         session(['client' => $client]);
         session(["info"=>"1"]);
         return redirect()->to(url('/clients/create'))->with(['message'=>'Se ha creado un cliente']);
-
         //
     }
     public function redirectToClient($client)
@@ -302,8 +405,7 @@ class ClientController extends Controller
                                                         document_type_id=`document_types`.id) amount ");
         $policies=AuthorizationPolicy::where('title', 'like', 'p%')->count();
         $autorizations=AuthorizationPolicy::where('title', 'like', 'a%')->count();
-
-
+        $documents=Document::where('client_id',$client->id);
         $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
         $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
@@ -319,7 +421,7 @@ class ClientController extends Controller
             session(["info"=>"2"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
         }
-        if($loan==null)
+        if($loan==null&& $client->quality_holder_id==1)
         {
             session(["info"=>"5"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
@@ -334,9 +436,12 @@ class ClientController extends Controller
             session(["info"=>"8"]);
             return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
         }
+        if($documents->count()==0){
+            session(["info"=>"9"]);
+            return redirect()->to(url('/clients/create'))->withInput(['client_id'=>$client->id]);
+        }
         $data =
         [
-
             'documenttypes'=> $documenttypes->get(),
             'policiesclients'=> $policiesclients->get(),
             'autorizationclients'=> $autorizationclients->get(),
@@ -380,20 +485,27 @@ class ClientController extends Controller
         $client=Client::find($id);
         $arrp=[];
         $arra=[];
-          $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
+        $documenttypes=$this->documenttypes->selectRaw("(SELECT
+                                                        COUNT(id)
+                                                        FROM
+                                                        documents
+                                                        WHERE
+                                                        client_id={$client?->id} and
+                                                        document_type_id=`document_types`.id) amount ");
+        $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
         $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
-
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client!=null?$client->id:0)->first();
         $loan=Loan::where('client_id',$client!=null?$client->id:0)->first();
-        $info=session()->has("info")?session('info'):'client';
+        $info=session()->has("info")?session('info'):'0';
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
             'client'=>$client,
-             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
+            'documenttypes'=> $documenttypes->get(),
+            'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
             'autorizations'=>$this->autorizations->whereNotIn ('id',$arra)->get(),
-          'policyclients'=>$policiesclients->get(),
+            'policyclients'=>$policiesclients->get(),
             'autorizationsclients'=>$autorizationclients->get(),
             'contactInfos'=>$contactInfos->get(),
             'EmploymentInformation'=>$EmploymentInformation,
@@ -424,9 +536,11 @@ class ClientController extends Controller
     {
         if(!Auth::check())
         {
-            return back()->withErrors('No esta permitido actualizar el registro. Comúnicate con el administrador del sistema para mas información' );
+            return back()->withErrors('No esta permitido actualizar el registro.
+                                       Comúnicate con el administrador del
+                                       sistema para mas información');
         }
-       $arrclient=[
+        $arrclient=[
             'identification'=>$request->identification,
             'name_last_name'=>$request->name_last_name,
             'phone'=>$request->phone,
@@ -461,5 +575,9 @@ class ClientController extends Controller
         $client->delete();
         return redirect()->to(url('/clients'))->with(['message'=>'Se ha eliminado el cliente']);
         //
+    }
+    public function downloadExcel($id)
+    {
+        return Excel::download(new ClientExport($this->clients->get()), "Masterclientes.xlsx");
     }
 }

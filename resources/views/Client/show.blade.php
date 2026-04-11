@@ -457,14 +457,13 @@
         </div>
         <div class="card-body">
             <div style="padding: 5px ;font-size:14px; text-align: justify;">
-            <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
-            <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
+                <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
+                <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
             </div>
             <div style="width:100%; margin:0 auto">
                 <table class="table table-bordered" style="  table-layout: fixed; width:100%" >
                     <thead style ="font-size: 14px" >
                         <tr>
-                            <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th style="width:20px">#</th>
                             <th style="text-align:center;width:100%;">TIPO DE DOCUMENTO </th>
@@ -475,12 +474,6 @@
                     <tbody style ="font-size: 12px">
                         @foreach ($documenttypes as $item )
                             <tr>
-                                <td style="text-align:center;">
-
-                                    <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
-                                        <i class="fa-solid fa-paperclip"></i>
-                                    </a>
-                                </td>
                                 <td style="text-align:center;">
                                     <form action="{{url('/documents')}}" method="GET">
                                         @csrf

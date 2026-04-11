@@ -54,6 +54,12 @@ class AuthorizationPolicyController extends Controller
         return response()->json(AuthorizationPolicy::find($id));
         //
     }
+    public function showByTitle(AutorizeRequest $request,$id)
+    {
+
+        return response()->json(AuthorizationPolicy::where('title',$request->title)->first());
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.

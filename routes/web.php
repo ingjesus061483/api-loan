@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\ClientExport;
 use App\Http\Controllers\ArlController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactInfoController;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewnessTypeController;
 use App\Http\Controllers\HomeworkController;
+use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,9 +37,11 @@ Route::resource('homework',HomeworkController::class);
 Route::get('UnAutorize', function () {
     return view('Shared.UnAutorize');
 });
+Route::get('clients/downloadExcel/{id}',[ClientController::class,'downloadExcel']);
 Route::resource('Newness',NewnessController::class);
 Route::resource('NewnessType',NewnessTypeController::class);
 Route::get('clients/GetClients',[ClientController::class,'GetClients']);
+Route::get('authorizationPolicies/ShowByTitle/{id}',[AuthorizationPolicyController::class,'showByTitle']);
 Route::get('NewnessType/SearchByName/{id}',[NewnessTypeController::class,'SearchByName']);
 Route::resource('users', UserController::class);
 Route::resource('authorizationPolicies',AuthorizationPolicyController::class);

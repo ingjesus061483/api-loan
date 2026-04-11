@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\ClientPolicy\StoreRequest;
+use App\Models\AuthorizationPolicy;
 use App\Models\ClientPolicy;
-use Illuminate\Http\Request;
-
 class ClientPolicyController extends Controller
 {
+
     public function store(StoreRequest $request)
     {
         $Clientpolicy=Clientpolicy::create([
@@ -20,11 +20,26 @@ class ClientPolicyController extends Controller
         if($policy!=null)
         {
             session(["info"=>"7"]);
+            $policies=$Clientpolicy->policy()->where('title','like','p%')->count();
+            if($policies==AuthorizationPolicy::where('title','like','p%')->count())
+            {
+                session(["info"=>"8"]);
+                return back()->with(["message"=>"Las políticas han sido completadas, ahora es necesario completar las autorizaciones"]);
+            }
+
         }
         else if($autorization!=null)
         {
-             session(["info"=>"8"]);
+            session(["info"=>"8"]);
+            $autorizations=$Clientpolicy->policy()->where('title','like','a%')->count();
+            if($autorizations==AuthorizationPolicy::where('title','like','a%')->count())
+            {
+                session(["info"=>"9"]);
+                return back()->with(["message"=>"Las autorizaciones han sido completadas, llene los anexos y espere la respuesta de su solicitud de crédito"]);
+            }
         }
+
+
         switch($Clientpolicy->state_policy_id)
         {
             case 1:{

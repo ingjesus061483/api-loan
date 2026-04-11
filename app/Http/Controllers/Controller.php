@@ -28,11 +28,6 @@ class Controller extends BaseController
         }
         return $nombreimagen;
     }
-   /* function convert_to_number($str)
-    {
-       $cur= str_replace('$','',$str) ;
-       $ammount=str_replace(',','', str_replace('.00','',$cur));
-       return $ammount;
-    }*/
+
 
 }

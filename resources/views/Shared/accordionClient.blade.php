@@ -16,7 +16,7 @@
             @endif
             @if(auth()->check())
             <div class="row">
-                <div  class="col-sm-4">
+                <div  class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label"style="font-size:12px" for="">
                              REFERENCIA
@@ -25,20 +25,8 @@
                             name="reference" id="reference">
                     </div>
                 </div>
-                <div  class="col-sm-4">
-                    <div class="mb-3">
-                        <label class="form-label"style="font-size:12px" for="">
-                             CALIDAD DEL TITULAR
-                        </label>
-                        <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
-                            <option value="">Seleccione una opción </option>
-                            @foreach($QualityHolder as $item)
-                            <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-4">
+
+                <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label"style="font-size:12px" for="">
                             TITULO VALOR
@@ -143,6 +131,19 @@
                             <option value="">Seleccione una opción </option>
                             @foreach($studylevels as $item)
                             <option value="{{$item->id}}"{{$item->id==$client?->level_study_id?'selected':''}}{{$item->id==old('study_level')?'selected':''}}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div  class="col-sm-6">
+                    <div class="mb-3">
+                        <label class="form-label"style="font-size:12px" for="">
+                             CALIDAD DEL TITULAR
+                        </label>
+                        <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
+                            <option value="">Seleccione una opción </option>
+                            @foreach($QualityHolder as $item)
+                            <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -497,7 +498,8 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" id="btnGuardar" class="btn btn-success">{{$loan==null?'Guardar':'Actualizar'}}</button>
+
+            <button {{$client?->quality_holder_id==2||$client?->quality_holder_id==3?'disabled':''}}   type="submit" id="btnGuardar" class="btn btn-success">{{$loan==null?'Guardar':'Actualizar'}}</button>
         </form>
     </div>
      <h3>
@@ -689,4 +691,54 @@
         </div>
         @endif
     </div>
+    @if($client!=null)
+    <h3>
+          <i class="fa-solid fa-file-pen"></i>
+          ANEXOS
+      </h3>
+    <div>
+        <div style="padding: 5px ;font-size:14px; text-align: justify;">
+                <p> Estimado Sr(a).&nbsp;&nbsp;<strong>{{$client->name_last_name}}</strong>:</p>
+                <p>Para continuar con el proceso de su solicitud de crédito, es necesario que adjunte copia de los sgtes. documentos: </p>
+        </div>
+        <div style="width:100%; margin:0 auto">
+            <table class="table table-bordered" style="  table-layout: fixed; width:100%" >
+                <thead style ="font-size: 14px" >
+                    <tr>
+                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th >&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th style="width:20px">#</th>
+                        <th style="text-align:center;width:100%;">TIPO DE DOCUMENTO </th>
+                        <th style="text-align:center;width:100%;" >CANTIDAD</th>
+
+                    </tr>
+                </thead>
+                <tbody style ="font-size: 12px">
+                    @foreach ($documenttypes as $item )
+                    <tr>
+                        <td style="text-align:center;">
+                            <a title="adjuntar documentos" onclick="attach({{$item->id}})" class="btn btn-primary btn-sm" id="btnAttach" >
+                                <i class="fa-solid fa-paperclip"></i>
+                            </a>
+                        </td>
+                        <td style="text-align:center;">
+                            <form action="{{url('/documents')}}" method="GET">
+                                @csrf
+                                <input type="hidden" name="client_id" value="{{$client->id}}" >
+                                <input type="hidden" name="document_type_id" value="{{$item->id}}" >
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <th scope="row" style="text-align: center;width:20px  ">{{$item->id}}.</th>
+                        <td style="width:100%;">{{$item->name}}</td>
+                        <td style="text-align:center;width:20px;">{{$item->amount}} </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @endif
 </div>

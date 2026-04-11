@@ -256,8 +256,60 @@
             $( "#accordion" ).accordion({
                 collapsible: true,
                 heightStyle: "content",
-                active: app               
+                active: app
             });
+            function GetPolicyBytitle(title)
+            {
+                url=urlBase+"authorizationPolicies/ShowByTitle/0";//"{{url('/authorizationPolicies/')}}/"+id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    data:{
+                        title:title
+                    },
+                    success: function (result)
+                    {
+                        console.log(result);
+                        var title=getTitle(result);
+                        Swal.fire({
+                            title: title,
+                            imageUrl: urlBase+"img/autorizaciones.png",
+                            imageHeight:200,
+                            html: "<p style='text-align:justify'>"+result.description+"</p>",
+                            draggable: true
+                        });
+                    },
+                    error: function (ajaxContext)
+                    {
+                        Swal.fire({
+                            title: "Se han encontrado los siguientes errores:",
+                            icon: "error",
+                            text:ajaxContext.responseText,
+                            draggable: true
+                        });
+                        //alert(ajaxContext.responseText)
+                    }
+                });
+            }
+            function getTitle(result)
+            {
+                var letra=result.title.charAt(0);
+                var number=result.title.replace(letra,'');
+                var title="";
+                switch (letra )
+                {
+                    case 'P':{
+                        title="Política "+number;
+                        break;
+                    }
+                    case'A':{
+                        title="Autorización "+number;
+                        break;
+                    }
+                }
+                return title;
+            }
             function cambiarColor(combo)
             {
                 var state_homework_id=combo.value;
