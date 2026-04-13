@@ -41,9 +41,8 @@ class LoanController extends Controller
         $loan=Loan::create($arrloan);
         session(["info"=>"6"]);
         return redirect()->to(url('/clients/create'))
-                         ->with(['message'=>'Se ha generado una Solicitud de credito
-                                             con referencia '.$loan->reference.' en
-                                             breve nos pondremos en contacto con usted']);
+                         ->with(['message'=>'Se ha generado la solicitud de credito
+                                             con referencia '.$loan->reference.'. continue con el tratamiento de datos personales.']);
 
     }
     //

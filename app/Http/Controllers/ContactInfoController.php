@@ -22,7 +22,7 @@ class ContactInfoController extends Controller
         $ContactInfo->phone_type_id=$request->phone_type;
         $ContactInfo->save();
         session(["info"=>"2"]);
-        return back()->with(['message'=>'Información de contacto creada correctamente']);
+        return back()->with(['message'=>'Información de contacto creada correctamente. Si deeseas agregar más información de contacto, hazlo ahora. De lo contrario, continua con la información laboral.']);
    }
     public function destroy($id)
     {

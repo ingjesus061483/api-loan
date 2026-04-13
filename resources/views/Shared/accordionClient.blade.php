@@ -157,26 +157,66 @@
         INFORMACION DE CONTACTO
     </h3>
     <div>
-        <a class="btn btn-primary"title="Crear datos de contacto"
+        <div class="row">
+            <div class="col-sm-6">
+                <div style="padding: 5px;color:rgba(180, 158, 169, 1);font-size:12px">
+                    Los campos marcados con * deben ser llenados obligatoriamente
+                </div>
+                <form action="{{url('/contactinfo')}}" autocomplete="off" method="POST" id="frmContact">
+                    @csrf
+                    <input type="hidden"  value="{{isset($client)? $client->id:''}}" name="client_id" id="client_id" >
+                    <div class="mb-3">
+                        <label class="form-label" for="" style="font-size: 14px;">
+                            Tipo de contacto*
+                        </label>
+                        <select class="form-select" name="phone_type" style="width:80;font-size:12px " id="phone_type">
+                            <option value="">Seleccione una opcion</option>
+                            @if(isset($phonetypes))
+                            @foreach($phonetypes as $item)
+                            <option value="{{$item->id}}">{{ $item->name}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="" style="font-size:14px" >
+                            Numero de telefono*
+                        </label>
+                        <input type="tel" name="phone" class="form-control"style="font-size:12px;" id="phone">
+                        <button type="submit" title="Guardar" id="btnGuardar" class="btn btn-success" style="margin-top:10px">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                        </button>
+
+
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <!--    <a class="btn btn-primary"title="Crear datos de contacto"
         id="btnContact">
             <i class="fa-solid fa-square-phone-flip"></i>
-        </a>
-        <ul style="padding:0; margin-top:10px">
-            @foreach($contactInfos as $item)
-            <li style="list-style:none; padding-bottom:5px; display:flex; justify-content:space-between;
-             align-items:center">
-                <strong>{{$item->phone_type->name}}: </strong>{{$item->phone_number}}
-                <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
-                    @csrf
-                    @method('delete')
-                    <button title="Eliminar" class="btn btn-danger" type="button"
-                        onclick="validar(this,'Desea eliminar este registro?')">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </form>
-            </li>
-            @endforeach
-        </ul>
+        </a>-->
+            <ul style="padding:0; margin-top:10px">
+                @foreach($contactInfos as $item)
+                <li style="list-style:none; padding-bottom:5px; display:flex; justify-content:space-between;
+                align-items:center">
+                    <strong>{{$item->phone_type->name}}: </strong>{{$item->phone_number}}
+                    <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button title="Eliminar" class="btn btn-danger" type="button"
+                            onclick="validar(this,'Desea eliminar este registro?')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
     <h3>
         <i class="fa-solid fa-user-tie"></i>

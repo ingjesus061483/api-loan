@@ -241,7 +241,7 @@ class ClientController extends Controller
         $client ->update();
         session(["info"=>"6"]);
         session(['client' => $client]);
-        return back() ->with(['message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos ':'No has aceptado las politicas de datos']);
+        return back() ->with(['message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos. Continua con las politicas ':'No has aceptado las politicas de datos']);
     }
     public function UpdateLawInformation(Request $request ,$id)
     {
@@ -263,7 +263,7 @@ class ClientController extends Controller
         $client->update();
         session(["info"=>"4"]);
         session(['client' => $client]);
-        return back() ->with(['message'=>'Se ha actualizado la información legal']);
+        return back() ->with(['message'=>'Se ha actualizado la información legal. Continue con la información del crédito.']);
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
     }
     public function UpdatePatrimonialInformation(Request $request ,$id)
@@ -282,7 +282,7 @@ class ClientController extends Controller
         session(["info"=>"3"]);
         session(['client' => $client]);
       //  return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
-        return back() ->with(['message'=>'Se ha actualizado la información patrimonial']);
+        return back() ->with(['message'=>'Se ha actualizado la información patrimonial. Continue con la información legal.']);
     }
     /**
      * Display a listing of the resource.
@@ -390,7 +390,7 @@ class ClientController extends Controller
         $client = Client::create($arrclient);
         session(['client' => $client]);
         session(["info"=>"1"]);
-        return redirect()->to(url('/clients/create'))->with(['message'=>'Se ha creado un cliente']);
+        return redirect()->to(url('/clients/create'))->with(['message'=>'Se ha creado un cliente. Ahora  debes ingresar la información de contacto']);
         //
     }
     public function redirectToClient($client)
