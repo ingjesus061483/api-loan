@@ -15,9 +15,12 @@ class PhonetypesSeeder extends Seeder
     {
         DB::table('phone_types')->insert([
             ['name'=>'Celular','description'=>''],
-            ['name'=>'WhatsApp','decripcion'=>''],
-            ['name'=>'Fijo','description'=>''],
-            ['name'=>'Corporativo','description'=>'']            
+            ['name'=>'Corporativo','description'=>''],
+            ['name'=>'Casa','description'=>''],
+            ['name'=>'Empresa','description'=>''],
+            ['name'=>'WhatsApp','description'=>''],
+
+
         ]);
         //
     }

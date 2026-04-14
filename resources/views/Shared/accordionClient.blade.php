@@ -25,7 +25,6 @@
                             name="reference" id="reference">
                     </div>
                 </div>
-
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label"style="font-size:12px" for="">
@@ -37,6 +36,19 @@
             </div>
             @endif
             <div class="row">
+                <div  class="col-sm-6">
+                    <div class="mb-3">
+                        <label class="form-label"style="font-size:12px" for="">
+                             CALIDAD DEL TITULAR
+                        </label>
+                        <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
+                            <option value="">Seleccione una opción </option>
+                            @foreach($QualityHolder as $item)
+                            <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="" style="font-size:12px">
@@ -45,6 +57,8 @@
                         <input type="text" style="font-size: 12px" class="form-control" name ="name_last_name" value="{{$client!=null?$client->name_last_name:old('name_last_name')}}" id="name_last_name"/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="" style="font-size: 12px">
@@ -53,8 +67,6 @@
                         <input type="text" style="font-size: 12px" name="identification" id="identification" class="form-control" value="{{$client!=null?$client->identification:old('identification')}}">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
@@ -67,6 +79,8 @@
                         EDAD:{{$client!=null? \Carbon\Carbon::parse($client->date_birth)->age:''}}
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for=""style="font-size: 12px">
@@ -77,8 +91,6 @@
                                 id="expedition_date">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
@@ -87,6 +99,8 @@
                         <input type="text" style="font-size: 12px" class="form-control" value="{{$client!=null?$client->address:old('address')}}" name="address" id="address">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for=""style="font-size: 12px">
@@ -95,8 +109,6 @@
                         <input type="text" style="font-size: 12px" name="neighborhood" value="{{$client!=null?$client->neighborhood:old('neighborhood')}}" class="form-control" id="neighborhood">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
@@ -112,6 +124,8 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for=""style="font-size: 12px">
@@ -120,8 +134,6 @@
                         <input type="email" value="{{$client!=null?$client->email:old('email')}}" style="font-size: 12px" class="form-control" name="email" id="email">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3" >
                         <label class="form-label" for=""style="font-size: 12px">
@@ -131,19 +143,6 @@
                             <option value="">Seleccione una opción </option>
                             @foreach($studylevels as $item)
                             <option value="{{$item->id}}"{{$item->id==$client?->level_study_id?'selected':''}}{{$item->id==old('study_level')?'selected':''}}>{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div  class="col-sm-6">
-                    <div class="mb-3">
-                        <label class="form-label"style="font-size:12px" for="">
-                             CALIDAD DEL TITULAR
-                        </label>
-                        <select style="font-size: 12px" class="form-select" name="quality_holder" id="quality_holder">
-                            <option value="">Seleccione una opción </option>
-                            @foreach($QualityHolder as $item)
-                            <option value="{{$item->id}}"{{$item->id==$client?->quality_holder_id?'selected':''}}>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -184,7 +183,7 @@
                         </label>
                         <input type="tel" name="phone" class="form-control"style="font-size:12px;" id="phone">
                         <button type="submit" title="Guardar" id="btnGuardar" class="btn btn-success" style="margin-top:10px">
-                            <i class="fa-solid fa-floppy-disk"></i>
+                            Guardar
                         </button>
 
 
@@ -200,6 +199,36 @@
         id="btnContact">
             <i class="fa-solid fa-square-phone-flip"></i>
         </a>-->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($contactInfos as $item)
+                    <tr>
+                        <td>{{$item->phone_type->name}}</td>
+                        <td>{{$item->phone_number}}</td>
+                        <td>
+                            <form class="form form-inline" action="{{url('/contactinfo')}}/{{$item->id}}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button title="Eliminar" class="btn btn-danger" type="button"
+                                    onclick="validar(this,'Desea eliminar este registro?')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+
+
+
+            </table>
             <ul style="padding:0; margin-top:10px">
                 @foreach($contactInfos as $item)
                 <li style="list-style:none; padding-bottom:5px; display:flex; justify-content:space-between;
