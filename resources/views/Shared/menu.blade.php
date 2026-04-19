@@ -25,7 +25,7 @@
                             </a>
                             <a class="nav-link" href="{{url('/clients')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user-tie"></i></div>
-                                Clientes
+                                Base de datos clientes
                             </a>
                             <a class="nav-link" href="{{url('/users')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
