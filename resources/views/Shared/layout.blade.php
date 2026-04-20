@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>@yield('title')</title>
+        <title>@yield('module')| @yield('title')</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
         <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-R5Azes02wvL9ervyq6xo5WLyg1ufX0qwun0F/0qos0E0wNjnnRTADTQpjpnNLakj" crossorigin="anonymous">
-        <link rel="shortcut icon" type="image/x-icon" href="{{url('/img/magestad.ico')}}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{url('/ImagenSistema/magestad.ico')}}" />
         <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
         <link href="{{url('/jquery-ui-1.12.1.custom/jquery-ui.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -103,17 +103,13 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="row">
-                           <div class="col-2">
-                                <img src="{{url('img/csSinFondo.png')}}"width="100px"height="100px;" alt=""style="padding: 5px">
-                            </div>
-                            <div class="col-10">
-                                <h1 class="mt-4" style="padding-left: 15px">@yield('title')</h1>
-                            </div>
-
-                        </div>
+                        <ol class="breadcrumb mb-4">
+                            <li class="item"><img src="{{url('ImagenSistema/cs.png')}}"width="80px"height="80px;" alt=""></li>
+                            <li class="item active"><h1 class="mt-4"> @yield('title')</h1></li>
+                        </ol>
                          <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{url('/')}}">Inicio</a></li>
+                            <li class="breadcrumb-item">@yield('module')</li>
                             <li class="breadcrumb-item active">@yield('title')</li>
                         </ol>
                        @yield('content')

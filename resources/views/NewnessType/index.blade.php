@@ -1,11 +1,12 @@
 @extends('Shared/layout')
-@section('title','Listado de tipo de novedades')
+@section('title','Tipos de novedades')
+@section('module','Configuracion')
 @section('content')
 
 <div class="card mb-4" style="width: 70%;margin:0 auto">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        Listado de tipo de novedades
+        Tipos de novedades
     </div>
     <div class="card-body">
         <div style="padding: 5px">

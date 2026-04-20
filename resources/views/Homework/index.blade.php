@@ -1,12 +1,19 @@
 @extends('Shared/layout')
 @section('title','Tareas')
+@section('module','Diario')
 @section('content')
-      <div style="padding-bottom: 5px">
-            <a  title="Crear Tarea" href="{{url('/homework/create')}}" class="btn btn-primary" ><i class="fa-solid fa-plus"></i></a>
-        </div>
+<div style="padding-bottom: 5px">
+    <a  title="Crear Tarea" href="{{url('/homework/create')}}" class="btn btn-primary" >
+        <i class="fa-solid fa-plus"></i>
+    </a>
+    <button  title="Filtrar tarea" class="btnfilter btn btn-secondary"  data-title="Filtrar Tareas" data-url="{{url('/homework')}}">
+         <i class="fa-solid fa-filter"></i>
+
+    </button>
+
+</div>
 <div id="accordion">
     @foreach ($state_homeworks as $item)
-
     <h3>
         <a
         @switch($item->id)

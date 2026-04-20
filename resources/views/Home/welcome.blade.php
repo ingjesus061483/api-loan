@@ -1,4 +1,5 @@
 @extends('Shared/layout')
 @section('title','Inicio')
-@section('content')  
+@section('module','')
+@section('content')
 @endsection

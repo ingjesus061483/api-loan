@@ -30,7 +30,14 @@
                         <label class="form-label"style="font-size:12px" for="">
                             TITULO VALOR
                         </label>
-                        <input type="text" style="font-size: 12px" class="form-control" name ="value_Title" value="{{$client!=null?$client->value_Title:old('value_Title')}}" id="value_Title"/>
+                        <div class="row">
+                            <div class="col-3" >
+                                <input type="text" style="font-size: 12px" class="form-control" name ="letter" readonly value="L" id="letter"/>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" style="font-size: 12px" class="form-control" name="consecutive" value="{{$client!=null?($client->value_Title!=''? explode('-',$client->value_Title)[1]:''):(old('consecutive')!=''? old('consecutive'):'')}}" id="consecutive"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -576,7 +583,7 @@
                 </div>
             </div>
 
-            <button {{$client?->quality_holder_id==2||$client?->quality_holder_id==3?'disabled':''}}   type="submit" id="btnGuardar" class="btn btn-success">{{$loan==null?'Guardar':'Actualizar'}}</button>
+            <button {{auth()->check()?'':( $client?->quality_holder_id==2||$client?->quality_holder_id==3?'disabled':'')}}   type="submit" id="btnGuardar" class="btn btn-success">{{$loan==null?'Guardar':'Actualizar'}}</button>
         </form>
     </div>
      <h3>
@@ -600,7 +607,7 @@
     </div>
       <h3>
           <i class="fa-solid fa-building-shield"></i>
-          POLITICAS
+          POLITICAS {{count($policyclients).' | '.$policiesCount}}
       </h3>
     <div>
         <div>
@@ -685,7 +692,7 @@
     </div>
     <h3>
           <i class="fa-solid fa-file-pen"></i>
-          AUTORIZACIONES
+          AUTORIZACIONES {{count($autorizationsclients).' | '.$autorizationsCount}}
       </h3>
     <div>
         <div>

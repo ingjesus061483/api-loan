@@ -1,14 +1,14 @@
 @extends('Shared/layout')
 @section('img',url('img/CerikSoluciones.png'))
-@section('title','Listado de documentos')
+@section('module','Base de datos')
+@section('title','Documentos')
 @section('content')
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        Listado de documentos/<strong>{{ $document_type->name}}</strong>
+        <strong>{{ $document_type->name}}</strong> | Documentos
     </div>
     <div class="card-body">
-
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach($documents as $item)
             <div class="col mb-5">

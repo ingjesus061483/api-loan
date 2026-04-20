@@ -339,6 +339,8 @@ class ClientController extends Controller
         $arrp=$this->getArray($policiesclients->get());
         $arra=$this->getArray($autorizationclients->get());
         $data=[
+            'policiesCount'=>$this->policies->count(),
+            'autorizationsCount'=>$this->autorizations->count(),
             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
             'autorizations'=>$this->autorizations->whereNotIn ('id',$arra)->get(),
             'policyclients'=>$policiesclients->get(),
@@ -372,6 +374,7 @@ class ClientController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $value_title=$request->consecutive!=''? $request->letter.'-'.$request->consecutive:'';
         $arrclient=[
             'identification'=>$request->identification,
             'name_last_name'=>$request->name_last_name,
@@ -379,7 +382,7 @@ class ClientController extends Controller
             'address'=>$request->address,
             'email'=>$request->email,
             'reference'=>$request->reference,
-            'value_Title'=>$request->value_Title,
+            'value_Title'=>$value_title,
             'date_birth'=>$request->birth_date,
             'expedition_date'=>$request->expedition_date,
             'neighborhood'=>$request->neighborhood,
@@ -506,6 +509,8 @@ class ClientController extends Controller
         $arra=$this->getArray($autorizationclients->get());
         $data=[
             'client'=>$client,
+            'policiesCount'=>$this->policies->count(),
+            'autorizationsCount'=>$this->autorizations->count(),
             'documenttypes'=> $documenttypes->get(),
             'policies'=>$this->policies->whereNotIn ('id',$arrp)->get(),
             'autorizations'=>$this->autorizations->whereNotIn ('id',$arra)->get(),
@@ -544,6 +549,7 @@ class ClientController extends Controller
                                        Comúnicate con el administrador del
                                        sistema para mas información');
         }
+        $value_title=$request->consecutive!=''? $request->letter.'-'.$request->consecutive:'';
         $arrclient=[
             'identification'=>$request->identification,
             'name_last_name'=>$request->name_last_name,
@@ -551,7 +557,7 @@ class ClientController extends Controller
             'address'=>$request->address,
             'email'=>$request->email,
             'reference'=>$request->reference,
-            'value_Title'=>$request->value_Title,
+            'value_Title'=>$value_title,
              'city_id'=>$request->city_id,
             'date_birth'=>$request->birth_date,
             'expedition_date'=>$request->expedition_date,

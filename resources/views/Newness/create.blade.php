@@ -1,5 +1,6 @@
 @extends('Shared/layout')
 @section('title',' Crear novedad')
+@section('module','Diario')
 @section('content')
 <div class="card mb-4" style="width: 100% ; margin:0 auto">
     <div class="card-header">

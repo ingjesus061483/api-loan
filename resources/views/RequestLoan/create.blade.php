@@ -1,5 +1,6 @@
 @extends('Shared/layout')
-@section('title','Crear solicitud de préstamo')
+@section('module','Diario')
+@section('title','Crear solicitud')
 @section('content')
 <div class="card mb-4" style="width: 70%;margin:0 auto">
     <div class="card-header">

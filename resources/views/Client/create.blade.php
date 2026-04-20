@@ -1,6 +1,7 @@
 @extends('Shared/layout')
 @section('img',url('img/CerikSoluciones.png'))
-@section('title','Formulario de solicitud de credito')
+@section('title','Solicitud de credito')
+@section('module','Base de datos')
 @section('content')
 <style>
 .acordion {

@@ -1,10 +1,15 @@
 @extends('Shared/layout')
 @section('title',' Solicitud de préstamo')
+@section('module','Diario')
 @section('content')
-<a title="Crear solicitud de prestamo" href="{{url('/requestLoan/create')}}" class="btn btn-primary mb-3">
-    <i class="fa-solid fa-plus"></i>
-
-</a>
+<div style="padding-bottom: 5px">
+    <a title="Crear solicitud de préstamo" href="{{url('/requestLoan/create')}}" class="btn btn-primary ">
+        <i class="fa-solid fa-plus"></i>
+    </a>
+    <button title="Filtrar solicitud" class="btnfilter btn btn-secondary" data-title="Filtrar Solicitudes" data-url="{{url('/requestLoan')}}">
+        <i class="fa-solid fa-filter"></i>
+    </button>
+</div>
 <div id="accordion">
     @foreach ($priorities as $item)
 

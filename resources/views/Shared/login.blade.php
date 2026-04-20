@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>@yield('title')</title>
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
-        <link rel="shortcut icon" type="image/x-icon" href="{{url('/')}}/login.ico" />      
+        <link rel="shortcut icon" type="image/x-icon" href="{{url('/ImagenSistema/login.ico')}}" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -20,7 +20,7 @@
                         <div id="errors" style="display: none" class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                <li style="list-style: none">{{$error}}</li>                    
+                                <li style="list-style: none">{{$error}}</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -44,7 +44,7 @@
                 </footer>
             </div>
         </div>
-        <script src="{{url('/js/jquery.js')}}"></script> 
+        <script src="{{url('/js/jquery.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{url('/js/scripts.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -52,13 +52,13 @@
             if ($("#errors").length>0)
             {
                 Swal.fire({
-                  title: "Drag me!",
+                  title: "Login",
                   icon: "error",
                   html:$("#errors").html(),
                   draggable: true
-                });            
+                });
 
-            }          
+            }
         </script>
     </body>
 </html>

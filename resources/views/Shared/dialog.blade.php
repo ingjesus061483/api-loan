@@ -142,41 +142,35 @@
                 @endif
             </form>
         </div>
-        <div title="Novedades" id="dialogNewness">
-            <form action="{{url('/Newness')}}" method="POST" autocomplete="off" id="frmNewness">
+        <div id="dialogfilter">
+            <form  method="get" autocomplete="off" id="frmfilter">
                 @csrf
-                <input type="hidden" name="user_id" value="{{auth()->check()?auth()->user()->id:''}}">
+
                 <div class="mb-3">
-                    <label for=""style="font-size:14px" >Fecha*</label>
-                    <input type="date" class="form-control" name="date" style="width:80%;font-size:12px; " value="{{date('Y-m-d')}}" id="dete">
+                    <label for=""style="font-size:14px" >Fecha inicio</label>
+                    <input type="date" class="form-control" name="dateStart" style="font-size:12px; " value="{{date('Y-m-d')}}" id="deteStart">
+                </div>
+                         <div class="mb-3">
+                    <label for=""style="font-size:14px" >Fecha final</label>
+                    <input type="date" class="form-control" name="dateEnd" style="font-size:12px; " value="{{date('Y-m-d')}}" id="dateEnd">
                 </div>
                 <div class="mb-3">
                     <label for=""style="font-size:14px" >Cliente*</label>
-                    <input type="text" class="client form-control" name="client_id" style="width:80%;font-size:12px; " />
-                   <!-- <datalist id="clients" style="width:80%;font-size:12px; ">
-                        @if (isset($clients))
-                            @foreach($clients as $item)
-                            <option value="{{$item->id}}">{{$item->identification.'-'.$item->name_last_name}}</option>
-                            @endforeach
-                        @endif
-                    </datalist>-->
+                    <input type="text" class="client form-control" name="client_id" style="font-size:12px;" />
                 </div>
+                @if(isset($newnesstypes))
                 <div class="mb-3">
-                    <label for="" style="font-size:14px">Tipo de novedad*</label>
-                    <input type="text" class="form-control" name="newness_type_id" id="newness_type_id" style="width:80%;font-size:12px; ">
-                   <!-- <select name="newness_type_id" class="form-select" style="width:80%;font-size:12px; " id="newness_type_id">
+                    <label for=""style="font-size:14px" >Tipo de novedad</label>
+                    <select name="newnesstype_id" class="form-select" style="font-size:12px; ">
                         <option value="">Seleccione una opcion</option>
-                        @if(isset($newnesstypes))
-                            @foreach ($newnesstypes as $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
-                        @endif
-                    </select>-->
+                        @foreach($newnesstypes as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="mb-3">
-                    <label for="" style="font-size:14px" style="width:80%;font-size:12px; ">Novedad*</label>
-                    <textarea name="remark" id="remark" class="form-control" cols="30" rows="10"></textarea>
-                </div>
+                @endif
+
+
             </form>
         </div>
         <div title="Tipos de novedades" id="dialogNewnessType">

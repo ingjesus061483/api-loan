@@ -16,8 +16,10 @@ class LevelStudiesSeeder extends Seeder
         DB::table('level_studies')->insert([
                 ['name'=>'Bachiller'],
                 ['name'=>'Tecnico'],
-                ['name'=>'Universitario'],
-              
+                ['name'=>'Pre grado | Universitario'],
+                ['name'=>'Post grado'],
+                ['name'=>'Magister']
+
             ]);      //
     }
 }

@@ -1,10 +1,14 @@
 @extends('Shared/layout')
 @section('title','Novedades')
+@section('module','Diario')
 @section('content')
 <div style="padding-bottom: 5px">
     <a  title="Crear Novedad" href="{{url('/Newness/create')}}" class="btn btn-primary" >
         <i class="fa-solid fa-plus"></i>
     </a>
+    <button title="Filtrar novedad" class="btnfilter btn btn-secondary" data-title="Filtrar Novedades" data-url="{{url('/Newness')}}">
+         <i class="fa-solid fa-filter"></i>
+    </button>
 </div>
 <div id="accordion">
     @foreach($state_newnesses as $item)

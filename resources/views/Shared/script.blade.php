@@ -896,13 +896,11 @@
                 $("#cardPolAutorizaciones").fadeIn();
 
             });
-            $("#btnPoltrataDatosPers").click(function(){
-                $(".btn").removeClass('btn-info').addClass('btn-primary');
-                $("#btnPoltrataDatosPers")
-                 .removeClass('btn-primary')
-                 .addClass('btn-info');
-                 $(".card").fadeOut();
-                $("#cardPoltrataDatosPers").fadeIn();
+            $(".btnfilter").click(function(){
+                console.log($(this).data('url'));
+                console.log($(this).data('title'));
+                $("#frmFilter").attr('action',$(this).data('url'));
+                dialogfilter.dialog("open");
 
             }) ;
             $("#btnInfoPatrimonial").click(function(){
@@ -987,6 +985,7 @@
                 modal: true,
                 buttons:
                 [{
+
                     text: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1008,29 +1007,32 @@
 
                 }
             });
-            var dialogNewness=$("#dialogNewness").dialog({
+            var dialogfilter=$("#dialogfilter").dialog({
+                title: $(".btnfilter").data('title'),
                 autoOpen: false,
                 height: "auto",
                 width: 300,
                 modal: true,
                 buttons:
                 [{
-                    text: "Guardar",
-                    "class": 'btn btn-success',
+                    icon:'fa-solid fa-magnifying-glass',
+                    text: "Buscar",
+                    class: 'btn btn-success',
                     click: function () {
-                        $("#frmNewness")[0].submit();
+                        $("#frmfilter")[0].submit();
                     }
                 },
                 {
+                    icon:'fa-solid fa-door-open',
                     text: "Salir",
-                    "class": 'btn btn-danger',
+                    class: 'btn btn-danger',
                     click: function () {
-                        dialogNewness.dialog("close");
+                        dialogfilter.dialog("close");
                     }
                 }],
                 close: function ()
                 {
-                    $("#frmNewness")[0].reset();
+                    $("#frmfilter")[0].reset();
                    //form[0].reset();
                     //allFields.removeClass("ui-state-error");
 
@@ -1043,6 +1045,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-save',
                     text: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1050,6 +1053,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
@@ -1092,6 +1096,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-save',
                     text: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1099,6 +1104,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
@@ -1120,6 +1126,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-save',
                     text: "Guardar",
                     class: 'btn btn-success',
                     click: function () {
@@ -1127,6 +1134,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
@@ -1148,6 +1156,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-paperclip',
                     text: "Adjuntar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1155,6 +1164,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
@@ -1176,6 +1186,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-save',
                     text: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1183,6 +1194,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
@@ -1197,6 +1209,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-save',
                     text: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1204,6 +1217,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
@@ -1221,6 +1235,7 @@
                 modal: true,
                 buttons:
                 [{
+                    icon: 'fa-solid fa-save',
                     text: "Guardar",
                     "class": 'btn btn-success',
                     click: function () {
@@ -1228,6 +1243,7 @@
                     }
                 },
                 {
+                    icon: 'fa-solid fa-door-open',
                     text: "Salir",
                     "class": 'btn btn-danger',
                     click: function () {
