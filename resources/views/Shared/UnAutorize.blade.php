@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>404 Error - SB Admin</title>
+        <title>404 Error - {{env('APP_NAME')}}</title>
         <link href="{{url('/css/styles.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -37,7 +37,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website {{date('Y')}}</div>
+                            <div class="text-muted">Copyright &copy; {{env('APP_NAME')}} {{date('Y')}}</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
