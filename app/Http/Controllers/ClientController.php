@@ -251,7 +251,7 @@ class ClientController extends Controller
         }
         $client ->acept_data_processing_policies=$accept_data_treatment;
         $client ->update();
-        session(["info"=>"6"]);
+        session(["info"=>"7"]);
         session(['client' => $client]);
         return back() ->with(['message'=>$client ->acept_data_processing_policies?'Has aceptado las politicas de datos. Continua con las politicas ':'No has aceptado las politicas de datos']);
     }
@@ -273,7 +273,7 @@ class ClientController extends Controller
         $client->seizure=$seizure;
         $client->company_seizure=$request->company_seizure;
         $client->update();
-        session(["info"=>"4"]);
+        session(["info"=>"5"]);
         session(['client' => $client]);
         return back() ->with(['message'=>'Se ha actualizado la información legal. Continue con la información del crédito.']);
        // return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
@@ -291,7 +291,7 @@ class ClientController extends Controller
         $client->vehicle=$request->vehicle==null?0:(bool)$request->vehicle;
         $client->estate=$request->estate==null?0:(bool)$request->estate;
         $client->update();
-        session(["info"=>"3"]);
+        session(["info"=>"4"]);
         session(['client' => $client]);
       //  return redirect()->to(url('/clients/create'))->withInput(["client_id"=>$client->id]);
         return back() ->with(['message'=>'Se ha actualizado la información patrimonial. Continue con la información legal.']);

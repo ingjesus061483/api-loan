@@ -66,7 +66,8 @@ class ClientPolicyController extends Controller
            where('title','like','a%')->count();
            if($autorizations==AuthorizationPolicy::where('title','like','a%')->count())
            {
-               $message= $message.'ahora pulsa el boton enviar para terminar el proceso';
+                $sesion="";
+               $message= $message.'ahora pulsa el boton enviar solicitud para terminar el proceso';
            }
         }
         session(["info"=>$sesion]);

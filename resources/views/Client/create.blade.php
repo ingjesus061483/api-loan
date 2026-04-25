@@ -40,6 +40,11 @@
             <input name="identification" id="identification" class="form-control" type="hidden" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
             <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
         </div>
+        @else
+        <div class="input-group">
+            <input name="identification" id="identification" class="form-control" type="text" placeholder="Digite su CC" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button class="btn btn-primary" id="btnNavbarSearch" type="submit "><i class="fas fa-search"></i></button>
+        </div>
         @endif
     </form>
     @endif
@@ -55,11 +60,11 @@
     <a class="btn btn-primary" title="Regresar" href="{{url('/clients')}}">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
-    @elseif($client!=null)
- <a href="{{url('/clients')}}/{{$client->id}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
-        <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;Enviar soñicitud
-    </a>
     @endif
+    <a href="{{url('/clients')}}/{{$client!=null?$client->id:0}}" class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;Enviar solicitud
+    </a>
+
 </div>
 
 </div>
