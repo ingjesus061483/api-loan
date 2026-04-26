@@ -2,27 +2,27 @@
 @section('title','Formulario de solicitud de credito')
 @section('content')
     <div style="padding-bottom: 5px">
-    <div class="card mb-4">
-         <div class="card-header">
-            <i class="fa-solid fa-id-card"></i>
-            ANEXOS
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-id-card"></i>
+                ANEXOS
+            </div>
+            <div class="card-body">
+                Estimado Sr(a) <strong> {{$client->name_last_name}}</strong>, buenas tardes, Gracias por diligenciar el formulario 👍
+                Validaremos la información anterior
+                y nos contactaremos con usted a la mayor brevedad posible, para acordar el desembolso  y los términos de la negociación.
+                Para finalizar este proceso, favor enviar al WhatsApp 300 676 6200 o adjuntar aquí 👇 los sgtes documentos para complementar dicha solicitud:
+                <ul>
+                        <li> Cédula de ciudadanía (ambos lados)</li>
+                        <li> Desprendibles de pago (último mes)</li>
+                        <li> Certificación laboral no mayor a 30 días</li>
+                        <li> Recibo de servicio público</li>
+                        <li> Carnet ARL afiliada.</li>
+                </ul>
+                Mil gracias.<br>
+                <strong>Cesar Rodriguez CSSoluciones</strong>
+            </div>
         </div>
-        <div class="card-body">
-            Estimado Sr(a) <strong> {{$client->name_last_name}}</strong>, buenas tardes, Gracias por diligenciar el formulario 👍
-            Validaremos la información anterior
-            y nos contactaremos con usted a la mayor brevedad posible, para acordar el desembolso  y los términos de la negociación.
-            Para finalizar este proceso, favor enviar al WhatsApp 300 676 6200 o adjuntar aquí 👇 los sgtes documentos para complementar dicha solicitud:
-            <ul>
-                    <li> Cédula de ciudadanía (ambos lados)</li>
-                    <li> Desprendibles de pago (último mes)</li>
-                    <li> Certificación laboral no mayor a 30 días</li>
-                    <li> Recibo de servicio público</li>
-                    <li> Carnet ARL afiliada.</li>
-            </ul>
-            Mil gracias.<br>
-            <strong>Cesar Rodriguez CSSoluciones</strong>
-        </div>
-    </div>
   <!--  <div class="card mb-4" id="cardInfoPersonal"style=" width:100%;margin:0 auto;">
         <div class="card-header">
             <i class="fa-solid fa-id-card"></i>

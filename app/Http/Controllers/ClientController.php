@@ -423,12 +423,18 @@ class ClientController extends Controller
                                                         document_type_id=`document_types`.id) amount ");
         $policies=AuthorizationPolicy::where('title', 'like', 'p%')->count();
         $autorizations=AuthorizationPolicy::where('title', 'like', 'a%')->count();
-        $documents=Document::where('client_id',$client->id);
+        $documents=Document::where('client_id',$client?->id);
         $policiesclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'p%')->where('client_id',$client?->id);
         $autorizationclients=ClientPolicy::join('authorization_policies as p', 'client_policies.policy_id', '=', 'p.id')->where('p.title', 'like', 'a%')->where('client_id',$client?->id);
         $contactInfos=ContactInformation::where ('client_id',$client?->id);
         $EmploymentInformation=EmploymentInformation::where ('client_id',$client?->id)->first();
         $loan=Loan::where('client_id',$client?->id)->first();
+        if($client==null)
+        {
+            session(["info"=>"0"]);
+            return redirect()->to(url('/clients/create'))->withErrors('La informacion personal no ha sido diligenciaciada')
+            ->withInput(['client_id'=>$client?->id]);
+        }
         if($contactInfos->count()==0)
         {
             session(["info"=>"1"]);
@@ -494,6 +500,7 @@ class ClientController extends Controller
            return $this-> redirectToClient($client);
         }
         $client=Client::find($id);
+
         return $this-> redirectToClient($client);
         //
     }
