@@ -830,6 +830,48 @@
                     }
                 });
             }
+            if($("#occupational_position").val()==1)
+            {
+                $(".asalariado").fadeOut();
+                $("#ingreso").html("INGRESOS *");
+                $("#actividad_economica").html("ACTIVIDAD ECONOMICA*");
+            }
+            else if($("#occupational_position").val()==2)
+            {
+                $(".asalariado").fadeIn();
+                $("#ingreso").html("SALARIO MENSUAL *");
+                $("#actividad_economica").html("CARGO ACTUAL*");
+            }
+            $("#occupational_position").change(function()
+            {
+                $('#company_works').val('');
+                $('#nit_company_works').val('');
+                $('#main_address').val('');
+                $('#city').val('');
+                $('#state').val('');
+                $('#entry_date').val('');
+                $("#company_on_mission").val('');
+                $("#nit_company_on_mission").val('');
+                $('#address_company_on_mission').val('');
+                if(this.value==-1 ||this.value==1 )
+                {
+                    $(".asalariado").fadeOut();
+                    $("#ingreso").html("INGRESOS *");
+                    $("#actividad_economica").html("ACTIVIDAD ECONOMICA*");
+
+                }
+                else if(this.value==2)
+                {
+                    $(".asalariado").fadeIn();
+
+                    $("#ingreso").html("SALARIO MENSUAL *");
+
+                    $("#actividad_economica").html("CARGO ACTUAL*");
+
+                }
+
+
+            });
             $("#eps_affiliate").change(function(){
                 if(this.value == "-1")
                 {

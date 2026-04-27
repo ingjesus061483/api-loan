@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('employment_informations', function (Blueprint $table) {
             $table->after('main_address',function($table){
-                $table->foreignId('city_id') ->constrained('cities')
+                $table->foreignId('city_id')->nullable()->constrained('cities')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

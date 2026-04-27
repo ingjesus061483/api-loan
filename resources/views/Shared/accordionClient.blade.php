@@ -258,15 +258,17 @@
             <input type="hidden" name="client_id" value="{{$client!=null? $client->id:''}}" id="client_id" >
             <div class="row">
                 <div class="col-sm-6">
-                    <label for="">Posicion ocupacional* </label>
-                    <select class="form-select" name="occupational_position" id="occupational_position" style="font-size: 12px">
-                        <option value="">Selecione una opcion</option>
-                        @foreach ($occupationalposition as $item)
-                        <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->occupational_position_id?'selected':''}}{{old('occupational_position')!=''?'selected':''}} >{{$item->name}}</option>
-                        @endforeach
-                    </select>
+                    <div class="mb-3">
+                        <label for="">Posicion ocupacional* </label>
+                        <select class="form-select" name="occupational_position" id="occupational_position" style="font-size: 12px">
+                            <option value="-1">Selecione una opcion</option>
+                            @foreach ($occupationalposition as $item)
+                            <option value="{{$item->id}}"{{$item->id==$EmploymentInformation?->occupational_position_id?'selected':''}}{{old('occupational_position')!=''?'selected':''}} >{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="asalariado col-sm-6" style="display: none">
                     <div class="mb-3">
                         <label class="form-label" for="">
                             EMPRESA LABORA
@@ -275,7 +277,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="asalariado row" style="display: none">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -293,7 +295,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="asalariado row" style="display: none">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -321,7 +323,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="asalariado row" style="display: none">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -341,7 +343,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="asalariado row" style="display: none">
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label" for="">
@@ -362,13 +364,13 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <label class="form-label" for="">SALARIO MENSUAL*</label>
+                        <label class="form-label" id="ingreso" for="">SALARIO MENSUAL*</label>
                         <input type="text" class="currency form-control" name="average_monthly_salary" value="{{$EmploymentInformation!=null?'$'.number_format($EmploymentInformation->average_monthly_salary):old('average_monthly_salary')}}" id="average_monthly_salary"style="font-size: 12px">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <label class="form-label" for="">
+                        <label class="form-label" id="actividad_economica" for="">
                             CARGO ACTUAL*
                         </label>
                         <input type="text" class="form-control" name="current_position" value="{{$EmploymentInformation!=null?$EmploymentInformation->current_position:old('current_position')}}" id="current_position"style="font-size: 12px">

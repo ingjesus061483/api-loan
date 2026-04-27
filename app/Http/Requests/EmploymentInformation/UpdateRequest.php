@@ -30,16 +30,18 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        if(   $this->occupational_position==2)
+        {
+
         return [
-            'occupational_position'=>'required|exists:occupational_positions,id',
             'client_id'=>'required',
-//            'company_works'=>'required|max:100',
-  //          'nit_company_works'=>'required|max:50',
+            'company_works'=>'required|max:100',
+            'nit_company_works'=>'max:50',
             'main_address'=>'required|max:50',
             'city'=>'required',
             'state'=>'required',
             'entry_date'=>'required',
-            'average_monthly_salary'=>'required',
+            'average_monthly_salary'=>'required|max:20',
             'current_position'=>'required',
             'payment_frequency'=>'required',
             'company_payment_date'=>'required',
@@ -47,6 +49,25 @@ class UpdateRequest extends FormRequest
             'contract_type'=>'required',
             'eps_affiliate'=>'required',
             'arl_affiliate'=>'required',
+            'occupational_position'=>'required|exists:occupational_positions,id'
+
+            //
+        ];
+        }
+        return[
+            'client_id'=>'required',
+            'company_works'=>'max:100',
+            'nit_company_works'=>'max:50',
+            'main_address'=>'max:50',
+            'average_monthly_salary'=>'required|max:20',
+            'current_position'=>'required',
+            'payment_frequency'=>'required',
+            'company_payment_date'=>'required',
+            'custemer_payment_date'=>'required',
+            'contract_type'=>'required',
+            'eps_affiliate'=>'required',
+            'arl_affiliate'=>'required',
+            'occupational_position'=>'required|exists:occupational_positions,id'
             //
         ];
     }

@@ -30,9 +30,12 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+     if(   $this->occupational_position==2)
+        {
+
         return [
             'client_id'=>'required',
-            'company_works'=>'max:100',
+            'company_works'=>'required|max:100',
             'nit_company_works'=>'max:50',
             'main_address'=>'required|max:50',
             'city'=>'required',
@@ -50,14 +53,32 @@ class StoreRequest extends FormRequest
 
             //
         ];
+        }
+        return[
+            'client_id'=>'required',
+            'company_works'=>'max:100',
+            'nit_company_works'=>'max:50',
+            'main_address'=>'max:50',
+            'average_monthly_salary'=>'required|max:20',
+            'current_position'=>'required',
+            'payment_frequency'=>'required',
+            'company_payment_date'=>'required',
+            'custemer_payment_date'=>'required',
+            'contract_type'=>'required',
+            'eps_affiliate'=>'required',
+            'arl_affiliate'=>'required',
+            'occupational_position'=>'required|exists:occupational_positions,id'
+            //
+        ];
     }
     public function messages()
     {
+
         return [
             'client_id.required' => 'El :attribute es obligatorio.',
-           // 'company_works.required' => 'El :attribute es obligatorio.',
+            'company_works.required' => 'El :attribute es obligatorio.',
             'company_works.max' => 'El :attribute no debe ser mayor a 100 caracteres.',
-            //'nit_company_works.required' => 'El :attribute es obligatorio.',
+            'nit_company_works.required' => 'El :attribute es obligatorio.',
             'nit_company_works.max' => 'El :attribute no debe ser mayor a 50 caracteres.',
             'main_address.required' => 'El :attribute es obligatorio.',
             'main_address.max' => 'El :attribute no debe ser mayor a 50 caracteres.',
@@ -81,7 +102,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'client_id' => 'cliente',
-//            'company_works' => 'empresa donde labora',
+            'company_works' => 'empresa donde labora',
             'nit_company_works' => 'NIT de la empresa donde labora',
             'main_address' => 'dirección principal de la empresa',
             'city' => 'ciudad',

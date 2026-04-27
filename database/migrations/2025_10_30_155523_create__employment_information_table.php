@@ -19,7 +19,7 @@ return new class extends Migration
             $table ->string("company_on_mission",50)->nullable();
             $table->string("nit",50)->nullable();
             $table->string("branch_address",50)->nullable();
-            $table->date("entry_date");
+            $table->date("entry_date")->nullable();
             $table->decimal("average_monthly_salary",22,2);
             $table->string("current_position");
             $table->foreignId('client_id')
